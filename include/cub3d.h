@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/07/14 18:56:56 by pehenri2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
+# define CUB3D_H
+
+# include <MLX42/MLX42.h>
+# include "libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <math.h>
+# include <errno.h>
+
+# define WIDTH 1024
+# define HEIGHT 512
+# define PI 3.14159
+
+enum e_axis
+{
+	X,
+	Y
+};
+
+typedef struct s_map
+{
+	int			width;
+	int			height;
+	int			block_size;
+	uint32_t	color;
+	int			*cells;
+}				t_map;
+
+typedef struct s_player
+{
+	int			pos[2];
+	int			dir[2];
+	int			plane[2];
+	uint32_t	color;
+}				t_player;
+
+typedef struct s_cube
+{
+	mlx_t			*window;
+	mlx_image_t		*image;
+	t_map			map;
+	t_player		player;
+}				t_cube;
+
+typedef struct s_line_info
+{
+	int				start[2];
+	int				end[2];
+	int				delta[2];
+	unsigned int	abs[2];
+	uint32_t		color;
+}					t_line_info;
+
+/*-----------------hooks.c-----------------*/
+
+void		action_hooks(void *param);
+void		close_loop_hook(void *param);
+void		move_player_loop_hook(void *param);
+
+/*--------------draw.c---------------*/
+
+void		draw_map(t_cube *cube, uint32_t color, t_map map);
+void		draw_block(int start[2], int block_size, uint32_t color,
+				t_cube *cube);
+void		draw_line(int start[2], int end[2], uint32_t color,
+				t_cube *cube);
+t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
+void		draw_shallow_line(t_line_info line_info, mlx_image_t *image);
+void		draw_steep_line(t_line_info line_info, mlx_image_t *image);
+
+/*----------------utils.c-----------------*/
+void		put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void		move_coordinate(int *coordinate, int direction);
+
+#endif
