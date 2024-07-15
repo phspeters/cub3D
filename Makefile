@@ -6,13 +6,13 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/14 12:49:43 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/15 19:13:42 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	cub3d
 CFLAGS		=	-Wextra -Wall -Werror -Wunreachable-code $(FLAG) #-fsanitize=address
-FLAG 		?= 	-Ofast
+FLAG 		?= 	-g3
 CC			= 	cc
 LIBMLX		= 	./lib/MLX42
 LIBFT		= 	./lib/libft

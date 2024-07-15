@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/15 16:32:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:00:21 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ typedef struct s_map
 	int			width;
 	int			height;
 	int			block_size;
+	int			*blocks;
 	uint32_t	color;
-	int			*cells;
 }				t_map;
 
 typedef struct s_player
 {
 	float		pos[2];
-	float		delta[2];
+	float		step[2];
 	float		dir_angle;
 	uint32_t	color;
 }				t_player;

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/15 17:58:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:17:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	draw_map(t_cube *cube, uint32_t color, t_map map)
 		x = 0;
 		while (x < map.width)
 		{
-			if (map.cells[(y * map.width) + x] == 1)
-			{
-				start[X] = x * map.block_size;
-				start[Y] = y * map.block_size;
+			start[X] = x * map.block_size;
+			start[Y] = y * map.block_size;
+			if (map.blocks[(y * map.width) + x] == 1)
 				draw_block (start, map.block_size, color, cube);
-			}
+			else
+				draw_block (start, map.block_size, 0x000000FF, cube);
 			x++;
 		}
 		y++;
