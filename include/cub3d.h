@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/14 18:56:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:32:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int			pos[2];
-	int			dir[2];
-	int			plane[2];
+	float		pos[2];
+	float		delta[2];
+	float		dir_angle;
 	uint32_t	color;
 }				t_player;
 
@@ -76,11 +76,11 @@ void		move_player_loop_hook(void *param);
 /*--------------draw.c---------------*/
 
 void		draw_map(t_cube *cube, uint32_t color, t_map map);
-void		draw_block(int start[2], int block_size, uint32_t color,
+void		draw_block(float start[2], int block_size, uint32_t color,
 				t_cube *cube);
-void		draw_line(int start[2], int end[2], uint32_t color,
+void		draw_line(float start[2], float end[2], uint32_t color,
 				t_cube *cube);
-t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
+t_line_info	set_line_info(float start[2], float end[2], uint32_t color);
 void		draw_shallow_line(t_line_info line_info, mlx_image_t *image);
 void		draw_steep_line(t_line_info line_info, mlx_image_t *image);
 

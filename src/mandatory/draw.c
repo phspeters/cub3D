@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/14 19:03:01 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:58:49 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	draw_map(t_cube *cube, uint32_t color, t_map map)
 {
 	int		x;
 	int		y;
-	int		start[2];
+	float	start[2];
 
 	y = 0;
 	while (y < map.height)
@@ -36,7 +36,7 @@ void	draw_map(t_cube *cube, uint32_t color, t_map map)
 	}
 }
 
-void	draw_block(int start[2], int block_size, uint32_t color, t_cube *cube)
+void	draw_block(float start[2], int block_size, uint32_t color, t_cube *cube)
 {
 	int	x;
 	int	y;
@@ -54,7 +54,7 @@ void	draw_block(int start[2], int block_size, uint32_t color, t_cube *cube)
 	}
 }
 
-void	draw_line(int start[2], int end[2], uint32_t color, t_cube *cube)
+void	draw_line(float start[2], float end[2], uint32_t color, t_cube *cube)
 {
 	t_line_info	line_info;
 
@@ -65,7 +65,7 @@ void	draw_line(int start[2], int end[2], uint32_t color, t_cube *cube)
 		draw_steep_line(line_info, cube->image);
 }
 
-t_line_info	set_line_info(int start[2], int end[2], uint32_t color)
+t_line_info	set_line_info(float start[2], float end[2], uint32_t color)
 {
 	t_line_info	line_info;
 
