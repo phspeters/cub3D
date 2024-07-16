@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:42 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/15 19:44:17 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:03:32 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	draw_rays(t_player player, t_map map, t_cube *cube)
 	}
 	if (ray_angle < PI)
 	{
-		ray_end[Y] = floor(player.pos[Y] / map.block_size) * map.block_size;
+		ray_end[Y] = floor(player.pos[Y] / map.block_size) * map.block_size + map.block_size;
 		ray_end[X] = (player.pos[Y] - ray_end[Y]) * angle_tan + player.pos[X];
 		ray_step[Y] = map.block_size;
 		ray_step[X] = -ray_step[Y] * angle_tan;
