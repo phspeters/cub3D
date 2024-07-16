@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/15 19:08:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:41:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@ void	move_player_loop_hook(void *param)
 	cube = param;
 	if (mlx_is_key_down(cube->window, MLX_KEY_UP))
 	{
-		cube->player.pos[Y] += cube->player.step[Y];
-		cube->player.pos[X] += cube->player.step[X];
+		cube->player.pos[Y] += cube->player.movement_delta[Y];
+		cube->player.pos[X] += cube->player.movement_delta[X];
 	}
 	if (mlx_is_key_down(cube->window, MLX_KEY_DOWN))
 	{
-		cube->player.pos[Y] -= cube->player.step[Y];
-		cube->player.pos[X] -= cube->player.step[X];
+		cube->player.pos[Y] -= cube->player.movement_delta[Y];
+		cube->player.pos[X] -= cube->player.movement_delta[X];
 	}
 	if (mlx_is_key_down(cube->window, MLX_KEY_LEFT))
 	{
 		cube->player.dir_angle -= 0.1;
 		if (cube->player.dir_angle < 0)
 			cube->player.dir_angle += 2 * PI;
-		cube->player.step[X] = cos(cube->player.dir_angle) * 5;
-		cube->player.step[Y] = sin(cube->player.dir_angle) * 5;
+		cube->player.movement_delta[X] = cos(cube->player.dir_angle) * 5;
+		cube->player.movement_delta[Y] = sin(cube->player.dir_angle) * 5;
 	}
 	if (mlx_is_key_down(cube->window, MLX_KEY_RIGHT))
 	{
 		cube->player.dir_angle += 0.1;
 		if (cube->player.dir_angle > 2 * PI)
 			cube->player.dir_angle -= 2 * PI;
-		cube->player.step[X] = cos(cube->player.dir_angle) * 5;
-		cube->player.step[Y] = sin(cube->player.dir_angle) * 5;
+		cube->player.movement_delta[X] = cos(cube->player.dir_angle) * 5;
+		cube->player.movement_delta[Y] = sin(cube->player.dir_angle) * 5;
 	}
 }

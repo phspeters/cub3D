@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/15 19:13:42 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/16 20:20:29 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
-				draw.c \
+				draw_elements.c \
+				draw_line.c \
 				hooks.c \
+				raycasting.c \
 				utils.c
 
 VPATH 		= 	./src:./src/mandatory
