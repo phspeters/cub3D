@@ -5,53 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 10:33:42 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 20:19:51 by pehenri2         ###   ########.fr       */
+/*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
+/*   Updated: 2024/07/18 19:17:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		init_params(t_cube *cube);
-
-int			g_map[] = {
-	1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 1, 0, 0, 0, 0, 1,
-	1, 0, 1, 0, 0, 0, 0, 1,
-	1, 0, 1, 0, 0, 1, 1, 1,
-	1, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 1, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 1,
-	1, 1, 1, 1, 1, 1, 1, 1
+int	g_map[MAP_HEIGHT][MAP_WIDTH] = {
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
+
+void		init_params(t_game *game);
 
 int	main(void)
 {
-	t_cube	cube;
+	t_game	game;
 
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	cube.window = mlx_init(WIDTH, HEIGHT, "Xube3D", true);
-	cube.image = mlx_new_image(cube.window, WIDTH, HEIGHT);
-	mlx_image_to_window(cube.window, cube.image, 0, 0);
-	init_params(&cube);
-	mlx_loop_hook(cube.window, draw_loop, &cube);
-	action_hooks(&cube);
-	mlx_loop(cube.window);
-	mlx_terminate(cube.window);
+	game.window = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "Cube3D", true);
+	game.image = mlx_new_image(game.window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	mlx_image_to_window(game.window, game.image, 0, 0);
+	init_params(&game);
+	mlx_loop_hook(game.window, draw_loop, &game);
+	action_hooks(&game);
+	mlx_loop(game.window);
+	mlx_terminate(game.window);
 	return (EXIT_SUCCESS);
 }
 
-void	init_params(t_cube *cube)
+void	init_params(t_game *game)
 {
-	cube->map.width = 8;
-	cube->map.height = 8;
-	cube->map.block_size = 64;
-	cube->map.color = 0xFFFFFFFF;
-	cube->map.grid = g_map;
-	cube->player.pos[X] = WIDTH / 4;
-	cube->player.pos[Y] = HEIGHT / 2;
-	cube->player.dir_angle = PI / 2;
-	cube->player.movement_delta[X] = cos(cube->player.dir_angle) * 5;
-	cube->player.movement_delta[Y] = sin(cube->player.dir_angle) * 5;
-	cube->player.color = 0xFF0000FF;
+	game->map.width = MAP_WIDTH;
+	game->map.height = MAP_HEIGHT;
+	game->map.minimap_block_size = 8;
+	game->player.pos[X] = 22;
+	game->player.pos[Y] = 12;
+	game->player.dir[X] = -1;
+	game->player.dir[Y] = 0;
+	game->player.plane[X] = 0;
+	game->player.plane[Y] = 0.66;
+	game->player.color = 0xFF0000FF;
 }

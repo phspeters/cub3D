@@ -6,138 +6,92 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 20:42:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:49:54 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_rays(t_entity player, t_map map, t_cube *cube)
+void	cast_ray(t_game *game, int x_coordinate)
 {
-	t_entity	vertical_ray;
-	t_entity	horizontal_ray;
-	float		vertical_distance;
-	float		horizontal_distance;
+	t_ray		ray;
+	t_player	player;
+	t_map		map;
 
-	vertical_ray = calculate_vertical_collision_point(player, map);
-	horizontal_ray = calculate_horizontal_collision_point(player, map);
-	vertical_distance = sqrt(pow(vertical_ray.pos[X] - player.pos[X], 2)
-			+ pow(vertical_ray.pos[Y] - player.pos[Y], 2));
-	horizontal_distance = sqrt(pow(horizontal_ray.pos[X] - player.pos[X], 2)
-			+ pow(horizontal_ray.pos[Y] - player.pos[Y], 2));
-	if (vertical_distance < horizontal_distance)
-		draw_line(player.pos, vertical_ray.pos, 0x00FF00FF, cube);
+	player = game->player;
+	map = game->map;
+	ray.camera_x_coordinate = 2 * x_coordinate / (double)SCREEN_WIDTH - 1;
+	ray.ray_dir[X] = player.dir[X] + player.plane[X] * (2 * x_coordinate
+			/ (double)SCREEN_WIDTH - 1);
+	ray.ray_dir[Y] = player.dir[Y] + player.plane[Y] * (2 * x_coordinate
+			/ (double)SCREEN_WIDTH - 1);
+	map.current_x = (int)player.pos[X];
+	map.current_y = (int)player.pos[Y];
+	if (ray.ray_dir[X] == 0)
+		ray.delta_distance[X] = 1e30;
 	else
-		draw_line(player.pos, horizontal_ray.pos, 0x00FF00FF, cube);
-}
-
-// check vertical line hit with horizontal grid line
-t_entity	calculate_vertical_collision_point(t_entity player, t_map map)
-{
-	t_entity	vertical_ray;
-	float		neg_inverse_tan;
-	int			depth;
-	int			current_cell;
-
-	depth = 0;
-	vertical_ray.dir_angle = player.dir_angle;
-	neg_inverse_tan = -1 / tan(vertical_ray.dir_angle);
-	if (vertical_ray.dir_angle > PI)
+		ray.delta_distance[X] = fabs(1 / ray.ray_dir[X]);
+	if (ray.ray_dir[Y] == 0)
+		ray.delta_distance[Y] = 1e30;
+	else
+		ray.delta_distance[Y] = fabs(1 / ray.ray_dir[Y]);
+	ray.hit = 0;
+	if (ray.ray_dir[X] < 0)
 	{
-		vertical_ray.pos[Y] = floor(player.pos[Y] / map.block_size)
-			* map.block_size;
-		vertical_ray.pos[X] = (player.pos[Y] - vertical_ray.pos[Y])
-			* neg_inverse_tan + player.pos[X];
-		vertical_ray.movement_delta[Y] = -map.block_size;
-		vertical_ray.movement_delta[X] = -vertical_ray.movement_delta[Y]
-			* neg_inverse_tan;
+		ray.grid_step[X] = -1;
+		ray.distance_to_side[X] = (player.pos[X] - map.current_x)
+			* ray.delta_distance[X];
 	}
-	if (vertical_ray.dir_angle < PI)
+	else
 	{
-		vertical_ray.pos[Y] = floor(player.pos[Y] / map.block_size)
-			* map.block_size + map.block_size;
-		vertical_ray.pos[X] = (player.pos[Y] - vertical_ray.pos[Y])
-			* neg_inverse_tan + player.pos[X];
-		vertical_ray.movement_delta[Y] = map.block_size;
-		vertical_ray.movement_delta[X] = -vertical_ray.movement_delta[Y]
-			* neg_inverse_tan;
+		ray.grid_step[X] = 1;
+		ray.distance_to_side[X] = (map.current_x + 1.0 - player.pos[X])
+			* ray.delta_distance[X];
 	}
-	if (vertical_ray.dir_angle == 0 || vertical_ray.dir_angle == PI)
+	if (ray.ray_dir[Y] < 0)
 	{
-		vertical_ray.pos[X] = player.pos[X] * 100000;
-		vertical_ray.pos[Y] = player.pos[Y] * 100000;
-		depth = 8;
+		ray.grid_step[Y] = -1;
+		ray.distance_to_side[Y] = (player.pos[Y] - map.current_y)
+			* ray.delta_distance[Y];
 	}
-	while (depth < 8)
+	else
 	{
-		current_cell = ((int)vertical_ray.pos[Y] / map.block_size) * map.width
-			+ (int)vertical_ray.pos[X] / map.block_size;
-		if (current_cell > 0 && current_cell < map.width * map.height
-			&& map.grid[current_cell] == 1)
-			break ;
+		ray.grid_step[Y] = 1;
+		ray.distance_to_side[Y] = (map.current_y + 1.0 - player.pos[Y])
+			* ray.delta_distance[Y];
+	}
+	while (ray.hit == 0)
+	{
+		if (ray.distance_to_side[X] < ray.distance_to_side[Y])
+		{
+			ray.distance_to_side[X] += ray.delta_distance[X];
+			map.current_x += ray.grid_step[X];
+			ray.side_hit = 0;
+		}
 		else
 		{
-			vertical_ray.pos[X] += vertical_ray.movement_delta[X];
-			vertical_ray.pos[Y] += vertical_ray.movement_delta[Y];
-			depth++;
+			ray.distance_to_side[Y] += ray.delta_distance[Y];
+			map.current_y += ray.grid_step[Y];
+			ray.side_hit = 1;
 		}
+		if (g_map[map.current_y][map.current_x] > 0)
+			ray.hit = 1;
 	}
-	return (vertical_ray);
-}
-
-// check horizontal line hit with vertical grid line
-t_entity	calculate_horizontal_collision_point(t_entity player, t_map map)
-{
-	t_entity	horizontal_ray;
-	float		neg_tan;
-	int			depth;
-	int			current_cell;
-
-	depth = 0;
-	horizontal_ray.dir_angle = player.dir_angle;
-	neg_tan = -tan(horizontal_ray.dir_angle);
-	if (horizontal_ray.dir_angle > PI / 2 && horizontal_ray.dir_angle < 3 * PI
-		/ 2)
-	{
-		horizontal_ray.pos[X] = floor(player.pos[X] / map.block_size)
-			* map.block_size;
-		horizontal_ray.pos[Y] = (player.pos[X] - horizontal_ray.pos[X])
-			* neg_tan + player.pos[Y];
-		horizontal_ray.movement_delta[X] = -map.block_size;
-		horizontal_ray.movement_delta[Y] = -horizontal_ray.movement_delta[X]
-			* neg_tan;
-	}
-	if (horizontal_ray.dir_angle < PI / 2 || horizontal_ray.dir_angle > 3 * PI
-		/ 2)
-	{
-		horizontal_ray.pos[X] = floor(player.pos[X] / map.block_size)
-			* map.block_size + map.block_size;
-		horizontal_ray.pos[Y] = (player.pos[X] - horizontal_ray.pos[X])
-			* neg_tan + player.pos[Y];
-		horizontal_ray.movement_delta[X] = map.block_size;
-		horizontal_ray.movement_delta[Y] = -horizontal_ray.movement_delta[X]
-			* neg_tan;
-	}
-	if (horizontal_ray.dir_angle == PI / 2 || horizontal_ray.dir_angle == 3 * PI
-		/ 2)
-	{
-		horizontal_ray.pos[Y] = player.pos[Y] * 100000;
-		horizontal_ray.pos[X] = player.pos[X] * 100000;
-		depth = 8;
-	}
-	while (depth < 8)
-	{
-		current_cell = ((int)horizontal_ray.pos[X] / map.block_size) * map.width
-			+ (int)horizontal_ray.pos[Y] / map.block_size;
-		if (current_cell > 0 && current_cell < map.width * map.height
-			&& map.grid[current_cell] == 1)
-			break ;
-		else
-		{
-			horizontal_ray.pos[Y] += horizontal_ray.movement_delta[Y];
-			horizontal_ray.pos[X] += horizontal_ray.movement_delta[X];
-			depth++;
-		}
-	}
-	return (horizontal_ray);
+	if (ray.side_hit == 0)
+		ray.perpendicular_wall_distance = ray.distance_to_side[X]
+			- ray.delta_distance[X];
+	else
+		ray.perpendicular_wall_distance = ray.distance_to_side[Y]
+			- ray.delta_distance[Y];
+	ray.wall_height = (int)(SCREEN_HEIGHT / ray.perpendicular_wall_distance);
+	ray.wall_line_start = -ray.wall_height / 2 + SCREEN_HEIGHT / 2;
+	if (ray.wall_line_start < 0)
+		ray.wall_line_start = 0;
+	ray.wall_line_end = ray.wall_height / 2 + SCREEN_HEIGHT / 2;
+	if (ray.wall_line_end >= SCREEN_HEIGHT)
+		ray.wall_line_end = SCREEN_HEIGHT - 1;
+	ray.wall_color = 0xFF0000FF;
+	if (ray.side_hit == 1)
+		ray.wall_color = 0xAA0000FF;
+	draw_vertical_line(game, x_coordinate, ray);
 }

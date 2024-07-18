@@ -6,24 +6,36 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 20:16:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:17:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_line(float start[2], float end[2], uint32_t color, t_cube *cube)
+void	draw_vertical_line(t_game *game, int x, t_ray ray)
+{
+	int	y;
+
+	y = ray.wall_line_start;
+	while (y < ray.wall_line_end)
+	{
+		put_valid_pixel(game->image, x, y, ray.wall_color);
+		y++;
+	}
+}
+
+void	draw_line(int start[2], int end[2], uint32_t color, t_game *game)
 {
 	t_line_info	line_info;
 
 	line_info = set_line_info(start, end, color);
 	if (line_info.abs[X] > line_info.abs[Y])
-		draw_shallow_line(line_info, cube->image);
+		draw_shallow_line(line_info, game->image);
 	else
-		draw_steep_line(line_info, cube->image);
+		draw_steep_line(line_info, game->image);
 }
 
-t_line_info	set_line_info(float start[2], float end[2], uint32_t color)
+t_line_info	set_line_info(int start[2], int end[2], uint32_t color)
 {
 	t_line_info	line_info;
 

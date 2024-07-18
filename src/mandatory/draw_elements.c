@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 20:30:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:45:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,88 @@
 
 void	draw_loop(void *param)
 {
-	t_cube		*cube;
-	t_entity	player;
-	t_map		map;
+	t_game	*game;
 
-	cube = param;
-	map = cube->map;
-	player = cube->player;
-	mlx_delete_image(cube->window, cube->image);
-	cube->image = mlx_new_image(cube->window, WIDTH, HEIGHT);
-	mlx_image_to_window(cube->window, cube->image, 0, 0);
-	draw_map(cube, map.color, map);
-	draw_player(player, cube);
-	draw_rays(player, map, cube);
+	game = (t_game *)param;
+	mlx_delete_image(game->window, game->image);
+	game->image = mlx_new_image(game->window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	mlx_image_to_window(game->window, game->image, 0, 0);
+	draw_3d_scene(game);
+	draw_minimap(game);
 }
 
-void	draw_map(t_cube *cube, uint32_t color, t_map map)
+void	draw_3d_scene(t_game *game)
 {
+	int	x_coordinate;
+
+	x_coordinate = 0;
+	while (x_coordinate <= SCREEN_WIDTH)
+	{
+		cast_ray(game, x_coordinate);
+		x_coordinate++;
+	}
+}
+
+void	draw_minimap(t_game *game)
+{
+	t_map	map;
 	int		x;
 	int		y;
-	float	start[2];
+	double	start[2];
+	double	x_offset;
 
+	map = game->map;
+	x_offset = SCREEN_WIDTH - map.width * map.minimap_block_size;
 	y = 0;
 	while (y < map.height)
 	{
 		x = 0;
 		while (x < map.width)
 		{
-			start[X] = x * map.block_size;
-			start[Y] = y * map.block_size;
-			if (map.grid[(y * map.width) + x] == 1)
-				draw_block (start, map.block_size, color, cube);
+			start[X] = x * map.minimap_block_size + x_offset;
+			start[Y] = y * map.minimap_block_size;
+			if (g_map[y][x] == 1)
+				draw_block(start, map.minimap_block_size, 0xFFFFFFFF, game);
 			else
-				draw_block (start, map.block_size, 0x000000FF, cube);
+				draw_block(start, map.minimap_block_size, 0x000000FF, game);
 			x++;
 		}
 		y++;
 	}
+	draw_player(game);
 }
 
-void	draw_player(t_entity player, t_cube *cube)
+void	draw_player(t_game *game)
 {
-	int	player_size;
+	t_player	player;
+	int			player_size;
+	t_map		map;
+	double		x_offset;
 
-	player_size = cube->map.block_size / 8;
-	player.pos[X] -= player_size / 2;
+	map = game->map;
+	x_offset = SCREEN_WIDTH - map.width * map.minimap_block_size;
+	player = game->player;
+	player_size = game->map.minimap_block_size / 2;
+	player.pos[X] *= game->map.minimap_block_size;
+	player.pos[Y] *= game->map.minimap_block_size;
+	player.pos[X] += x_offset - player_size / 2;
 	player.pos[Y] -= player_size / 2;
-	draw_block(player.pos, player_size, player.color, cube);
+	draw_block(player.pos, player_size, player.color, game);
 }
 
-void	draw_block(float start[2], int block_size, uint32_t color, t_cube *cube)
+void	draw_block(double start[2], int block_size, uint32_t color,
+		t_game *game)
 {
 	int	x;
 	int	y;
 
 	y = start[Y];
-	while (y < start[Y] + block_size - 1)
+	while (y < start[Y] + block_size)
 	{
 		x = start[X];
-		while (x < start[X] + block_size - 1)
+		while (x < start[X] + block_size)
 		{
-			put_valid_pixel(cube->image, x, y, color);
+			put_valid_pixel(game->image, x, y, color);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 20:19:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:17:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 # include <math.h>
 # include <errno.h>
 
-# define WIDTH 1024
-# define HEIGHT 512
-# define PI 3.14159
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
+# define MAP_WIDTH 24
+# define MAP_HEIGHT 24
 
 enum e_axis
 {
@@ -37,26 +38,43 @@ typedef struct s_map
 {
 	int			width;
 	int			height;
-	int			block_size;
-	int			*grid;
-	uint32_t	color;
+	int			minimap_block_size;
+	int			current_x;
+	int			current_y;
+	int			grid[MAP_HEIGHT][MAP_WIDTH];
 }				t_map;
 
-typedef struct s_entity
+typedef struct s_player
 {
-	float		pos[2];
-	float		movement_delta[2];
-	float		dir_angle;
+	double		pos[2];
+	double		dir[2];
+	double		plane[2];
 	uint32_t	color;
-}				t_entity;
+}				t_player;
 
-typedef struct s_cube
+typedef struct s_ray
+{
+	double		ray_dir[2];
+	double		camera_x_coordinate;
+	double		distance_to_side[2];
+	double		delta_distance[2];
+	double		perpendicular_wall_distance;
+	uint32_t	wall_color;
+	int			wall_height;
+	int			wall_line_start;
+	int			wall_line_end;
+	int			grid_step[2];
+	int			hit;
+	int			side_hit;
+}				t_ray;
+
+typedef struct s_game
 {
 	mlx_t			*window;
 	mlx_image_t		*image;
 	t_map			map;
-	t_entity		player;
-}				t_cube;
+	t_player		player;
+}					t_game;
 
 typedef struct s_line_info
 {
@@ -67,19 +85,23 @@ typedef struct s_line_info
 	uint32_t		color;
 }					t_line_info;
 
+extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
+
 /*------------draw_elements.c-------------*/
 
 void		draw_loop(void *param);
-void		draw_map(t_cube *cube, uint32_t color, t_map map);
-void		draw_player(t_entity player, t_cube *cube);
-void		draw_block(float start[2], int block_size, uint32_t color,
-				t_cube *cube);
+void		draw_3d_scene(t_game *game);
+void		draw_minimap(t_game *game);
+void		draw_player(t_game *game);
+void		draw_block(double start[2], int block_size, uint32_t color,
+				t_game *game);
 
 /*--------------draw_line.c---------------*/
 
-void		draw_line(float start[2], float end[2], uint32_t color,
-				t_cube *cube);
-t_line_info	set_line_info(float start[2], float end[2], uint32_t color);
+void		draw_vertical_line(t_game *game, int x, t_ray ray);
+void		draw_line(int start[2], int end[2], uint32_t color,
+				t_game *game);
+t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
 void		draw_shallow_line(t_line_info line_info, mlx_image_t *image);
 void		draw_steep_line(t_line_info line_info, mlx_image_t *image);
 
@@ -91,9 +113,7 @@ void		move_player_loop_hook(void *param);
 
 /*----------------raycasting.c-----------------*/
 
-void		draw_rays(t_entity player, t_map map, t_cube *cube);
-t_entity	calculate_vertical_collision_point(t_entity player, t_map map);
-t_entity	calculate_horizontal_collision_point(t_entity player, t_map map);
+void		cast_ray(t_game *game, int x_coordinate);
 
 /*----------------utils.c-----------------*/
 void		put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color);

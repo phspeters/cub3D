@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/16 19:41:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:48:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,79 @@
 
 void	action_hooks(void *param)
 {
-	t_cube	*cube;
+	t_game	*game;
 
-	cube = param;
-	mlx_loop_hook(cube->window, close_loop_hook, cube);
-	mlx_loop_hook(cube->window, move_player_loop_hook, cube);
+	game = param;
+	mlx_loop_hook(game->window, close_loop_hook, game);
+	mlx_loop_hook(game->window, move_player_loop_hook, game);
 }
 
 void	close_loop_hook(void *param)
 {
-	t_cube	*cube;
+	t_game	*game;
 
-	cube = param;
-	if (mlx_is_key_down(cube->window, MLX_KEY_ESCAPE))
-		mlx_close_window(cube->window);
+	game = param;
+	if (mlx_is_key_down(game->window, MLX_KEY_ESCAPE))
+		mlx_close_window(game->window);
 }
 
 void	move_player_loop_hook(void *param)
 {
-	t_cube	*cube;
+	t_game		*game;
+	t_player	*player;
+	double		move_speed;
+	double		rot_speed;
+	double		old_dir_x;
+	double		old_plane_x;
+	double		collision_distance;
 
-	cube = param;
-	if (mlx_is_key_down(cube->window, MLX_KEY_UP))
+	game = param;
+	player = &game->player;
+	move_speed = game->window->delta_time * 5.0;
+	rot_speed = game->window->delta_time * 3.0;
+	collision_distance = 0.4;
+	if (mlx_is_key_down(game->window, MLX_KEY_UP))
 	{
-		cube->player.pos[Y] += cube->player.movement_delta[Y];
-		cube->player.pos[X] += cube->player.movement_delta[X];
+		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] + player->dir[X]
+				* (move_speed + collision_distance))] == 0)
+			player->pos[X] += player->dir[X] * move_speed;
+		if (g_map[(int)(player->pos[Y] + player->dir[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] == 0)
+			player->pos[Y] += player->dir[Y] * move_speed;
 	}
-	if (mlx_is_key_down(cube->window, MLX_KEY_DOWN))
+	if (mlx_is_key_down(game->window, MLX_KEY_DOWN))
 	{
-		cube->player.pos[Y] -= cube->player.movement_delta[Y];
-		cube->player.pos[X] -= cube->player.movement_delta[X];
+		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] - player->dir[X]
+				* (move_speed + collision_distance))] == 0)
+			player->pos[X] -= player->dir[X] * move_speed;
+		if (g_map[(int)(player->pos[Y] - player->dir[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] == 0)
+			player->pos[Y] -= player->dir[Y] * move_speed;
 	}
-	if (mlx_is_key_down(cube->window, MLX_KEY_LEFT))
+	if (mlx_is_key_down(game->window, MLX_KEY_LEFT))
 	{
-		cube->player.dir_angle -= 0.1;
-		if (cube->player.dir_angle < 0)
-			cube->player.dir_angle += 2 * PI;
-		cube->player.movement_delta[X] = cos(cube->player.dir_angle) * 5;
-		cube->player.movement_delta[Y] = sin(cube->player.dir_angle) * 5;
+		old_dir_x = player->dir[X];
+		player->dir[X] = player->dir[X] * cos(rot_speed) - player->dir[Y]
+			* sin(rot_speed);
+		player->dir[Y] = old_dir_x * sin(rot_speed) + player->dir[Y]
+			* cos(rot_speed);
+		old_plane_x = player->plane[X];
+		player->plane[X] = player->plane[X] * cos(rot_speed) - player->plane[Y]
+			* sin(rot_speed);
+		player->plane[Y] = old_plane_x * sin(rot_speed) + player->plane[Y]
+			* cos(rot_speed);
 	}
-	if (mlx_is_key_down(cube->window, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(game->window, MLX_KEY_RIGHT))
 	{
-		cube->player.dir_angle += 0.1;
-		if (cube->player.dir_angle > 2 * PI)
-			cube->player.dir_angle -= 2 * PI;
-		cube->player.movement_delta[X] = cos(cube->player.dir_angle) * 5;
-		cube->player.movement_delta[Y] = sin(cube->player.dir_angle) * 5;
+		old_dir_x = player->dir[X];
+		player->dir[X] = player->dir[X] * cos(-rot_speed) - player->dir[Y]
+			* sin(-rot_speed);
+		player->dir[Y] = old_dir_x * sin(-rot_speed) + player->dir[Y]
+			* cos(-rot_speed);
+		old_plane_x = player->plane[X];
+		player->plane[X] = player->plane[X] * cos(-rot_speed) - player->plane[Y]
+			* sin(-rot_speed);
+		player->plane[Y] = old_plane_x * sin(-rot_speed) + player->plane[Y]
+			* cos(-rot_speed);
 	}
 }
