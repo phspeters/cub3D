@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/16 20:20:29 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/18 21:21:07 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FILES		= 	main.c \
 				draw_elements.c \
 				draw_line.c \
 				hooks.c \
+				player.c \
 				raycasting.c \
 				utils.c
 
@@ -60,6 +61,6 @@ val: all
 	valgrind --leak-check=full --suppressions=MLX42_suppressions ./$(EXE) maps/default.cub
 
 norm:
-	@norminette $(SRCS_PATH) include $(LIBFT)
+	@norminette src include $(LIBFT)
 
 .PHONY: all, clean, fclean, re, norm, val

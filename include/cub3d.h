@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/18 19:17:01 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:20:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ typedef struct s_map
 	int			width;
 	int			height;
 	int			minimap_block_size;
-	int			current_x;
-	int			current_y;
+	int			current[2];
 	int			grid[MAP_HEIGHT][MAP_WIDTH];
 }				t_map;
 
@@ -111,9 +110,25 @@ void		action_hooks(void *param);
 void		close_loop_hook(void *param);
 void		move_player_loop_hook(void *param);
 
+/*player.c*/
+
+void		move_player(t_game *game, t_player *player, double move_speed,
+				double collision_distance);
+void		rotate_player_left(t_game *game, t_player *player,
+				double rot_speed);
+void		rotate_player_right(t_game *game, t_player *player,
+				double rot_speed);
+
 /*----------------raycasting.c-----------------*/
 
 void		cast_ray(t_game *game, int x_coordinate);
+void		initialize_ray_and_player(t_game *game, t_ray *ray,
+				int x_coordinate);
+void		calculate_step_and_initial_side_distance(t_game *game,
+				t_player *player, t_ray *ray);
+void		perform_dda(t_map *map, t_ray *ray);
+void		calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
+				int x_coordinate);
 
 /*----------------utils.c-----------------*/
 void		put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color);
