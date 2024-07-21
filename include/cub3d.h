@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 13:08:08 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:23:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void		move_player_loop_hook(void *param);
 
 void		load_map_params(t_game *game);
 void		init_params(t_game *game);
-void		load_textures(t_map *map);
+void		load_textures(t_game *game);
 
 /*----------------player.c----------------*/
 
