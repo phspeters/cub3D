@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_elements.c                                    :+:      :+:    :+:   */
+/*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/18 20:45:24 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/07/21 09:23:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	draw_loop(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	mlx_delete_image(game->window, game->image);
-	game->image = mlx_new_image(game->window, SCREEN_WIDTH, SCREEN_HEIGHT);
-	mlx_image_to_window(game->window, game->image, 0, 0);
-	draw_3d_scene(game);
-	draw_minimap(game);
-}
-
-void	draw_3d_scene(t_game *game)
-{
-	int	x_coordinate;
-
-	x_coordinate = 0;
-	while (x_coordinate <= SCREEN_WIDTH)
-	{
-		cast_ray(game, x_coordinate);
-		x_coordinate++;
-	}
-}
 
 void	draw_minimap(t_game *game)
 {

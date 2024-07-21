@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/20 21:59:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/21 09:46:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,6 @@ enum e_axis
 	Y
 };
 
-typedef struct s_map
-{
-	mlx_texture_t	*north_texture;
-	mlx_texture_t	*south_texture;
-	mlx_texture_t	*west_texture;
-	mlx_texture_t	*east_texture;
-	uint32_t		ceiling;
-	uint32_t		floor;
-	int				grid[MAP_HEIGHT][MAP_WIDTH];
-	int				current[2];
-	int				width;
-	int				height;
-	int				minimap_block_size;
-}				t_map;
-
-typedef struct s_player
-{
-	double		pos[2];
-	double		dir[2];
-	double		plane[2];
-	uint32_t	color;
-}				t_player;
-
 typedef struct s_ray
 {
 	double			ray_dir[2];
@@ -73,6 +50,37 @@ typedef struct s_ray
 	int				side_hit;
 }				t_ray;
 
+typedef struct s_texture_info
+{
+	int		texture_coord[2];
+	double	step;
+	double	texture_pos;
+	double	wall_x;
+}			t_texture_info;
+
+typedef struct s_player
+{
+	double		pos[2];
+	double		dir[2];
+	double		plane[2];
+	uint32_t	color;
+}				t_player;
+
+typedef struct s_map
+{
+	mlx_texture_t	*north_texture;
+	mlx_texture_t	*south_texture;
+	mlx_texture_t	*west_texture;
+	mlx_texture_t	*east_texture;
+	uint32_t		ceiling;
+	uint32_t		floor;
+	int				grid[MAP_HEIGHT][MAP_WIDTH];
+	int				current[2];
+	int				width;
+	int				height;
+	int				minimap_block_size;
+}				t_map;
+
 typedef struct s_game
 {
 	mlx_t			*window;
@@ -81,34 +89,23 @@ typedef struct s_game
 	t_player		player;
 }					t_game;
 
-typedef struct s_line_info
-{
-	int				start[2];
-	int				end[2];
-	int				delta[2];
-	unsigned int	abs[2];
-	uint32_t		color;
-}					t_line_info;
-
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
 
-/*------------draw_elements.c-------------*/
+/*------------draw_minimap.c-------------*/
 
-void		draw_loop(void *param);
-void		draw_3d_scene(t_game *game);
 void		draw_minimap(t_game *game);
 void		draw_player(t_game *game);
 void		draw_block(double start[2], int block_size, uint32_t color,
 				t_game *game);
 
-/*--------------draw_line.c---------------*/
+/*--------------draw_scene.c---------------*/
 
+void		draw_loop(void *param);
+void		draw_3d_scene(t_game *game);
 void		draw_vertical_line(t_game *game, int x, t_ray ray);
-void		draw_line(int start[2], int end[2], uint32_t color,
-				t_game *game);
-t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
-void		draw_shallow_line(t_line_info line_info, mlx_image_t *image);
-void		draw_steep_line(t_line_info line_info, mlx_image_t *image);
+void		calculate_texture_coordinates(t_game *game, t_ray *ray,
+				t_texture_info *texture_info);
+uint32_t	get_texel_color(mlx_texture_t *texture, int x, int y);
 
 /*-----------------hooks.c-----------------*/
 
