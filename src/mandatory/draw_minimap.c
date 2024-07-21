@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 09:23:38 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:03:35 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	draw_player(t_game *game)
 	player.pos[Y] *= game->map.minimap_block_size;
 	player.pos[X] += x_offset - player_size / 2;
 	player.pos[Y] -= player_size / 2;
-	draw_block(player.pos, player_size, player.color, game);
+	draw_block(player.pos, player_size, player.minimap_color, game);
 }
 
 void	draw_block(double start[2], int block_size, uint32_t color,

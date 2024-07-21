@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/18 18:18:12 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:52:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,25 @@ void	put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 		mlx_put_pixel(img, x, y, color);
 }
 
-void	move_coordinate(int *coordinate, int direction)
+void	handle_mlx_error(t_game *game)
 {
-	if (direction < 0)
-		*coordinate -= 1;
+	(void)game;
+	ft_fprintf(STDERR_FILENO, "%s.\n", mlx_strerror(mlx_errno));
+	exit(mlx_errno);
+}
+
+void	handle_error(char *message)
+{
+	if (errno)
+	{
+		ft_fprintf(STDERR_FILENO, "Error\n");
+		perror(message);
+		exit(errno);
+	}
 	else
-		*coordinate += 1;
+	{
+		ft_fprintf(STDERR_FILENO, "Error\n");
+		ft_fprintf(STDERR_FILENO, "%s.\n", message);
+		exit(EXIT_FAILURE);
+	}
 }

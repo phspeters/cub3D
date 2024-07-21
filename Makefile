@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/21 09:26:00 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/21 13:08:42 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
 				draw_minimap.c \
 				draw_scene.c \
+				game.c \
 				hooks.c \
+				load_params.c \
 				player.c \
 				raycasting.c \
 				utils.c

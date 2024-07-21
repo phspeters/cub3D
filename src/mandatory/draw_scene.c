@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 09:45:08 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:17:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	draw_loop(void *param)
 	game = (t_game *)param;
 	mlx_delete_image(game->window, game->image);
 	game->image = mlx_new_image(game->window, SCREEN_WIDTH, SCREEN_HEIGHT);
-	mlx_image_to_window(game->window, game->image, 0, 0);
+	if (!game->image)
+		handle_mlx_error(game);
+	if (mlx_image_to_window(game->window, game->image, 0, 0) == -1)
+		handle_mlx_error(game);
 	draw_3d_scene(game);
 	draw_minimap(game);
 }
