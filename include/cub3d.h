@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/18 21:20:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:59:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,17 @@ enum e_axis
 
 typedef struct s_map
 {
-	int			width;
-	int			height;
-	int			minimap_block_size;
-	int			current[2];
-	int			grid[MAP_HEIGHT][MAP_WIDTH];
+	mlx_texture_t	*north_texture;
+	mlx_texture_t	*south_texture;
+	mlx_texture_t	*west_texture;
+	mlx_texture_t	*east_texture;
+	uint32_t		ceiling;
+	uint32_t		floor;
+	int				grid[MAP_HEIGHT][MAP_WIDTH];
+	int				current[2];
+	int				width;
+	int				height;
+	int				minimap_block_size;
 }				t_map;
 
 typedef struct s_player
@@ -53,18 +59,18 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double		ray_dir[2];
-	double		camera_x_coordinate;
-	double		distance_to_side[2];
-	double		delta_distance[2];
-	double		perpendicular_wall_distance;
-	uint32_t	wall_color;
-	int			wall_height;
-	int			wall_line_start;
-	int			wall_line_end;
-	int			grid_step[2];
-	int			hit;
-	int			side_hit;
+	double			ray_dir[2];
+	double			camera_x_coordinate;
+	double			distance_to_side[2];
+	double			delta_distance[2];
+	double			perpendicular_wall_distance;
+	mlx_texture_t	*wall_texture;
+	int				wall_height;
+	int				wall_line_start;
+	int				wall_line_end;
+	int				grid_step[2];
+	int				hit;
+	int				side_hit;
 }				t_ray;
 
 typedef struct s_game
