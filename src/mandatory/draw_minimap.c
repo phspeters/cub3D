@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 13:03:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:50:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ void	draw_minimap(t_game *game)
 
 	map = game->map;
 	x_offset = SCREEN_WIDTH - map.width * map.minimap_block_size;
-	y = 0;
-	while (y < map.height)
+	y = -1;
+	while (++y < map.height)
 	{
-		x = 0;
-		while (x < map.width)
+		x = -1;
+		while (++x < map.width)
 		{
 			start[X] = x * map.minimap_block_size + x_offset;
 			start[Y] = y * map.minimap_block_size;
 			if (g_map[y][x] == 1)
 				draw_block(start, map.minimap_block_size, 0xFFFFFFFF, game);
+			else if (g_map[y][x] == 'D' || g_map[y][x] == - 'D')
+				draw_block(start, map.minimap_block_size, 0x0000FFFF, game);
 			else
 				draw_block(start, map.minimap_block_size, 0x000000FF, game);
-			x++;
 		}
-		y++;
 	}
 	draw_player(game);
 }
