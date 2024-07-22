@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 17:04:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:24:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		end_game(t_game *game);
 
 void		close_loop_hook(void *param);
 void		move_player_loop_hook(void *param);
-void		player_action_loop_hook(void *param);
+void		player_action_loop_hook(mlx_key_data_t keydata, void *param);
 
 /*-------------load_params.c--------------*/
 

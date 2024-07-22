@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 18:30:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:39:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	move_player_loop_hook(void *param)
 	game = param;
 	player = &game->player;
 	move_speed = game->window->delta_time * 5.0;
-	rot_speed = game->window->delta_time * 3.0;
+	rot_speed = game->window->delta_time * 2.5;
 	collision_distance = move_speed * 5;
 	move_player_forward_backward(game, player, move_speed, collision_distance);
 	strafe_player_left_right(game, player, move_speed, collision_distance);
@@ -40,7 +40,7 @@ void	move_player_loop_hook(void *param)
 	mouse_rotate_player(game, player, rot_speed);
 }
 
-void	player_action_loop_hook(void *param)
+void	player_action_loop_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game		*game;
 	t_map		*map;
@@ -49,9 +49,10 @@ void	player_action_loop_hook(void *param)
 
 	game = param;
 	map = &game->map;
+	(void)(map);
 	cur[X] = (int)game->player.pos[X];
 	cur[Y] = (int)game->player.pos[Y];
-	if (mlx_is_key_down(game->window, MLX_KEY_SPACE))
+	if ((keydata.key == MLX_KEY_SPACE) && (keydata.action == MLX_PRESS))
 	{
 		offset[X] = -2;
 		while (++offset[X] < 2)
