@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 12:56:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:53:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	move_player_loop_hook(void *param)
 	collision_distance = move_speed * 5;
 	move_player_forward_backward(game, player, move_speed, collision_distance);
 	strafe_player_left_right(game, player, move_speed, collision_distance);
-	rotate_player_right(game, player, rot_speed);
-	rotate_player_left(game, player, rot_speed);
+	keyboard_rotate_player(game, player, rot_speed);
+	mouse_rotate_player(game, player, rot_speed);
 }

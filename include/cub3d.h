@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 14:23:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:11:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ enum e_axis
 	Y
 };
 
+enum e_direction
+{
+	RIGHT = -1,
+	LEFT = 1
+};
+
 typedef struct s_ray
 {
 	double			ray_dir[2];
@@ -48,7 +54,7 @@ typedef struct s_ray
 	int				grid_step[2];
 	int				hit;
 	int				side_hit;
-}				t_ray;
+}					t_ray;
 
 typedef struct s_texture_info
 {
@@ -64,6 +70,7 @@ typedef struct s_player
 	double		dir[2];
 	double		plane[2];
 	uint32_t	minimap_color;
+	uint32_t	is_mouse_active;
 }				t_player;
 
 typedef struct s_map
@@ -79,7 +86,7 @@ typedef struct s_map
 	int				width;
 	int				height;
 	int				minimap_block_size;
-}				t_map;
+}					t_map;
 
 typedef struct s_game
 {
@@ -124,16 +131,18 @@ void		load_map_params(t_game *game);
 void		init_params(t_game *game);
 void		load_textures(t_game *game);
 
-/*----------------player.c----------------*/
+/*-----------player_movement.c------------*/
 
 void		move_player_forward_backward(t_game *game, t_player *player,
 				double move_speed, double collision_distance);
 void		strafe_player_left_right(t_game *game, t_player *player,
 				double move_speed, double collision_distance);
-void		rotate_player_left(t_game *game, t_player *player,
+void		keyboard_rotate_player(t_game *game, t_player *player,
 				double rot_speed);
-void		rotate_player_right(t_game *game, t_player *player,
+void		mouse_rotate_player(t_game *game, t_player *player,
 				double rot_speed);
+void		rotate_direction_and_plane(t_player *player, double rot_speed,
+				int direction);
 
 /*--------------raycasting.c--------------*/
 

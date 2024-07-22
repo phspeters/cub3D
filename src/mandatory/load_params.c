@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 13:16:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:33:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_params(t_game *game)
 	game->player.plane[X] = 0;
 	game->player.plane[Y] = 0.66;
 	game->player.minimap_color = 0xFF0000FF;
+	game->player.is_mouse_active = 0;
 }
 
 void	load_textures(t_game *game)
