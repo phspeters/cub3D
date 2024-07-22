@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 09:21:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:57:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	perform_dda(t_map *map, t_ray *ray)
 			ray->side_hit = 1;
 		}
 		if (g_map[map->current[Y]][map->current[X]] > 0)
-			ray->hit = 1;
+			ray->hit = g_map[map->current[Y]][map->current[X]];
 	}
 }
 
@@ -115,7 +115,9 @@ void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 	ray->wall_line_end = ray->wall_height / 2 + SCREEN_HEIGHT / 2;
 	if (ray->wall_line_end >= SCREEN_HEIGHT)
 		ray->wall_line_end = SCREEN_HEIGHT - 1;
-	if (ray->side_hit == 1 && ray->ray_dir[Y] < 0)
+	if (ray->hit == 'D')
+		ray->wall_texture = game->map.door_texture;
+	else if (ray->side_hit == 1 && ray->ray_dir[Y] < 0)
 		ray->wall_texture = game->map.north_texture;
 	else if (ray->side_hit == 1 && ray->ray_dir[Y] > 0)
 		ray->wall_texture = game->map.south_texture;

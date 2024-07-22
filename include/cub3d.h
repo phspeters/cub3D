@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 16:11:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:04:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_map
 	mlx_texture_t	*south_texture;
 	mlx_texture_t	*west_texture;
 	mlx_texture_t	*east_texture;
+	mlx_texture_t	*door_texture;
 	uint32_t		ceiling;
 	uint32_t		floor;
 	int				grid[MAP_HEIGHT][MAP_WIDTH];
@@ -124,6 +125,7 @@ void		end_game(t_game *game);
 
 void		close_loop_hook(void *param);
 void		move_player_loop_hook(void *param);
+void		player_action_loop_hook(void *param);
 
 /*-------------load_params.c--------------*/
 

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 13:14:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:04:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	run_game_loop(t_game *game)
 	if (!mlx_loop_hook(game->window, close_loop_hook, game))
 		handle_mlx_error(game);
 	if (!mlx_loop_hook(game->window, move_player_loop_hook, game))
+		handle_mlx_error(game);
+	if (!mlx_loop_hook(game->window, player_action_loop_hook, game))
 		handle_mlx_error(game);
 	mlx_loop(game->window);
 }

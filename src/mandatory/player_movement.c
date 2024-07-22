@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:19:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 15:55:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:21:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ void	move_player_forward_backward(t_game *game, t_player *player,
 	if (mlx_is_key_down(game->window, MLX_KEY_W))
 	{
 		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] + player->dir[X]
-			* (move_speed + collision_distance))] == 0)
+			* (move_speed + collision_distance))] <= 0)
 			player->pos[X] += player->dir[X] * move_speed;
 		if (g_map[(int)(player->pos[Y] + player->dir[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] == 0)
+					+ collision_distance))][(int)player->pos[X]] <= 0)
 			player->pos[Y] += player->dir[Y] * move_speed;
 	}
 	if (mlx_is_key_down(game->window, MLX_KEY_S))
 	{
 		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] - player->dir[X]
-			* (move_speed + collision_distance))] == 0)
+			* (move_speed + collision_distance))] <= 0)
 			player->pos[X] -= player->dir[X] * move_speed;
 		if (g_map[(int)(player->pos[Y] - player->dir[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] == 0)
+					+ collision_distance))][(int)player->pos[X]] <= 0)
 			player->pos[Y] -= player->dir[Y] * move_speed;
 	}
 }
@@ -41,19 +41,19 @@ void	strafe_player_left_right(t_game *game, t_player *player,
 	if (mlx_is_key_down(game->window, MLX_KEY_D))
 	{
 		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] + player->plane[X]
-			* (move_speed + collision_distance))] == 0)
+			* (move_speed + collision_distance))] <= 0)
 			player->pos[X] += player->plane[X] * move_speed;
 		if (g_map[(int)(player->pos[Y] + player->plane[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] == 0)
+					+ collision_distance))][(int)player->pos[X]] <= 0)
 			player->pos[Y] += player->plane[Y] * move_speed;
 	}
 	if (mlx_is_key_down(game->window, MLX_KEY_A))
 	{
 		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] - player->plane[X]
-			* (move_speed + collision_distance))] == 0)
+			* (move_speed + collision_distance))] <= 0)
 			player->pos[X] -= player->plane[X] * move_speed;
 		if (g_map[(int)(player->pos[Y] - player->plane[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] == 0)
+					+ collision_distance))][(int)player->pos[X]] <= 0)
 			player->pos[Y] -= player->plane[Y] * move_speed;
 	}
 }

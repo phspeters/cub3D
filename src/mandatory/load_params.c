@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 15:33:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:00:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	load_textures(t_game *game)
 		handle_mlx_error(game);
 	map->east_texture = mlx_load_png("./assets/greystone.png");
 	if (!map->east_texture)
+		handle_mlx_error(game);
+	map->door_texture = mlx_load_png("./assets/eagle.png");
+	if (!map->door_texture)
 		handle_mlx_error(game);
 	map->ceiling = 0x87CEEBFF;
 	map->floor = 0xC0C0C0FF;
