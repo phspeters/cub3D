@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 20:24:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:03:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ enum e_axis
 
 enum e_direction
 {
-	RIGHT = -1,
-	LEFT = 1
+	RIGHT = 1,
+	LEFT = -1
 };
 
 typedef struct s_ray
@@ -98,6 +98,7 @@ typedef struct s_game
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
+void		draw_line(int start[2], int end[2], uint32_t color, t_game *cube);
 
 /*-------------draw_minimap.c-------------*/
 

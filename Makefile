@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/22 15:53:26 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/23 17:33:21 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FILES		= 	main.c \
 				load_params.c \
 				player_movement.c \
 				raycasting.c \
-				utils.c
+				utils.c \
+				draw_line.c
 
 VPATH 		= 	./src:./src/mandatory
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)

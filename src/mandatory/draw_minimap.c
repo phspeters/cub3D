@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 20:50:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:01:36 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ void	draw_player(t_game *game)
 	player.pos[X] += x_offset - player_size / 2;
 	player.pos[Y] -= player_size / 2;
 	draw_block(player.pos, player_size, player.minimap_color, game);
+	int	dir[2];
+	int	pos[2];
+	int	plane[2];
+	dir[X] = (int)(player.pos[X] + player.dir[X] * game->map.minimap_block_size * 2);
+	dir[Y] = (int)(player.pos[Y] + player.dir[Y] * game->map.minimap_block_size * 2);
+	pos[X] = (int)player.pos[X];
+	pos[Y] = (int)player.pos[Y];
+	plane[X] = (int)(player.pos[X] + player.plane[X] * game->map.minimap_block_size * 2);
+	plane[Y] = (int)(player.pos[Y] + player.plane[Y] * game->map.minimap_block_size * 2);
+	draw_line(pos, dir, 0x00FF00FF, game);
+	draw_line(pos, plane, 0x0000FFFF, game);
 }
 
 void	draw_block(double start[2], int block_size, uint32_t color,
