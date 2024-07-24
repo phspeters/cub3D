@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:13:01 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:28:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 	if (ray->wall_line_end >= game->screen_size[Y])
 		ray->wall_line_end = game->screen_size[Y] - 1;
 	if (ray->hit == 'D')
-		ray->wall_texture = game->map.door_texture;
+		ray->wall_texture = game->map.textures[DOOR];
 	else if (ray->side_hit == 1 && ray->ray_dir[Y] < 0)
-		ray->wall_texture = game->map.north_texture;
+		ray->wall_texture = game->map.textures[NORTH];
 	else if (ray->side_hit == 1 && ray->ray_dir[Y] > 0)
-		ray->wall_texture = game->map.south_texture;
+		ray->wall_texture = game->map.textures[SOUTH];
 	else if (ray->side_hit == 0 && ray->ray_dir[X] > 0)
-		ray->wall_texture = game->map.east_texture;
+		ray->wall_texture = game->map.textures[EAST];
 	else if (ray->side_hit == 0 && ray->ray_dir[X] < 0)
-		ray->wall_texture = game->map.west_texture;
+		ray->wall_texture = game->map.textures[WEST];
 	draw_vertical_line(game, x_coordinate, *ray);
 }

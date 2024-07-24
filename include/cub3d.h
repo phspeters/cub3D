@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:19:40 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:28:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ enum e_direction
 	LEFT = -1
 };
 
+enum e_texture_type
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	DOOR
+};
+
 typedef struct s_line_info
 {
 	int				start[2];
@@ -50,9 +59,9 @@ typedef struct s_line_info
 typedef struct s_ray
 {
 	double			ray_dir[2];
-	double			camera_x_coordinate;
 	double			distance_to_side[2];
 	double			delta_distance[2];
+	double			camera_x_coordinate;
 	double			perpendicular_wall_distance;
 	mlx_texture_t	*wall_texture;
 	int				wall_height;
@@ -82,11 +91,8 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	mlx_texture_t	*north_texture;
-	mlx_texture_t	*south_texture;
-	mlx_texture_t	*west_texture;
-	mlx_texture_t	*east_texture;
-	mlx_texture_t	*door_texture;
+	char			*texture_path[5];
+	mlx_texture_t	*textures[5];
 	uint32_t		ceiling;
 	uint32_t		floor;
 	int				grid[MAP_HEIGHT][MAP_WIDTH];

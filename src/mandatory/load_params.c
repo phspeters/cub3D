@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:24:40 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:28:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ void	load_game_params(t_game *game)
 
 void	load_map_and_screen_params(t_game *game)
 {
-	//int		screen[2];
+	int		screen[2];
 
 	game->map.width = MAP_WIDTH;
 	game->map.height = MAP_HEIGHT;
 	game->map.minimap_block_size = 8;
-	//mlx_get_monitor_size(0, &screen[X], &screen[Y]);
-	//printf("screen size: %d %d\n", screen[X], screen[Y]);
-	//game->screen_size[X] = screen[X];
-	//game->screen_size[Y] = screen[Y];
-	game->screen_size[X] = 1280;
-	game->screen_size[Y] = 720;
+	mlx_get_monitor_size(0, &screen[X], &screen[Y]);
+	game->screen_size[X] = screen[X];
+	game->screen_size[Y] = screen[Y];
+	if (!game->screen_size[X] || !game->screen_size[Y])
+	{
+		game->screen_size[X] = 1280;
+		game->screen_size[Y] = 720;
+	}
 }
 
 void	load_player_params(t_game *game)
@@ -44,7 +46,7 @@ void	load_player_params(t_game *game)
 	game->player.dir[Y] = 0;
 	game->player.plane[X] = 0;
 	game->player.plane[Y] = 0;
-	set_player_start_dir(game, 'W');
+	set_player_start_dir(game, 'N');
 }
 
 void	set_player_start_dir(t_game *game, int start_dir)
@@ -62,12 +64,12 @@ void	set_player_start_dir(t_game *game, int start_dir)
 	else if (start_dir == 'S')
 	{
 		game->player.dir[Y] = 1;
-		game->player.plane[X] = 0.66;
+		game->player.plane[X] = -0.66;
 	}
 	else if (start_dir == 'N')
 	{
 		game->player.dir[Y] = -1;
-		game->player.plane[X] = -0.66;
+		game->player.plane[X] = 0.66;
 	}
 }
 
@@ -76,20 +78,20 @@ void	load_textures(t_game *game)
 	t_map	*map;
 
 	map = &game->map;
-	map->north_texture = mlx_load_png("./assets/redbrick.png");
-	if (!map->north_texture)
+	map->textures[NORTH] = mlx_load_png("./assets/redbrick.png");
+	if (!map->textures[NORTH])
 		handle_mlx_error(game);
-	map->south_texture = mlx_load_png("./assets/colorstone.png");
-	if (!map->south_texture)
+	map->textures[SOUTH] = mlx_load_png("./assets/colorstone.png");
+	if (!map->textures[SOUTH])
 		handle_mlx_error(game);
-	map->west_texture = mlx_load_png("./assets/purplestone.png");
-	if (!map->west_texture)
+	map->textures[WEST] = mlx_load_png("./assets/purplestone.png");
+	if (!map->textures[WEST])
 		handle_mlx_error(game);
-	map->east_texture = mlx_load_png("./assets/greystone.png");
-	if (!map->east_texture)
+	map->textures[EAST] = mlx_load_png("./assets/greystone.png");
+	if (!map->textures[EAST])
 		handle_mlx_error(game);
-	map->door_texture = mlx_load_png("./assets/eagle.png");
-	if (!map->door_texture)
+	map->textures[DOOR] = mlx_load_png("./assets/eagle.png");
+	if (!map->textures[DOOR])
 		handle_mlx_error(game);
 	map->ceiling = 0x87CEEBFF;
 	map->floor = 0xC0C0C0FF;
