@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 15:28:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:03:14 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
 
 enum e_axis
 {

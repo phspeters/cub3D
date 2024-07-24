@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 15:28:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:02:36 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,12 @@ void	load_game_params(t_game *game)
 
 void	load_map_and_screen_params(t_game *game)
 {
-	int		screen[2];
-
-	game->map.width = MAP_WIDTH;
-	game->map.height = MAP_HEIGHT;
 	game->map.minimap_block_size = 8;
-	mlx_get_monitor_size(0, &screen[X], &screen[Y]);
-	game->screen_size[X] = screen[X];
-	game->screen_size[Y] = screen[Y];
+	mlx_get_monitor_size(0, &game->screen_size[X], &game->screen_size[Y]);
 	if (!game->screen_size[X] || !game->screen_size[Y])
 	{
-		game->screen_size[X] = 1280;
-		game->screen_size[Y] = 720;
+		game->screen_size[X] = SCREEN_WIDTH;
+		game->screen_size[Y] = SCREEN_HEIGHT;
 	}
 }
 
