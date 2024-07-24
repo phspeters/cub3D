@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:14:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:04:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	draw_loop(void *param)
 		handle_mlx_error(game);
 	draw_3d_scene(game);
 	draw_minimap(game);
+	draw_player_on_minimap(game);
 }
 
 void	draw_3d_scene(t_game *game)

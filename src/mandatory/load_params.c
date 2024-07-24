@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 18:56:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:05:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	load_player_params(t_game *game)
 {
 	game->player.pos[X] = 22;
 	game->player.pos[Y] = 12;
-	game->player.minimap_color = 0xFF0000FF;
 	game->player.is_mouse_active = 0;
 	game->player.dir[X] = 0;
 	game->player.dir[Y] = 0;

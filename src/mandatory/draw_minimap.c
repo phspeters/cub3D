@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:10:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:08:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,51 @@
 void	draw_minimap(t_game *game)
 {
 	t_map	map;
-	int		x;
-	int		y;
-	double	start[2];
+	int		counter[2];
+	int		start[2];
 	double	x_offset;
 
 	map = game->map;
-	x_offset = game->screen_size[X] - map.width * map.minimap_block_size;
-	y = -1;
-	while (++y < map.height)
+	x_offset = game->screen_size[X] - MINIMAP_SIZE * map.minimap_block_size;
+	start[X] = (int)(game->player.pos[X]) - MINIMAP_SIZE / 2;
+	start[Y] = (int)(game->player.pos[Y]) - MINIMAP_SIZE / 2;
+	counter[Y] = 0;
+	while (counter[Y] < MINIMAP_SIZE)
 	{
-		x = -1;
-		while (++x < map.width)
+		counter[X] = 0;
+		while (counter[X] < MINIMAP_SIZE)
 		{
-			start[X] = x * map.minimap_block_size + x_offset;
-			start[Y] = y * map.minimap_block_size;
-			if (g_map[y][x] == 1)
-				draw_block(start, map.minimap_block_size, 0xFFFFFFFF, game);
-			else if (g_map[y][x] == 'D' || g_map[y][x] == - 'D')
-				draw_block(start, map.minimap_block_size, 0x0000FFFF, game);
-			else
-				draw_block(start, map.minimap_block_size, 0x000000FF, game);
+			draw_minimap_block(start, counter, x_offset, game);
+			counter[X]++;
 		}
+		counter[Y]++;
 	}
-	draw_player(game);
 }
 
-void	draw_player(t_game *game)
+void	draw_minimap_block(int start[2], int counter[2], double x_offset,
+		t_game *game)
 {
-	t_player	player;
-	double		x_offset;
-	int			minimap_scale;
-	int			dir_end[2];
-	int			plane[2];
+	t_map	map;
+	double	block_start[2];
 
-	player = game->player;
-	minimap_scale = game->map.minimap_block_size;
-	x_offset = game->screen_size[X] - game->map.width * minimap_scale;
-	player.pos[X] = (player.pos[X] - player.dir[X]) * minimap_scale + x_offset;
-	player.pos[Y] = (player.pos[Y] - player.dir[Y]) * minimap_scale;
-	dir_end[X] = (int)(player.pos[X] + player.dir[X] * minimap_scale);
-	dir_end[Y] = (int)(player.pos[Y] + player.dir[Y] * minimap_scale);
-	plane[X] = (int)(player.pos[X] + player.plane[X] * minimap_scale / 2);
-	plane[Y] = (int)(player.pos[Y] + player.plane[Y] * minimap_scale / 2);
-	draw_line(plane, dir_end, player.minimap_color, game);
-	plane[X] = (int)(player.pos[X] - player.plane[X] * minimap_scale / 2);
-	plane[Y] = (int)(player.pos[Y] - player.plane[Y] * minimap_scale / 2);
-	draw_line(plane, dir_end, player.minimap_color, game);
+	map = game->map;
+	map.current[X] = start[X] + counter[X];
+	map.current[Y] = start[Y] + counter[Y];
+	block_start[X] = counter[X] * map.minimap_block_size + x_offset;
+	block_start[Y] = counter[Y] * map.minimap_block_size;
+	if (map.current[X] >= 0 && map.current[X] < map.width && map.current[Y] >= 0
+		&& map.current[Y] < map.height)
+	{
+		if (g_map[map.current[Y]][map.current[X]] == 1)
+			draw_block(block_start, map.minimap_block_size, WALL_COLOR, game);
+		else if (g_map[map.current[Y]][map.current[X]] == 'D'
+			|| g_map[map.current[Y]][map.current[X]] == - 'D')
+			draw_block(block_start, map.minimap_block_size, DOOR_COLOR, game);
+		else
+			draw_block(block_start, map.minimap_block_size, FLOOR_COLOR, game);
+	}
+	else
+		draw_block(block_start, map.minimap_block_size, WALL_COLOR, game);
 }
 
 void	draw_block(double start[2], int block_size, uint32_t color,
@@ -81,4 +79,26 @@ void	draw_block(double start[2], int block_size, uint32_t color,
 		}
 		y++;
 	}
+}
+
+void	draw_player_on_minimap(t_game *game)
+{
+	t_player	player;
+	int			minimap_scale;
+	int			dir_end[2];
+	int			plane[2];
+	double		offset[2];
+
+	player = game->player;
+	minimap_scale = game->map.minimap_block_size;
+	offset[X] = game->screen_size[X] - (MINIMAP_SIZE * minimap_scale) / 2;
+	offset[Y] = (MINIMAP_SIZE * minimap_scale) / 2;
+	dir_end[X] = (int)(offset[X] + player.dir[X] * minimap_scale);
+	dir_end[Y] = (int)(offset[Y] + player.dir[Y] * minimap_scale);
+	plane[X] = (int)(offset[X] + player.plane[X] * minimap_scale / 2);
+	plane[Y] = (int)(offset[Y] + player.plane[Y] * minimap_scale / 2);
+	draw_line(plane, dir_end, PLAYER_COLOR, game);
+	plane[X] = (int)(offset[X] - player.plane[X] * minimap_scale / 2);
+	plane[Y] = (int)(offset[Y] - player.plane[Y] * minimap_scale / 2);
+	draw_line(plane, dir_end, PLAYER_COLOR, game);
 }

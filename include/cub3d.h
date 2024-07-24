@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 17:03:14 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:07:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define MAP_HEIGHT 24
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
+# define MINIMAP_SIZE 25
 
 enum e_axis
 {
@@ -47,6 +48,14 @@ enum e_texture_type
 	WEST,
 	EAST,
 	DOOR
+};
+
+enum e_minimap_colors
+{
+	WALL_COLOR = 0xFFFFFFFF,
+	FLOOR_COLOR = 0x000000FF,
+	DOOR_COLOR = 0x0000FFFF,
+	PLAYER_COLOR = 0xFF0000FF
 };
 
 typedef struct s_line_info
@@ -87,7 +96,6 @@ typedef struct s_player
 	double		pos[2];
 	double		dir[2];
 	double		plane[2];
-	uint32_t	minimap_color;
 	uint32_t	is_mouse_active;
 }				t_player;
 
@@ -126,9 +134,11 @@ void		move_coordinate(int *coordinate, int direction);
 /*-------------draw_minimap.c-------------*/
 
 void		draw_minimap(t_game *game);
-void		draw_player(t_game *game);
+void		draw_minimap_block(int start[2], int counter[2], double x_offset,
+				t_game *game);
 void		draw_block(double start[2], int block_size, uint32_t color,
 				t_game *game);
+void		draw_player_on_minimap(t_game *game);
 
 /*--------------draw_scene.c--------------*/
 
