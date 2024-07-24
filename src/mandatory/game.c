@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 20:24:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:20:36 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	start_game(t_game *game)
 {
-	game->window = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "Cube3D", false);
+	game->window = mlx_init(game->screen_size[X], game->screen_size[Y],
+			"Cube3D", false);
 	if (!game->window)
 		handle_mlx_error(game);
-	game->image = mlx_new_image(game->window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	game->image = mlx_new_image(game->window, game->screen_size[X],
+			game->screen_size[Y]);
 	if (!game->image)
 		handle_mlx_error(game);
 	if (mlx_image_to_window(game->window, game->image, 0, 0) == -1)

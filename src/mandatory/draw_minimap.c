@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 18:01:36 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:10:35 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	draw_minimap(t_game *game)
 	double	x_offset;
 
 	map = game->map;
-	x_offset = SCREEN_WIDTH - map.width * map.minimap_block_size;
+	x_offset = game->screen_size[X] - map.width * map.minimap_block_size;
 	y = -1;
 	while (++y < map.height)
 	{
@@ -44,30 +44,24 @@ void	draw_minimap(t_game *game)
 void	draw_player(t_game *game)
 {
 	t_player	player;
-	int			player_size;
-	t_map		map;
 	double		x_offset;
+	int			minimap_scale;
+	int			dir_end[2];
+	int			plane[2];
 
-	map = game->map;
-	x_offset = SCREEN_WIDTH - map.width * map.minimap_block_size;
 	player = game->player;
-	player_size = game->map.minimap_block_size / 2;
-	player.pos[X] *= game->map.minimap_block_size;
-	player.pos[Y] *= game->map.minimap_block_size;
-	player.pos[X] += x_offset - player_size / 2;
-	player.pos[Y] -= player_size / 2;
-	draw_block(player.pos, player_size, player.minimap_color, game);
-	int	dir[2];
-	int	pos[2];
-	int	plane[2];
-	dir[X] = (int)(player.pos[X] + player.dir[X] * game->map.minimap_block_size * 2);
-	dir[Y] = (int)(player.pos[Y] + player.dir[Y] * game->map.minimap_block_size * 2);
-	pos[X] = (int)player.pos[X];
-	pos[Y] = (int)player.pos[Y];
-	plane[X] = (int)(player.pos[X] + player.plane[X] * game->map.minimap_block_size * 2);
-	plane[Y] = (int)(player.pos[Y] + player.plane[Y] * game->map.minimap_block_size * 2);
-	draw_line(pos, dir, 0x00FF00FF, game);
-	draw_line(pos, plane, 0x0000FFFF, game);
+	minimap_scale = game->map.minimap_block_size;
+	x_offset = game->screen_size[X] - game->map.width * minimap_scale;
+	player.pos[X] = (player.pos[X] - player.dir[X]) * minimap_scale + x_offset;
+	player.pos[Y] = (player.pos[Y] - player.dir[Y]) * minimap_scale;
+	dir_end[X] = (int)(player.pos[X] + player.dir[X] * minimap_scale);
+	dir_end[Y] = (int)(player.pos[Y] + player.dir[Y] * minimap_scale);
+	plane[X] = (int)(player.pos[X] + player.plane[X] * minimap_scale / 2);
+	plane[Y] = (int)(player.pos[Y] + player.plane[Y] * minimap_scale / 2);
+	draw_line(plane, dir_end, player.minimap_color, game);
+	plane[X] = (int)(player.pos[X] - player.plane[X] * minimap_scale / 2);
+	plane[Y] = (int)(player.pos[Y] - player.plane[Y] * minimap_scale / 2);
+	draw_line(plane, dir_end, player.minimap_color, game);
 }
 
 void	draw_block(double start[2], int block_size, uint32_t color,
@@ -82,7 +76,7 @@ void	draw_block(double start[2], int block_size, uint32_t color,
 		x = start[X];
 		while (x < start[X] + block_size)
 		{
-			put_valid_pixel(game->image, x, y, color);
+			put_valid_pixel(game, x, y, color);
 			x++;
 		}
 		y++;

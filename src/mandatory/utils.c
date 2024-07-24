@@ -6,16 +6,20 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/21 12:52:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:10:11 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color)
+void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 {
-	if ((x > 0 && x < SCREEN_WIDTH) && (y > 0 && y < SCREEN_HEIGHT))
-		mlx_put_pixel(img, x, y, color);
+	mlx_image_t	*image;
+
+	image = game->image;
+	if ((x > 0 && x < game->screen_size[X]) && (y > 0
+			&& y < game->screen_size[Y]))
+		mlx_put_pixel(image, x, y, color);
 }
 
 void	handle_mlx_error(t_game *game)

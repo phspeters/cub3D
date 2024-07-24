@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/07/22 16:57:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:18:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 	t_game	game;
 
 	//parse_map(&game, argc, argv);
-	load_map_params(&game);
+	load_game_params(&game);
 	start_game(&game);
 	run_game_loop(&game);
 	end_game(&game);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 16:57:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:13:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	initialize_ray_and_player(t_game *game, t_ray *ray, int x_coordinate)
 	t_player	player;
 
 	player = game->player;
-	ray->camera_x_coordinate = 2 * x_coordinate / (double)SCREEN_WIDTH - 1;
+	ray->camera_x_coordinate = 2 * x_coordinate / (double)game->screen_size[X]
+		- 1;
 	ray->ray_dir[X] = player.dir[X] + player.plane[X]
 		* ray->camera_x_coordinate;
 	ray->ray_dir[Y] = player.dir[Y] + player.plane[Y]
@@ -108,13 +109,14 @@ void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 	else
 		ray->perpendicular_wall_distance = ray->distance_to_side[Y]
 			- ray->delta_distance[Y];
-	ray->wall_height = (int)(SCREEN_HEIGHT / ray->perpendicular_wall_distance);
-	ray->wall_line_start = -ray->wall_height / 2 + SCREEN_HEIGHT / 2;
+	ray->wall_height = (int)(game->screen_size[Y]
+			/ ray->perpendicular_wall_distance);
+	ray->wall_line_start = -ray->wall_height / 2 + game->screen_size[Y] / 2;
 	if (ray->wall_line_start < 0)
 		ray->wall_line_start = 0;
-	ray->wall_line_end = ray->wall_height / 2 + SCREEN_HEIGHT / 2;
-	if (ray->wall_line_end >= SCREEN_HEIGHT)
-		ray->wall_line_end = SCREEN_HEIGHT - 1;
+	ray->wall_line_end = ray->wall_height / 2 + game->screen_size[Y] / 2;
+	if (ray->wall_line_end >= game->screen_size[Y])
+		ray->wall_line_end = game->screen_size[Y] - 1;
 	if (ray->hit == 'D')
 		ray->wall_texture = game->map.door_texture;
 	else if (ray->side_hit == 1 && ray->ray_dir[Y] < 0)

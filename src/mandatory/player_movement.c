@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:19:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 18:21:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:08:25 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ void	mouse_rotate_player(t_game *game, t_player *player, double rot_speed)
 	if (!player->is_mouse_active)
 		return ;
 	mlx_get_mouse_pos(game->window, &mouse_pos[X], &mouse_pos[Y]);
-	if (mouse_pos[X] != SCREEN_WIDTH / 2)
+	if (mouse_pos[X] != game->screen_size[X] / 2)
 	{
-		if (mouse_pos[X] > SCREEN_WIDTH / 2)
+		if (mouse_pos[X] > game->screen_size[X] / 2)
 			rotate_direction_and_plane(player, rot_speed, RIGHT);
 		else
 			rotate_direction_and_plane(player, rot_speed, LEFT);
 	}
-	mlx_set_mouse_pos(game->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	mlx_set_mouse_pos(game->window, game->screen_size[X] / 2,
+		game->screen_size[Y] / 2);
 }
 
 void	rotate_direction_and_plane(t_player *player, double rot_speed,

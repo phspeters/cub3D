@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 18:03:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:19:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include <math.h>
 # include <errno.h>
 
-# define SCREEN_WIDTH 1280
-# define SCREEN_HEIGHT 720
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
 
@@ -39,6 +37,15 @@ enum e_direction
 	RIGHT = 1,
 	LEFT = -1
 };
+
+typedef struct s_line_info
+{
+	int				start[2];
+	int				end[2];
+	int				delta[2];
+	unsigned int	abs[2];
+	uint32_t		color;
+}					t_line_info;
 
 typedef struct s_ray
 {
@@ -95,10 +102,18 @@ typedef struct s_game
 	mlx_image_t		*image;
 	t_map			map;
 	t_player		player;
+	int32_t			screen_size[2];
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
-void		draw_line(int start[2], int end[2], uint32_t color, t_game *cube);
+
+/*--------------draw_line.c---------------*/
+
+void		draw_line(int start[2], int end[2], uint32_t color, t_game *game);
+t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
+void		draw_shallow_line(t_line_info line_info, t_game *game);
+void		draw_steep_line(t_line_info line_info, t_game *game);
+void		move_coordinate(int *coordinate, int direction);
 
 /*-------------draw_minimap.c-------------*/
 
@@ -130,8 +145,10 @@ void		player_action_loop_hook(mlx_key_data_t keydata, void *param);
 
 /*-------------load_params.c--------------*/
 
-void		load_map_params(t_game *game);
-void		init_params(t_game *game);
+void		load_game_params(t_game *game);
+void		load_map_and_screen_params(t_game *game);
+void		load_player_params(t_game *game);
+void		set_player_start_dir(t_game *game, int start_dir);
 void		load_textures(t_game *game);
 
 /*-----------player_movement.c------------*/
@@ -160,7 +177,7 @@ void		calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 
 /*----------------utils.c-----------------*/
 
-void		put_valid_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void		put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 void		handle_mlx_error(t_game *game);
 void		handle_error(char *message);
 
