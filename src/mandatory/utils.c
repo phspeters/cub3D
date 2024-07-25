@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:10:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:35:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 	mlx_image_t	*image;
 
 	image = game->image;
+	if (color == 0xFF00FFFF)
+		return ;
 	if ((x > 0 && x < game->screen_size[X]) && (y > 0
 			&& y < game->screen_size[Y]))
 		mlx_put_pixel(image, x, y, color);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:20:36 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:10:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	run_game_loop(t_game *game)
 
 void	end_game(t_game *game)
 {
+	free(game->player.wall_distance);
 	mlx_terminate(game->window);
 }

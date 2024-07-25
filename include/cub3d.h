@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 20:07:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:51:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,22 @@ typedef struct s_line_info
 	uint32_t		color;
 }					t_line_info;
 
+typedef struct s_sprite
+{
+	mlx_texture_t	*texture[9];
+	double			pos[2];
+	double			transform[2];
+	double			inverse_projection_determinant;
+	int				draw_start[2];
+	int				draw_end[2];
+	int				texture_coord[2];
+	int				screen_x;
+	int				texture_y_position;
+	int				frames_per_texture;
+	int				width;
+	int				height;
+}					t_sprite;
+
 typedef struct s_ray
 {
 	double			ray_dir[2];
@@ -96,6 +112,7 @@ typedef struct s_player
 	double		pos[2];
 	double		dir[2];
 	double		plane[2];
+	double		*wall_distance;
 	uint32_t	is_mouse_active;
 }				t_player;
 
@@ -105,6 +122,7 @@ typedef struct s_map
 	mlx_texture_t	*textures[5];
 	uint32_t		ceiling;
 	uint32_t		floor;
+	t_sprite		sprite;
 	int				grid[MAP_HEIGHT][MAP_WIDTH];
 	int				current[2];
 	int				width;
@@ -149,6 +167,15 @@ void		calculate_texture_coordinates(t_game *game, t_ray *ray,
 				t_texture_info *texture_info);
 uint32_t	get_texel_color(mlx_texture_t *texture, int x, int y);
 
+/*-------------draw_sprites.c-------------*/
+
+void		draw_sprites(t_game *game);
+void		initialize_sprite(t_game *game, t_sprite *sprite);
+void		calculate_sprite_dimensions(t_game *game, t_sprite *sprite);
+void		draw_sprite_stripes(t_game *game, t_sprite *sprite, int tex_index);
+void		draw_sprite_pixels(t_game *game, t_sprite *sprite, int stripe,
+				int tex_index);
+
 /*----------------game.c------------------*/
 
 void		start_game(t_game *game);
@@ -167,7 +194,11 @@ void		load_game_params(t_game *game);
 void		load_map_and_screen_params(t_game *game);
 void		load_player_params(t_game *game);
 void		set_player_start_dir(t_game *game, int start_dir);
-void		load_textures(t_game *game);
+
+/*------------load_textures.c-------------*/
+
+void		load_map_textures(t_game *game);
+void		load_sprite_textures(t_game *game);
 
 /*-----------player_movement.c------------*/
 
