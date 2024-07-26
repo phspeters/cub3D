@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 20:50:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:10:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	load_map_textures(t_game *game)
 	map->textures[EAST] = mlx_load_png("./assets/cave_wall.png");
 	if (!map->textures[EAST])
 		handle_mlx_error(game);
-	map->textures[DOOR] = mlx_load_png("./assets/eagle.png");
+	map->textures[DOOR] = mlx_load_png("./assets/door.png");
 	if (!map->textures[DOOR])
 		handle_mlx_error(game);
 	map->ceiling = 0x87CEEBFF;
