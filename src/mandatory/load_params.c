@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 20:50:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:14:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	load_map_and_screen_params(t_game *game)
 		game->screen_size[X] = SCREEN_WIDTH;
 		game->screen_size[Y] = SCREEN_HEIGHT;
 	}
-	game->map.sprite.pos[X] = 21;
-	game->map.sprite.pos[Y] = 11;
+	game->map.sprite.pos[X] = 21.5;
+	game->map.sprite.pos[Y] = 11.5;
+	game->map.sprite.killed = 0;
 	game->map.sprite.frames_per_texture = 3;
 }
 
@@ -45,7 +46,8 @@ void	load_player_params(t_game *game)
 	game->player.dir[Y] = 0;
 	game->player.plane[X] = 0;
 	game->player.plane[Y] = 0;
-	game->player.wall_distance = malloc(sizeof(double) * game->screen_size[X]);
+	game->player.wall_distance_on_camera_x = malloc(sizeof(double)
+			* game->screen_size[X]);
 	set_player_start_dir(game, 'N');
 }
 

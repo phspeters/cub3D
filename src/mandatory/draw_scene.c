@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 18:16:32 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:05:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	draw_vertical_line(t_game *game, int x, t_ray ray)
 	while (++y < ray.wall_line_start)
 		put_valid_pixel(game, x, y, game->map.ceiling);
 	calculate_texture_coordinates(game, &ray, &texture_info);
-	game->player.wall_distance[x] = ray.perpendicular_wall_distance;
+	game->player.wall_distance_on_camera_x[x] = ray.perpendicular_wall_distance;
 	while (++y < ray.wall_line_end)
 	{
 		texture_info.texture_coord[Y] = (int)texture_info.texture_pos & \

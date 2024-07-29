@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 20:51:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:19:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MINIMAP_SIZE 25
+# define MOVEMENT_SPEED_MULTIPLIER 5.0
+# define ROTATION_SPEED_MULTIPLIER 2.0
+# define COLLISION_DISTANCE_MULTIPLIER 2
 
 enum e_axis
 {
@@ -81,6 +84,7 @@ typedef struct s_sprite
 	int				frames_per_texture;
 	int				width;
 	int				height;
+	int				killed;
 }					t_sprite;
 
 typedef struct s_ray
@@ -101,20 +105,20 @@ typedef struct s_ray
 
 typedef struct s_texture_info
 {
-	int		texture_coord[2];
-	double	step;
-	double	texture_pos;
-	double	wall_x;
-}			t_texture_info;
+	int				texture_coord[2];
+	double			step;
+	double			texture_pos;
+	double			wall_x;
+}					t_texture_info;
 
 typedef struct s_player
 {
-	double		pos[2];
-	double		dir[2];
-	double		plane[2];
-	double		*wall_distance;
-	uint32_t	is_mouse_active;
-}				t_player;
+	double			pos[2];
+	double			dir[2];
+	double			plane[2];
+	double			*wall_distance_on_camera_x;
+	uint32_t		is_mouse_active;
+}					t_player;
 
 typedef struct s_map
 {
@@ -186,7 +190,9 @@ void		end_game(t_game *game);
 
 void		close_loop_hook(void *param);
 void		move_player_loop_hook(void *param);
-void		player_action_loop_hook(mlx_key_data_t keydata, void *param);
+void		keyboard_action_loop_hook(mlx_key_data_t keydata, void *param);
+void		mouse_action_loop_hook(mouse_key_t button, action_t action,
+				modifier_key_t mod, void *param);
 
 /*-------------load_params.c--------------*/
 
@@ -212,6 +218,11 @@ void		mouse_rotate_player(t_game *game, t_player *player,
 				double rot_speed);
 void		rotate_direction_and_plane(t_player *player, double rot_speed,
 				int direction);
+
+/*------------player_action.c-------------*/
+
+void		open_doors(t_game *game, double pos[2]);
+void		kill_sprites(t_game *game, double pos[2]);
 
 /*--------------raycasting.c--------------*/
 

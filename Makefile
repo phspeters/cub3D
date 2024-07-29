@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/25 20:51:48 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/29 18:01:43 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ FILES		= 	main.c \
 				hooks.c \
 				load_params.c \
 				load_textures.c \
+				player_action.c \
 				player_movement.c \
 				raycasting.c \
 				utils.c \

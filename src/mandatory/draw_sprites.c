@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:13:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 20:44:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:19:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	draw_sprites(t_game *game)
 	{
 		tex_index = (tex_index + 1) % 9;
 		frame_counter = 0;
+	}
+	if (game->map.sprite.killed == 1)
+	{
+		game->map.sprite.pos[X] = 11.5;
+		game->map.sprite.pos[Y] = 21.5;
+		game->map.sprite.killed = 0;
 	}
 }
 
@@ -75,9 +81,11 @@ void	draw_sprite_stripes(t_game *game, t_sprite *sprite, int tex_index)
 		sprite->texture_coord[X] = (int)(256 * (stripe - (-sprite->width / 2
 						+ sprite->screen_x)) * sprite->texture[tex_index]->width
 				/ sprite->width) / 256;
-		if (sprite->transform[Y] > 0 && stripe > 0
+		if (sprite->transform[Y] > 0
+			&& stripe > 0
 			&& stripe < game->screen_size[X]
-			&& sprite->transform[Y] < game->player.wall_distance[stripe])
+			&& sprite->transform[Y]
+			< game->player.wall_distance_on_camera_x[stripe])
 		{
 			draw_sprite_pixels(game, sprite, stripe, tex_index);
 		}

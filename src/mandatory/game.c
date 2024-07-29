@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 18:10:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:54:56 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ void	run_game_loop(t_game *game)
 		handle_mlx_error(game);
 	if (!mlx_loop_hook(game->window, move_player_loop_hook, game))
 		handle_mlx_error(game);
-	mlx_key_hook(game->window, player_action_loop_hook, game);
+	mlx_key_hook(game->window, keyboard_action_loop_hook, game);
+	mlx_mouse_hook(game->window, mouse_action_loop_hook, game);
+	mlx_set_cursor_mode(game->window, MLX_MOUSE_HIDDEN);
 	mlx_loop(game->window);
 }
 
 void	end_game(t_game *game)
 {
-	free(game->player.wall_distance);
+	free(game->player.wall_distance_on_camera_x);
 	mlx_terminate(game->window);
 }

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:19:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:08:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:54:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ void	mouse_rotate_player(t_game *game, t_player *player, double rot_speed)
 {
 	int32_t	mouse_pos[2];
 
-	mlx_set_cursor_mode(game->window, MLX_MOUSE_HIDDEN);
-	if (mlx_is_mouse_down(game->window, MLX_MOUSE_BUTTON_LEFT))
-		player->is_mouse_active = !player->is_mouse_active;
 	if (!player->is_mouse_active)
 		return ;
 	mlx_get_mouse_pos(game->window, &mouse_pos[X], &mouse_pos[Y]);
