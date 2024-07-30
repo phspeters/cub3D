@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 21:21:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:56:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,17 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 
 void	respawn_sprite(t_game *game)
 {
-	//int	new_sprite_pos[2];
+	int	new_sprite_pos[2];
 
-	game->map.sprite.pos[X] = 10.5;
-	game->map.sprite.pos[Y] = 10.5;
-	//new_sprite_pos[X] = get_random_map_coordinate(game->map.width);
-	//new_sprite_pos[Y] = get_random_map_coordinate(game->map.height);
-	//if (g_map[new_sprite_pos[Y]][new_sprite_pos[X]] == '0')
-	//{
-	//	game->map.sprite.pos[X] = new_sprite_pos[X] + 0.5;
-	//	game->map.sprite.pos[Y] = new_sprite_pos[Y] + 0.5;
-	//}
-	//else
-	//	respawn_sprite(game);
+	new_sprite_pos[X] = get_random_map_coordinate(game->map.width);
+	new_sprite_pos[Y] = get_random_map_coordinate(game->map.height);
+	if (g_map[new_sprite_pos[Y]][new_sprite_pos[X]] == '0')
+	{
+		game->map.sprite.pos[X] = new_sprite_pos[X] + 0.5;
+		game->map.sprite.pos[Y] = new_sprite_pos[Y] + 0.5;
+	}
+	else
+		respawn_sprite(game);
 }
 
 int	get_random_map_coordinate(int max)
