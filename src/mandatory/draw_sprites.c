@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:13:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 18:19:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:19:12 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 void	draw_sprites(t_game *game)
 {
-	t_sprite	sprite;
-	static int	tex_index = 0;
-	static int	frame_counter = 0;
+	t_sprite		sprite;
+	mlx_texture_t	*texture;
+	static int		tex_index = 0;
+	static int		frame_counter = 0;
 
 	sprite = game->map.sprite;
+	texture = sprite.texture[tex_index];
+	if (game->map.sprite.killed == 1)
+	{
+		draw_death_animation_and_respawn(game, sprite);
+		return ;
+	}
 	initialize_sprite(game, &sprite);
 	calculate_sprite_dimensions(game, &sprite);
-	draw_sprite_stripes(game, &sprite, tex_index);
+	draw_sprite_stripes(game, &sprite, texture);
 	(frame_counter)++;
 	if (frame_counter >= sprite.frames_per_texture)
 	{
 		tex_index = (tex_index + 1) % 9;
 		frame_counter = 0;
-	}
-	if (game->map.sprite.killed == 1)
-	{
-		game->map.sprite.pos[X] = 11.5;
-		game->map.sprite.pos[Y] = 21.5;
-		game->map.sprite.killed = 0;
 	}
 }
 
@@ -71,7 +72,8 @@ void	calculate_sprite_dimensions(t_game *game, t_sprite *sprite)
 		sprite->draw_end[X] = game->screen_size[X] - 1;
 }
 
-void	draw_sprite_stripes(t_game *game, t_sprite *sprite, int tex_index)
+void	draw_sprite_stripes(t_game *game, t_sprite *sprite,
+		mlx_texture_t *texture)
 {
 	int	stripe;
 
@@ -79,22 +81,21 @@ void	draw_sprite_stripes(t_game *game, t_sprite *sprite, int tex_index)
 	while (stripe < sprite->draw_end[X])
 	{
 		sprite->texture_coord[X] = (int)(256 * (stripe - (-sprite->width / 2
-						+ sprite->screen_x)) * sprite->texture[tex_index]->width
-				/ sprite->width) / 256;
-		if (sprite->transform[Y] > 0
-			&& stripe > 0
+						+ sprite->screen_x)) * texture->width / sprite->width)
+			/ 256;
+		if (sprite->transform[Y] > 0 && stripe > 0
 			&& stripe < game->screen_size[X]
 			&& sprite->transform[Y]
 			< game->player.wall_distance_on_camera_x[stripe])
 		{
-			draw_sprite_pixels(game, sprite, stripe, tex_index);
+			draw_sprite_pixels(game, sprite, texture, stripe);
 		}
 		stripe++;
 	}
 }
 
-void	draw_sprite_pixels(t_game *game, t_sprite *sprite, int stripe,
-		int tex_index)
+void	draw_sprite_pixels(t_game *game, t_sprite *sprite,
+		mlx_texture_t *texture, int stripe)
 {
 	int	y;
 
@@ -104,10 +105,8 @@ void	draw_sprite_pixels(t_game *game, t_sprite *sprite, int stripe,
 		sprite->texture_y_position = y * 256 - game->screen_size[Y] * 128
 			+ sprite->height * 128;
 		sprite->texture_coord[Y] = ((sprite->texture_y_position
-					* sprite->texture[tex_index]->height) / sprite->height)
-			/ 256;
-		put_valid_pixel(game, stripe, y,
-			get_texel_color(sprite->texture[tex_index],
+					* texture->height) / sprite->height) / 256;
+		put_valid_pixel(game, stripe, y, get_texel_color(texture,
 				sprite->texture_coord[X], sprite->texture_coord[Y]));
 		y++;
 	}

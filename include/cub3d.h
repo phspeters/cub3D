@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 18:19:51 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:07:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_line_info
 typedef struct s_sprite
 {
 	mlx_texture_t	*texture[9];
+	mlx_texture_t	*death_animation[4];
 	double			pos[2];
 	double			transform[2];
 	double			inverse_projection_determinant;
@@ -176,9 +177,16 @@ uint32_t	get_texel_color(mlx_texture_t *texture, int x, int y);
 void		draw_sprites(t_game *game);
 void		initialize_sprite(t_game *game, t_sprite *sprite);
 void		calculate_sprite_dimensions(t_game *game, t_sprite *sprite);
-void		draw_sprite_stripes(t_game *game, t_sprite *sprite, int tex_index);
-void		draw_sprite_pixels(t_game *game, t_sprite *sprite, int stripe,
-				int tex_index);
+void		draw_sprite_stripes(t_game *game, t_sprite *sprite,
+				mlx_texture_t *texture);
+void		draw_sprite_pixels(t_game *game, t_sprite *sprite,
+				mlx_texture_t *texture, int stripe);
+
+/*----------draw_sprites_utils.c----------*/
+
+void		draw_death_animation_and_respawn(t_game *game, t_sprite sprite);
+void		respawn_sprite(t_game *game);
+int			get_random_map_coordinate(int max);
 
 /*----------------game.c------------------*/
 

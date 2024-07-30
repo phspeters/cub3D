@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/25 21:10:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 20:36:11 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,16 @@ void	load_sprite_textures(t_game *game)
 	map->sprite.texture[6] = mlx_load_png("./assets/sprite6.png");
 	map->sprite.texture[7] = mlx_load_png("./assets/sprite7.png");
 	map->sprite.texture[8] = mlx_load_png("./assets/sprite8.png");
+	map->sprite.death_animation[0] = mlx_load_png("./assets/death0.png");
+	map->sprite.death_animation[1] = mlx_load_png("./assets/death1.png");
+	map->sprite.death_animation[2] = mlx_load_png("./assets/death2.png");
+	map->sprite.death_animation[3] = mlx_load_png("./assets/death3.png");
 	if (!map->sprite.texture[0] || !map->sprite.texture[1]
 		|| !map->sprite.texture[2] || !map->sprite.texture[3]
 		|| !map->sprite.texture[4] || !map->sprite.texture[5]
 		|| !map->sprite.texture[6] || !map->sprite.texture[7]
-		|| !map->sprite.texture[8])
+		|| !map->sprite.texture[8] || !map->sprite.death_animation[0]
+		|| !map->sprite.death_animation[1] || !map->sprite.death_animation[2]
+		|| !map->sprite.death_animation[3])
 		handle_mlx_error(game);
 }

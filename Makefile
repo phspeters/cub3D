@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/29 18:01:43 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/07/29 21:08:33 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FILES		= 	main.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
+				draw_sprites_utils.c \
 				game.c \
 				hooks.c \
 				load_params.c \
