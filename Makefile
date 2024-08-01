@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/08/01 16:24:48 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/08/01 16:46:25 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ fclean: clean
 re: fclean all
 
 val: all supp
-	valgrind --leak-check=full --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
+	valgrind --leak-check=full --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
 
 norm:
 	@norminette src include $(LIBFT)
