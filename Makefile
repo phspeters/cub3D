@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/29 21:08:33 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/08/01 16:24:48 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d
 
+SUPP_FILE	= MLX42.suppressions
+
 all: libmlx libft $(NAME)
 
 libmlx:
@@ -64,10 +66,68 @@ fclean: clean
 
 re: fclean all
 
-val: all
-	valgrind --leak-check=full --suppressions=MLX42_suppressions ./$(EXE) maps/default.cub
+val: all supp
+	valgrind --leak-check=full --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
 
 norm:
 	@norminette src include $(LIBFT)
+
+supp:
+	echo "{" > $(SUPP_FILE)
+	echo "   <MLX_CODAM>"  $(SUPP_FILE)
+	echo "   Memcheck:Leak"  $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable"  $(SUPP_FILE)
+	echo "   ..."  $(SUPP_FILE)
+	echo "   fun:_dl_catch_exception"  $(SUPP_FILE)
+	echo "   ..."  $(SUPP_FILE)
+	echo "}"  $(SUPP_FILE)
+	echo "{"  $(SUPP_FILE)
+	echo " <MLX_CODAM>"  $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:mlx_init" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
+	echo "{" >> $(SUPP_FILE)
+	echo " <MLX_CODAM>" >> $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:XrmGetStringDatabase" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
+	echo "{" >> $(SUPP_FILE)
+	echo " <MLX_CODAM>" >> $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:_XrmInitParseInfo" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
+	echo "{" >> $(SUPP_FILE)
+	echo " <MLX_CODAM>" >> $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:__tls_get_addr" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
+	echo "{" >> $(SUPP_FILE)
+	echo " <MLX_CODAM>" >> $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:__pthread_once_slow" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
+	echo "{" >> $(SUPP_FILE)
+	echo " <MLX_CODAM>" >> $(SUPP_FILE)
+	echo "   Memcheck:Leak" >> $(SUPP_FILE)
+	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "   fun:_dl_init" >> $(SUPP_FILE)
+	echo "   ..." >> $(SUPP_FILE)
+	echo "}" >> $(SUPP_FILE)
 
 .PHONY: all, clean, fclean, re, norm, val

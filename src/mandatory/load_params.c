@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 18:14:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:41:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	load_player_params(t_game *game)
 	game->player.plane[X] = 0;
 	game->player.plane[Y] = 0;
 	game->player.wall_distance_on_camera_x = malloc(sizeof(double)
-			* game->screen_size[X]);
+			* (game->screen_size[X] + 1));
 	set_player_start_dir(game, 'N');
 }
 

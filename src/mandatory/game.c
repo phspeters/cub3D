@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 17:54:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:24:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,23 @@ void	run_game_loop(t_game *game)
 void	end_game(t_game *game)
 {
 	free(game->player.wall_distance_on_camera_x);
+	mlx_delete_texture(game->map.textures[NORTH]);
+	mlx_delete_texture(game->map.textures[SOUTH]);
+	mlx_delete_texture(game->map.textures[WEST]);
+	mlx_delete_texture(game->map.textures[EAST]);
+	mlx_delete_texture(game->map.textures[DOOR]);
+	mlx_delete_texture(game->map.sprite.texture[0]);
+	mlx_delete_texture(game->map.sprite.texture[1]);
+	mlx_delete_texture(game->map.sprite.texture[2]);
+	mlx_delete_texture(game->map.sprite.texture[3]);
+	mlx_delete_texture(game->map.sprite.texture[4]);
+	mlx_delete_texture(game->map.sprite.texture[5]);
+	mlx_delete_texture(game->map.sprite.texture[6]);
+	mlx_delete_texture(game->map.sprite.texture[7]);
+	mlx_delete_texture(game->map.sprite.texture[8]);
+	mlx_delete_texture(game->map.sprite.death_animation[0]);
+	mlx_delete_texture(game->map.sprite.death_animation[1]);
+	mlx_delete_texture(game->map.sprite.death_animation[2]);
+	mlx_delete_texture(game->map.sprite.death_animation[3]);
 	mlx_terminate(game->window);
 }
