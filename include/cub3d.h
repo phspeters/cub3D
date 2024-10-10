@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 21:07:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:47:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 # include <math.h>
 # include <errno.h>
+# include <string.h>
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
@@ -145,6 +146,10 @@ typedef struct s_game
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
+
+/*--------------parsing.c---------------*/
+void	parse_map(t_game *game, int argc, char *argv[]);
+
 
 /*--------------draw_line.c---------------*/
 

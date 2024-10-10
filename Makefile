@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/08/01 16:46:25 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/10/10 22:48:55 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,10 @@ FILES		= 	main.c \
 				player_movement.c \
 				raycasting.c \
 				utils.c \
-				draw_line.c
+				draw_line.c \
+				parsing/parsing.c
 
-VPATH 		= 	./src:./src/mandatory
+VPATH 		= 	./src:./src/mandatory/
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d
