@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/10 22:48:55 by codespace        ###   ########.fr        #
+#    Updated: 2024/10/10 23:08:25 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,9 @@ FLAG 		?= 	-g3
 CC			= 	cc
 LIBMLX		= 	./lib/MLX42
 LIBFT		= 	./lib/libft
-HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
-LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
+HEADERS		= 	-I ./include -I $(LIBFT)
+LIBS		= 	$(LIBFT)/libft.a
 FILES		= 	main.c \
-				draw_minimap.c \
-				draw_scene.c \
-				draw_sprites.c \
-				draw_sprites_utils.c \
-				game.c \
-				hooks.c \
-				load_params.c \
-				load_textures.c \
-				player_action.c \
-				player_movement.c \
-				raycasting.c \
-				utils.c \
-				draw_line.c \
 				parsing/parsing.c
 
 VPATH 		= 	./src:./src/mandatory/
@@ -41,7 +28,7 @@ EXE			?= 	cub3d
 
 SUPP_FILE	= MLX42.suppressions
 
-all: libmlx libft $(NAME)
+all: libft $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
@@ -51,7 +38,7 @@ libft:
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
+	@$(CC)  $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)

@@ -6,11 +6,27 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/10 22:41:44 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/11 00:01:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
+
+void	handle_error(char *message)
+{
+	if (errno)
+	{
+		ft_fprintf(STDERR_FILENO, "Error\n");
+		perror(message);
+		exit(errno);
+	}
+	else
+	{
+		ft_fprintf(STDERR_FILENO, "Error\n");
+		ft_fprintf(STDERR_FILENO, "%s.\n", message);
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	parse_map(t_game *game, int argc, char *argv[])
 {
@@ -30,11 +46,16 @@ void	parse_map(t_game *game, int argc, char *argv[])
 	}
 	while ((line = ft_get_next_line(fd)) != NULL)
 	{
-		//trimmed_line = strtrim(line);
-		char	**map_lines;
-		map_lines[i] = line;
-		printf("Linha %d: %s\n", i, map_lines[i]);
-		i++;
+		//printf("Linha lida: %s", line);  // Imprime a linha lida
+		if (ft_strle(line) > 0)
+		{
+			if (is_texture_line(line))
+			{
+				if (!validate_textures(game, line))
+					handle_error("Invalid resolution values");
+			}
+		}
+		free(line);
 	}
-	
+	close(fd);
 }

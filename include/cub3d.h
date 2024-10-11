@@ -6,15 +6,15 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/10 22:47:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/10 23:04:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <MLX42/MLX42.h>
-# include "libft.h"
+
+# include "../lib/libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -68,13 +68,10 @@ typedef struct s_line_info
 	int				end[2];
 	int				delta[2];
 	unsigned int	abs[2];
-	uint32_t		color;
 }					t_line_info;
 
 typedef struct s_sprite
 {
-	mlx_texture_t	*texture[9];
-	mlx_texture_t	*death_animation[4];
 	double			pos[2];
 	double			transform[2];
 	double			inverse_projection_determinant;
@@ -96,7 +93,6 @@ typedef struct s_ray
 	double			delta_distance[2];
 	double			camera_x_coordinate;
 	double			perpendicular_wall_distance;
-	mlx_texture_t	*wall_texture;
 	int				wall_height;
 	int				wall_line_start;
 	int				wall_line_end;
@@ -119,15 +115,12 @@ typedef struct s_player
 	double			dir[2];
 	double			plane[2];
 	double			*wall_distance_on_camera_x;
-	uint32_t		is_mouse_active;
 }					t_player;
 
 typedef struct s_map
 {
 	char			*texture_path[5];
-	mlx_texture_t	*textures[5];
-	uint32_t		ceiling;
-	uint32_t		floor;
+
 	t_sprite		sprite;
 	int				grid[MAP_HEIGHT][MAP_WIDTH];
 	int				current[2];
@@ -138,11 +131,8 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	mlx_t			*window;
-	mlx_image_t		*image;
 	t_map			map;
 	t_player		player;
-	int32_t			screen_size[2];
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
@@ -153,8 +143,6 @@ void	parse_map(t_game *game, int argc, char *argv[]);
 
 /*--------------draw_line.c---------------*/
 
-void		draw_line(int start[2], int end[2], uint32_t color, t_game *game);
-t_line_info	set_line_info(int start[2], int end[2], uint32_t color);
 void		draw_shallow_line(t_line_info line_info, t_game *game);
 void		draw_steep_line(t_line_info line_info, t_game *game);
 void		move_coordinate(int *coordinate, int direction);
@@ -163,8 +151,6 @@ void		move_coordinate(int *coordinate, int direction);
 
 void		draw_minimap(t_game *game);
 void		draw_minimap_block(int start[2], int counter[2], double x_offset,
-				t_game *game);
-void		draw_block(double start[2], int block_size, uint32_t color,
 				t_game *game);
 void		draw_player_on_minimap(t_game *game);
 
@@ -175,17 +161,12 @@ void		draw_3d_scene(t_game *game);
 void		draw_vertical_line(t_game *game, int x, t_ray ray);
 void		calculate_texture_coordinates(t_game *game, t_ray *ray,
 				t_texture_info *texture_info);
-uint32_t	get_texel_color(mlx_texture_t *texture, int x, int y);
 
 /*-------------draw_sprites.c-------------*/
 
 void		draw_sprites(t_game *game);
 void		initialize_sprite(t_game *game, t_sprite *sprite);
 void		calculate_sprite_dimensions(t_game *game, t_sprite *sprite);
-void		draw_sprite_stripes(t_game *game, t_sprite *sprite,
-				mlx_texture_t *texture);
-void		draw_sprite_pixels(t_game *game, t_sprite *sprite,
-				mlx_texture_t *texture, int stripe);
 
 /*----------draw_sprites_utils.c----------*/
 
@@ -203,9 +184,6 @@ void		end_game(t_game *game);
 
 void		close_loop_hook(void *param);
 void		move_player_loop_hook(void *param);
-void		keyboard_action_loop_hook(mlx_key_data_t keydata, void *param);
-void		mouse_action_loop_hook(mouse_key_t button, action_t action,
-				modifier_key_t mod, void *param);
 
 /*-------------load_params.c--------------*/
 
@@ -250,7 +228,6 @@ void		calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 
 /*----------------utils.c-----------------*/
 
-void		put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 void		handle_mlx_error(t_game *game);
 void		handle_error(char *message);
 
