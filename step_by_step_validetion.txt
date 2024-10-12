@@ -1,0 +1,10 @@
+Estrutura Geral do Parser
+parse_map: Lê e processa o arquivo .cub.
+Funções de Validação:
+validade_file: Valida arquivo para execucao TO DO
+validate_resolution: Valida a resolução do mapa.
+validate_textures: Valida os caminhos das texturas.
+validate_rgb: Valida os valores de cor.
+validate_map: Verifica a estrutura do mapa.
+Função process_map_line: Processa cada linha do mapa.
+Função set_player_start_dir: Configura a direção inicial do jogador.

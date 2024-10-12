@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/11 00:01:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/12 16:06:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ void	handle_error(char *message)
 	}
 }
 
+int	is_texture_line(char *line)
+{
+	return (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
+			|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0);
+}
+
+int	validate_textures(t_game *game, char *line)
+{
+	char	*texture_path;
+	int		valid;
+
+	valid = 1;
+	if (ft_strncmp(line, "NO ", 3) == 0)
+	{
+		printf("NO \n");
+	}
+	
+}
+
 void	parse_map(t_game *game, int argc, char *argv[])
 {
 	char	*line;
@@ -47,7 +66,7 @@ void	parse_map(t_game *game, int argc, char *argv[])
 	while ((line = ft_get_next_line(fd)) != NULL)
 	{
 		//printf("Linha lida: %s", line);  // Imprime a linha lida
-		if (ft_strle(line) > 0)
+		if (ft_strlen(line) > 0)
 		{
 			if (is_texture_line(line))
 			{

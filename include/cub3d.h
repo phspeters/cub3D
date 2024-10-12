@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/10 23:04:28 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/12 15:59:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 # include "../lib/libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -32,6 +34,12 @@
 # define MOVEMENT_SPEED_MULTIPLIER 5.0
 # define ROTATION_SPEED_MULTIPLIER 2.0
 # define COLLISION_DISTANCE_MULTIPLIER 2
+
+enum e_output
+{
+	SUCCESS = 0,
+	FAILURE = 1,
+};
 
 enum e_axis
 {
@@ -136,6 +144,9 @@ typedef struct s_game
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
+
+/*--------------chack_file.c---------------*/
+int		check_file(char *argv_file, bool cub);
 
 /*--------------parsing.c---------------*/
 void	parse_map(t_game *game, int argc, char *argv[]);

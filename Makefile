@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/10 23:08:25 by codespace        ###   ########.fr        #
+#    Updated: 2024/10/12 16:01:29 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBFT)
 LIBS		= 	$(LIBFT)/libft.a
 FILES		= 	main.c \
-				parsing/parsing.c
+				parsing/parsing.c \
+				parsing/check_file.c
 
 VPATH 		= 	./src:./src/mandatory/
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)

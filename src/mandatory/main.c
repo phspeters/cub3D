@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/10 23:05:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/12 15:15:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ int	g_map[MAP_HEIGHT][MAP_WIDTH] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
+
+
 int	main(int argc, char *argv[])
 {
 	t_game	game;
 
-	if (argc != 2)
+	if (argc != 2 && check_file(argv[1], true) == FAILURE)
 	{
-		handle_error("Usage: ./cub3D <map.cub>");
+		handle_error("Usage: ./cub3D <map.cub> or check if file end with .cub");
 		return (EXIT_FAILURE);
 	}
 	parse_map(&game, argc, argv);
