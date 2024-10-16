@@ -6,12 +6,21 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/30 15:57:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:30:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief animates the death of a sprite by cycling through a series of
+ * textures. It initializes and calculates the sprite's dimensions, draws the
+ * sprite, and updates the frame counter. Once the animation sequence is
+ * complete, it resets the sprite's state and respawns it.
+ * 
+ * @param game struct containing all the game information
+ * @param sprite information about the sprite to be drawn
+ */
 void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 {
 	mlx_texture_t	*texture;
@@ -36,6 +45,13 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 	}
 }
 
+/**
+ * @brief generates a random position for the sprite within the map boundaries
+ * and checks if the position is empty. If it is, it updates the sprite's
+ * position. If not, it recursively tries again until a valid position is found.
+ * 
+ * @param game 
+ */
 void	respawn_sprite(t_game *game)
 {
 	int			new_sprite_pos[2];

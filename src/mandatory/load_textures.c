@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 20:36:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:01:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,25 @@ void	load_map_textures(t_game *game)
 
 	map = &game->map;
 	map->textures[NORTH] = mlx_load_png("./assets/black_wood.png");
-	if (!map->textures[NORTH])
-		handle_mlx_error(game);
 	map->textures[SOUTH] = mlx_load_png("./assets/wood_brick.png");
-	if (!map->textures[SOUTH])
-		handle_mlx_error(game);
 	map->textures[WEST] = mlx_load_png("./assets/plant_wall.png");
-	if (!map->textures[WEST])
-		handle_mlx_error(game);
 	map->textures[EAST] = mlx_load_png("./assets/cave_wall.png");
-	if (!map->textures[EAST])
-		handle_mlx_error(game);
 	map->textures[DOOR] = mlx_load_png("./assets/door.png");
-	if (!map->textures[DOOR])
+	if (!map->textures[NORTH] || !map->textures[SOUTH] || !map->textures[WEST]
+		|| !map->textures[EAST] || !map->textures[DOOR])
 		handle_mlx_error(game);
 	map->ceiling = 0x87CEEBFF;
 	map->floor = 0xC0C0C0FF;
 }
 
+/**
+ * @brief loads sprite textures and death animation textures from PNG files
+ * into the game using mlx_load_png, and checks for any loading errors.
+ * If any texture fails to load, it calls the handle_mlx_error function to
+ * handle the error.
+ * 
+ * @param game pointer to the game structure
+ */
 void	load_sprite_textures(t_game *game)
 {
 	t_map	*map;

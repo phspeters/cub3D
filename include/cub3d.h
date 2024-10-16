@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 21:07:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:29:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ enum e_direction
 {
 	RIGHT = 1,
 	LEFT = -1
+};
+
+enum e_side
+{
+	WEST_EAST,
+	NORTH_SOUTH
 };
 
 enum e_texture_type
@@ -247,6 +253,6 @@ void		calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 
 void		put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 void		handle_mlx_error(t_game *game);
-void		handle_error(char *message);
+void		handle_error(t_game *game, char *message);
 
 #endif

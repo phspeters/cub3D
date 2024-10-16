@@ -6,12 +6,20 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/01 16:41:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:51:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief initializes various game parameters by calling helper functions to
+ * load map and screen parameters, player parameters, map textures, and sprite
+ * textures. Ensures that all necessary game data is loaded and initialized
+ * before the game starts.
+ * 
+ * @param game 
+ */
 void	load_game_params(t_game *game)
 {
 	load_map_and_screen_params(game);

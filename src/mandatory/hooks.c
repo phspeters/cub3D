@@ -6,12 +6,18 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 18:14:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:46:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief checks if the Escape key is pressed. If it is, the function closes
+ * the game window.
+ * 
+ * @param param pointer to the game struct
+ */
 void	close_loop_hook(void *param)
 {
 	t_game	*game;
@@ -21,6 +27,15 @@ void	close_loop_hook(void *param)
 		mlx_close_window(game->window);
 }
 
+/**
+ * @brief updates the player's movement and rotation continuously based on user
+ * input and the elapsed time. It calculates the movement and rotation speeds,
+ * checks for collisions, and calls appropriate functions to handle
+ * forward/backward movement, strafing, and rotation using both keyboard and
+ * mouse inputs.
+ * 
+ * @param param pointer to the game struct
+ */
 void	move_player_loop_hook(void *param)
 {
 	t_game		*game;
@@ -40,6 +55,14 @@ void	move_player_loop_hook(void *param)
 	mouse_rotate_player(game, player, rot_speed);
 }
 
+/**
+ * @brief handles the Space key press event. When the Space key is pressed,
+ * it performs actions related to opening doors and killing sprites in the
+ * game.
+ * 
+ * @param keydata received key data
+ * @param param pointer to the game struct
+ */
 void	keyboard_action_loop_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game		*game;
@@ -55,6 +78,19 @@ void	keyboard_action_loop_hook(mlx_key_data_t keydata, void *param)
 	}
 }
 
+/**
+ * @brief handles mouse button actions in the game.
+ * When the right mouse button is pressed, it toggles the is_mouse_active
+ * flag in the player structure. If the flag is active, the player can
+ * rotate the camera using the mouse.
+ * When the left mouse button is pressed, it performs actions related to
+ * opening doors and killing sprites.
+ * 
+ * @param button mouse button pressed
+ * @param action what action was performed
+ * @param mod unused
+ * @param param pointer to the game struct
+ */
 void	mouse_action_loop_hook(mouse_key_t button, action_t action,
 		modifier_key_t mod, void *param)
 {

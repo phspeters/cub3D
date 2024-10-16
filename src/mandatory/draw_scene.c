@@ -6,12 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 17:05:01 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:30:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief handles the rendering of the game scene by deleting the old image,
+ * creating a new image, attaching it to the window, and then drawing the 3D
+ * scene, minimap, player on the minimap, and sprites. All in a loop.
+ * 
+ * @param param pointer to the game struct holding all game information
+ */
 void	draw_loop(void *param)
 {
 	t_game	*game;
@@ -30,6 +37,13 @@ void	draw_loop(void *param)
 	draw_sprites(game);
 }
 
+/**
+ * @brief iterates through each horizontal pixel column of the screen,
+ * casting a ray for each column to determine what is visible from the
+ * player's perspective and rendering the 3D view accordingly.
+ * 
+ * @param game struct with game information
+ */
 void	draw_3d_scene(t_game *game)
 {
 	int	x_coordinate;
@@ -42,6 +56,17 @@ void	draw_3d_scene(t_game *game)
 	}
 }
 
+/**
+ * @brief called at the end of the cast_ray function. Draws a vertical slice of
+ * the 3D scene on the x coordinate of the screen according to the ray
+ * information provided. Starts drawing the line from the top of the screen to
+ * the start of the wall, then draws the wall texture and finally draws the
+ * floor from the end of the wall to the bottom of the screen.
+ * 
+ * @param game struct with game information
+ * @param x x coordinate of the screen
+ * @param ray information about the ray casted on the x coordinate
+ */
 void	draw_vertical_line(t_game *game, int x, t_ray ray)
 {
 	int				y;
@@ -64,12 +89,22 @@ void	draw_vertical_line(t_game *game, int x, t_ray ray)
 		put_valid_pixel(game, x, y, game->map.floor);
 }
 
+/**
+ * @brief calculates the exact position on the wall where the ray hit,
+ * determines the corresponding texture coordinates, adjusts them if necessary,
+ * and calculates the step size and initial position for moving through the
+ * texture vertically.
+ * 
+ * @param game struct with game information
+ * @param ray information about the ray casted on the x coordinate
+ * @param texture_info information about the texture to be drawn
+ */
 void	calculate_texture_coordinates(t_game *game, t_ray *ray,
 		t_texture_info *texture_info)
 {
 	double	wall_x;
 
-	if (ray->side_hit == 0)
+	if (ray->side_hit == WEST_EAST)
 		wall_x = game->player.pos[Y] + ray->perpendicular_wall_distance
 			* ray->ray_dir[Y];
 	else
@@ -78,10 +113,10 @@ void	calculate_texture_coordinates(t_game *game, t_ray *ray,
 	wall_x -= floor(wall_x);
 	texture_info->texture_coord[X] = (int)(wall_x
 			* (double)(ray->wall_texture->width));
-	if (ray->side_hit == 0 && ray->ray_dir[X] > 0)
+	if (ray->side_hit == WEST_EAST && ray->ray_dir[X] > 0)
 		texture_info->texture_coord[X] = ray->wall_texture->width
 			- texture_info->texture_coord[X] - 1;
-	if (ray->side_hit == 1 && ray->ray_dir[Y] < 0)
+	if (ray->side_hit == NORTH_SOUTH && ray->ray_dir[Y] < 0)
 		texture_info->texture_coord[X] = ray->wall_texture->width
 			- texture_info->texture_coord[X] - 1;
 	texture_info->step = 1.0 * ray->wall_texture->height / ray->wall_height;
@@ -89,6 +124,16 @@ void	calculate_texture_coordinates(t_game *game, t_ray *ray,
 			+ ray->wall_height / 2) * (texture_info->step);
 }
 
+/**
+ * @brief calculates the position of a specific texel within a texture's pixel
+ * array and retrieves its color channels (RGBA), combining them into a single
+ * 32-bit integer representing the color.
+ * 
+ * @param texture texture to get the color from
+ * @param x x coordinate of the texel
+ * @param y y coordinate of the texel
+ * @return uint32_t color of the texel
+ */
 uint32_t	get_texel_color(mlx_texture_t *texture, int x, int y)
 {
 	uint8_t	*channel;
