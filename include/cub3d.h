@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/10 22:47:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/16 18:07:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <limits.h>
 # include <math.h>
 # include <errno.h>
-# include <string.h>
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
@@ -43,6 +42,12 @@ enum e_direction
 {
 	RIGHT = 1,
 	LEFT = -1
+};
+
+enum e_side
+{
+	WEST_EAST,
+	NORTH_SOUTH
 };
 
 enum e_texture_type
@@ -147,10 +152,6 @@ typedef struct s_game
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
 
-/*--------------parsing.c---------------*/
-void	parse_map(t_game *game, int argc, char *argv[]);
-
-
 /*--------------draw_line.c---------------*/
 
 void		draw_line(int start[2], int end[2], uint32_t color, t_game *game);
@@ -252,6 +253,6 @@ void		calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 
 void		put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 void		handle_mlx_error(t_game *game);
-void		handle_error(char *message);
+void		handle_error(t_game *game, char *message);
 
 #endif

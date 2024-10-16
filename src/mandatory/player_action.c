@@ -6,12 +6,20 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:52:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 21:13:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:05:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief toggles the state of doors in the game map based on the player's
+ * position. It iterates over the surrounding tiles within a 2-unit radius of
+ * the player's current position and toggles the state of any doors found.
+ * 
+ * @param game struct containing the game data
+ * @param pos player's current x and y position
+ */
 void	open_doors(t_game *game, double pos[2])
 {
 	t_map	map;
@@ -36,6 +44,13 @@ void	open_doors(t_game *game, double pos[2])
 	}
 }
 
+/**
+ * @brief responsible for marking a sprite as "killed" if the player's position
+ * is within a certain proximity to the sprite's position. 
+ * 
+ * @param game struct containing the game data
+ * @param pos player's current x and y position
+ */
 void	kill_sprites(t_game *game, double pos[2])
 {
 	t_map	*map;

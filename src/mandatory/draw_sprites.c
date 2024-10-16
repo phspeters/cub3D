@@ -6,12 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:13:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/29 21:19:12 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:44:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief checks if the sprite was killed, initializes it, calculates its
+ * dimensions, draws it on the screen, and handles sprite animation by updating
+ * the texture index and frame counter.
+ * 
+ * @param game struct with all game information
+ */
 void	draw_sprites(t_game *game)
 {
 	t_sprite		sprite;
@@ -28,7 +35,7 @@ void	draw_sprites(t_game *game)
 	}
 	initialize_sprite(game, &sprite);
 	calculate_sprite_dimensions(game, &sprite);
-	draw_sprite_stripes(game, &sprite, texture);
+	draw_sprite_columns(game, &sprite, texture);
 	(frame_counter)++;
 	if (frame_counter >= sprite.frames_per_texture)
 	{
@@ -37,6 +44,14 @@ void	draw_sprites(t_game *game)
 	}
 }
 
+/**
+ * @brief adjusts the sprite's position relative to the player, transforms it
+ * into the player's view space (always facing the player), and calculates the
+ * horizontal screen position where the sprite should be drawn.
+ * 
+ * @param game struct with all game information
+ * @param sprite information about the sprite
+ */
 void	initialize_sprite(t_game *game, t_sprite *sprite)
 {
 	sprite->pos[X] -= game->player.pos[X];
@@ -54,6 +69,15 @@ void	initialize_sprite(t_game *game, t_sprite *sprite)
 				+ sprite->transform[X] / sprite->transform[Y]));
 }
 
+/**
+ * @brief calculates the height and width of the sprite based on its distance
+ * from the player, and determines the start and end positions for drawing the
+ * sprite on the screen, ensuring that the sprite is correctly centered and
+ * clamped within the screen boundaries.
+ * 
+ * @param game struct with all game information
+ * @param sprite information about the sprite
+ */
 void	calculate_sprite_dimensions(t_game *game, t_sprite *sprite)
 {
 	sprite->height = abs((int)(game->screen_size[Y] / (sprite->transform[Y])));
@@ -72,30 +96,49 @@ void	calculate_sprite_dimensions(t_game *game, t_sprite *sprite)
 		sprite->draw_end[X] = game->screen_size[X] - 1;
 }
 
-void	draw_sprite_stripes(t_game *game, t_sprite *sprite,
+/**
+ * @brief iterates through the vertical columns of a sprite, calculates the
+ * corresponding texture coordinates, checks if the sprite is visible and not
+ * occluded by walls, and draws the sprite's pixels on the screen.
+ * 
+ * @param game struct with all game information
+ * @param sprite information about the sprite
+ * @param texture information about the sprite's texture
+ */
+void	draw_sprite_columns(t_game *game, t_sprite *sprite,
 		mlx_texture_t *texture)
 {
-	int	stripe;
+	int	column;
 
-	stripe = sprite->draw_start[X];
-	while (stripe < sprite->draw_end[X])
+	column = sprite->draw_start[X];
+	while (column < sprite->draw_end[X])
 	{
-		sprite->texture_coord[X] = (int)(256 * (stripe - (-sprite->width / 2
+		sprite->texture_coord[X] = (int)(256 * (column - (-sprite->width / 2
 						+ sprite->screen_x)) * texture->width / sprite->width)
 			/ 256;
-		if (sprite->transform[Y] > 0 && stripe > 0
-			&& stripe < game->screen_size[X]
+		if (sprite->transform[Y] > 0 && column > 0
+			&& column < game->screen_size[X]
 			&& sprite->transform[Y]
-			< game->player.wall_distance_on_camera_x[stripe])
+			< game->player.wall_distance_on_camera_x[column])
 		{
-			draw_sprite_pixels(game, sprite, texture, stripe);
+			draw_sprite_pixels(game, sprite, texture, column);
 		}
-		stripe++;
+		column++;
 	}
 }
 
+/**
+ * @brief iterates through the vertical pixels of a sprite, calculates the
+ * corresponding texture coordinates, retrieves the texel color from the
+ * texture, and draws the pixel on the screen.
+ * 
+ * @param game struct with all game information
+ * @param sprite information about the sprite
+ * @param texture information about the sprite's texture
+ * @param column 
+ */
 void	draw_sprite_pixels(t_game *game, t_sprite *sprite,
-		mlx_texture_t *texture, int stripe)
+		mlx_texture_t *texture, int column)
 {
 	int	y;
 
@@ -106,7 +149,7 @@ void	draw_sprite_pixels(t_game *game, t_sprite *sprite,
 			+ sprite->height * 128;
 		sprite->texture_coord[Y] = ((sprite->texture_y_position
 					* texture->height) / sprite->height) / 256;
-		put_valid_pixel(game, stripe, y, get_texel_color(texture,
+		put_valid_pixel(game, column, y, get_texel_color(texture,
 				sprite->texture_coord[X], sprite->texture_coord[Y]));
 		y++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/10 00:52:32 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/16 18:08:43 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,9 @@ int	main(int argc, char *argv[])
 {
 	t_game	game;
 
-	if (argc != 2)
-	{
-		handle_error("Usage: ./cub3D <map.cub>");
-		return (EXIT_FAILURE);
-	}
-	parse_map(&game, argc, argv);
-
-	//load_game_params(&game);
-	//start_game(&game);
-	//run_game_loop(&game);
-	//end_game(&game);
+	load_game_params(&game);
+	start_game(&game);
+	run_game_loop(&game);
+	end_game(&game);
 	return (EXIT_SUCCESS);
 }
