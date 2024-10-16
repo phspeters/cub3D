@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 16:22:08 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:27:48 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
  */
 void	handle_mlx_error(t_game *game)
 {
-	(void)game; //TODO: free stuff
+	end_game(game);
 	ft_fprintf(STDERR_FILENO, "%s.\n", mlx_strerror(mlx_errno));
 	exit(mlx_errno);
 }
@@ -57,7 +57,7 @@ void	handle_mlx_error(t_game *game)
  */
 void	handle_error(t_game *game, char *message)
 {
-	(void)game; //TODO: free stuff
+	end_game(game);
 	if (errno)
 	{
 		ft_fprintf(STDERR_FILENO, "Error\n");

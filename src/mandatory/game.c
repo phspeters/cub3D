@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 16:38:42 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:29:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * handles errors at each step by calling handle_mlx_error if any of the MLX
  * functions fail. The function sets up the graphical components necessary to
  * start the game.
- * 
+ *
  * @param game struct containing the game information
  */
 void	start_game(t_game *game)
@@ -39,7 +39,7 @@ void	start_game(t_game *game)
  * drawing, closing, player movement, keyboard actions, and mouse actions.
  * It hides the mouse cursor and enters the main loop to keep the application
  * running and responsive to events.
- * 
+ *
  * @param game struct containing the game information
  */
 void	run_game_loop(t_game *game)
@@ -61,29 +61,31 @@ void	run_game_loop(t_game *game)
  * resources when the game ends. It frees the player's wall distance array,
  * deletes all textures associated with the map and sprites, and terminates
  * the MLX window to ensure that no memory leaks occur.
- * 
+ *
  * @param game struct containing the game information
  */
 void	end_game(t_game *game)
 {
+	int	i;
+
+	i = -1;
 	free(game->player.wall_distance_on_camera_x);
-	mlx_delete_texture(game->map.textures[NORTH]);
-	mlx_delete_texture(game->map.textures[SOUTH]);
-	mlx_delete_texture(game->map.textures[WEST]);
-	mlx_delete_texture(game->map.textures[EAST]);
-	mlx_delete_texture(game->map.textures[DOOR]);
-	mlx_delete_texture(game->map.sprite.texture[0]);
-	mlx_delete_texture(game->map.sprite.texture[1]);
-	mlx_delete_texture(game->map.sprite.texture[2]);
-	mlx_delete_texture(game->map.sprite.texture[3]);
-	mlx_delete_texture(game->map.sprite.texture[4]);
-	mlx_delete_texture(game->map.sprite.texture[5]);
-	mlx_delete_texture(game->map.sprite.texture[6]);
-	mlx_delete_texture(game->map.sprite.texture[7]);
-	mlx_delete_texture(game->map.sprite.texture[8]);
-	mlx_delete_texture(game->map.sprite.death_animation[0]);
-	mlx_delete_texture(game->map.sprite.death_animation[1]);
-	mlx_delete_texture(game->map.sprite.death_animation[2]);
-	mlx_delete_texture(game->map.sprite.death_animation[3]);
+	while (++i < 5)
+	{
+		if (game->map.textures[i])
+			mlx_delete_texture(game->map.textures[i]);
+	}
+	i = -1;
+	while (++i < 9)
+	{
+		if (game->map.textures[i])
+			mlx_delete_texture(game->map.sprite.texture[i]);
+	}
+	i = -1;
+	while (++i < 4)
+	{
+		if (game->map.textures[i])
+			mlx_delete_texture(game->map.sprite.death_animation[i]);
+	}
 	mlx_terminate(game->window);
 }
