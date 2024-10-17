@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 16:18:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:56:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 	{
 		game->map.sprite.killed = 0;
 		tex_index = 0;
-		respawn_sprite(game);
+		randomize_sprite_position(game);
 	}
 }
 
@@ -52,7 +52,7 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
  * 
  * @param game 
  */
-void	respawn_sprite(t_game *game)
+void	randomize_sprite_position(t_game *game)
 {
 	int			new_sprite_pos[2];
 
@@ -64,5 +64,5 @@ void	respawn_sprite(t_game *game)
 		game->map.sprite.pos[Y] = new_sprite_pos[Y] + 0.5;
 	}
 	else
-		respawn_sprite(game);
+		randomize_sprite_position(game);
 }

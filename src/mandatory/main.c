@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/17 16:17:27 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:40:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	main(void)
 {
 	t_game	game;
 
-	load_game_params(&game);
+	init_params(&game);
+	load_params(&game);
 	start_game(&game);
 	run_game_loop(&game);
 	end_game(&game);

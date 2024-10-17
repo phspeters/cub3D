@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 16:46:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:22:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_texture_info
 
 typedef struct s_player
 {
+	char			start_dir;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
@@ -134,7 +135,7 @@ typedef struct s_map
 	uint32_t		ceiling;
 	uint32_t		floor;
 	t_sprite		sprite;
-	int				grid[MAP_HEIGHT][MAP_WIDTH];
+	int				**grid;
 	int				current[2];
 	int				width;
 	int				height;
@@ -193,8 +194,7 @@ void				draw_sprite_pixels(t_game *game, t_sprite *sprite,
 
 void				draw_death_animation_and_respawn(t_game *game,
 						t_sprite sprite);
-void				respawn_sprite(t_game *game);
-int					get_random_map_coordinate(int max);
+void				randomize_sprite_position(t_game *game);
 
 /*----------------game.c------------------*/
 
@@ -211,12 +211,19 @@ void				keyboard_action_loop_hook(mlx_key_data_t keydata,
 void				mouse_action_loop_hook(mouse_key_t button, action_t action,
 						modifier_key_t mod, void *param);
 
+/*-------------init_params.c--------------*/
+
+void				init_params(t_game *game);
+void				init_screen_params(t_game *game);
+void				init_player_params(t_game *game);
+void				init_textures_params(t_game *game);
+void				init_sprite_params(t_game *game);
+
 /*-------------load_params.c--------------*/
 
-void				load_game_params(t_game *game);
-void				load_map_and_screen_params(t_game *game);
+void				load_params(t_game *game);
+void				fake_load_map_params(t_game *game);
 void				load_player_params(t_game *game);
-void				set_player_start_dir(t_game *game, int start_dir);
 
 /*------------load_textures.c-------------*/
 
@@ -258,5 +265,6 @@ void				put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 void				handle_mlx_error(t_game *game, char *message);
 void				handle_error(t_game *game, char *message);
 mlx_texture_t		*ft_load_png(t_game *game, char *path);
+void				delete_textures(mlx_texture_t **textures, int count);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/17 17:06:30 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/10/17 19:53:23 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,14 @@ FILES		= 	main.c \
 				draw_sprites_utils.c \
 				game.c \
 				hooks.c \
+				init_params.c \
 				load_params.c \
 				load_textures.c \
 				player_action.c \
 				player_movement.c \
 				raycasting.c \
 				utils.c \
-				draw_line.c
+				draw_line.c \
 
 VPATH 		= 	./src:./src/mandatory
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)

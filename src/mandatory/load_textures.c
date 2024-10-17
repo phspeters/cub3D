@@ -6,12 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 16:46:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:31:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief initializes the textures for different parts of the game map by
+ * loading PNG images from specified file paths. It also sets the ceiling and
+ * floor colors for the map.
+ * 
+ * @param game struct containing all game info
+ */
 void	load_map_textures(t_game *game)
 {
 	t_map	*map;

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 16:45:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:59:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * but only if the coordinates are within the screen boundaries and the color
  * is not 0xFF00FFFF. It uses the mlx_put_pixel function to actually draw the
  * pixel on the image.
- * 
+ *
  * @param game struct with game info
  * @param x coordinate
  * @param y coordinate
@@ -38,7 +38,7 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 /**
  * @brief prints the appropriate error message and exits the program without
  * memory leaks when an error occurs in the mlx library.
- * 
+ *
  * @param game struct with game info
  */
 void	handle_mlx_error(t_game *game, char *message)
@@ -51,7 +51,7 @@ void	handle_mlx_error(t_game *game, char *message)
 /**
  * @brief prints the appropriate error message and exits the program without
  * memory leaks.
- * 
+ *
  * @param game struct with game info
  * @param message error message
  */
@@ -72,6 +72,15 @@ void	handle_error(t_game *game, char *message)
 	}
 }
 
+/**
+ * @brief attempts to load a PNG texture from a given file path and handles
+ * any errors that occur during the loading process. If successful, it returns
+ * the loaded texture.
+ * 
+ * @param game struct with game info
+ * @param path texture file path
+ * @return mlx_texture_t* 
+ */
 mlx_texture_t	*ft_load_png(t_game *game, char *path)
 {
 	mlx_texture_t	*texture;
@@ -80,4 +89,25 @@ mlx_texture_t	*ft_load_png(t_game *game, char *path)
 	if (!texture)
 		handle_mlx_error(game, "mlx_load_png");
 	return (texture);
+}
+
+/**
+ * @brief iterates over an array of texture pointers and deletes each texture
+ * that is not NULL using the mlx_delete_texture function from the MiniLibX
+ * library.
+ * 
+ * @param textures array of texture pointers
+ * @param count number of textures in the array
+ */
+void	delete_textures(mlx_texture_t **textures, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (textures[i])
+			mlx_delete_texture(textures[i]);
+		i++;
+	}
 }
