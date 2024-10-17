@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/16 18:08:43 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:17:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	g_map[MAP_HEIGHT][MAP_WIDTH] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-int	main(int argc, char *argv[])
+int	main(void)
 {
 	t_game	game;
 

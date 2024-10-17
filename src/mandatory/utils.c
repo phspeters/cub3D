@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:27:48 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:45:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
  * 
  * @param game struct with game info
  */
-void	handle_mlx_error(t_game *game)
+void	handle_mlx_error(t_game *game, char *message)
 {
 	end_game(game);
-	ft_fprintf(STDERR_FILENO, "%s.\n", mlx_strerror(mlx_errno));
+	ft_fprintf(STDERR_FILENO, "%s: %s.\n", message, mlx_strerror(mlx_errno));
 	exit(mlx_errno);
 }
 
@@ -70,4 +70,14 @@ void	handle_error(t_game *game, char *message)
 		ft_fprintf(STDERR_FILENO, "%s.\n", message);
 		exit(EXIT_FAILURE);
 	}
+}
+
+mlx_texture_t	*ft_load_png(t_game *game, char *path)
+{
+	mlx_texture_t	*texture;
+
+	texture = mlx_load_png(path);
+	if (!texture)
+		handle_mlx_error(game, "mlx_load_png");
+	return (texture);
 }

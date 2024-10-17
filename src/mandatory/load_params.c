@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 16:51:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:26:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
  * load map and screen parameters, player parameters, map textures, and sprite
  * textures. Ensures that all necessary game data is loaded and initialized
  * before the game starts.
- * 
- * @param game 
+ *
+ * @param game
  */
 void	load_game_params(t_game *game)
 {
@@ -54,8 +54,8 @@ void	load_player_params(t_game *game)
 	game->player.dir[Y] = 0;
 	game->player.plane[X] = 0;
 	game->player.plane[Y] = 0;
-	game->player.wall_distance_on_camera_x = malloc(sizeof(double)
-			* (game->screen_size[X] + 1));
+	game->player.wall_distance_on_camera_x = ft_safalloc(sizeof(double),
+			(game->screen_size[X] + 1));
 	set_player_start_dir(game, 'N');
 }
 

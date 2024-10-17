@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 16:30:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:18:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 	texture = sprite.death_animation[tex_index];
 	initialize_sprite(game, &sprite);
 	calculate_sprite_dimensions(game, &sprite);
-	draw_sprite_stripes(game, &sprite, texture);
+	draw_sprite_columns(game, &sprite, texture);
 	frame_counter++;
 	if (frame_counter >= sprite.frames_per_texture)
 	{

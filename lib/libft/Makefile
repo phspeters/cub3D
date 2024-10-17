@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/17 16:51:34 by pehenri2          #+#    #+#              #
-#    Updated: 2023/11/21 13:06:51 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/10/17 16:12:43 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FILES = ft_isalpha.c			ft_isdigit.c			ft_isalnum.c			ft_isascii.c			ft_isprint.c
 																															\
 		ft_isspace.c    		ft_issign.c				ft_putnbr_base_fd.c		ft_count_words.c		ft_nbrlen.c			\
 		ft_putptr_fd.c			ft_free_ptr_array.c		ft_free_str_array.c		ft_strtoupper.c			ft_strtolower.c		\
-		ft_atoi_base.c			ft_free_str.c			ft_fprintf.c																				\
+		ft_atoi_base.c			ft_free_str.c			ft_fprintf.c			ft_safalloc.c								\
 																															\
 		ft_get_next_line.c		ft_printf.c
 OBJ = $(FILES:.c=.o)

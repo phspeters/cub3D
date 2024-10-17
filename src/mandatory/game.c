@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:29:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:48:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	start_game(t_game *game)
 	game->window = mlx_init(game->screen_size[X], game->screen_size[Y],
 			"Cube3D", false);
 	if (!game->window)
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_init");
 	game->image = mlx_new_image(game->window, game->screen_size[X],
 			game->screen_size[Y]);
 	if (!game->image)
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_new_image");
 	if (mlx_image_to_window(game->window, game->image, 0, 0) == -1)
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_image_to_window");
 }
 
 /**
@@ -45,11 +45,11 @@ void	start_game(t_game *game)
 void	run_game_loop(t_game *game)
 {
 	if (!mlx_loop_hook(game->window, draw_loop, game))
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_loop_hook");
 	if (!mlx_loop_hook(game->window, close_loop_hook, game))
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_loop_hook");
 	if (!mlx_loop_hook(game->window, move_player_loop_hook, game))
-		handle_mlx_error(game);
+		handle_mlx_error(game, "mlx_loop_hook");
 	mlx_key_hook(game->window, keyboard_action_loop_hook, game);
 	mlx_mouse_hook(game->window, mouse_action_loop_hook, game);
 	mlx_set_cursor_mode(game->window, MLX_MOUSE_HIDDEN);
@@ -69,7 +69,7 @@ void	end_game(t_game *game)
 	int	i;
 
 	i = -1;
-	free(game->player.wall_distance_on_camera_x);
+	ft_free_all_memory();
 	while (++i < 5)
 	{
 		if (game->map.textures[i])
