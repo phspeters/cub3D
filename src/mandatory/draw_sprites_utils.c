@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 19:56:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:15:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * textures. It initializes and calculates the sprite's dimensions, draws the
  * sprite, and updates the frame counter. Once the animation sequence is
  * complete, it resets the sprite's state and respawns it.
- * 
+ *
  * @param game struct containing all the game information
  * @param sprite information about the sprite to be drawn
  */
@@ -49,15 +49,15 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
  * @brief generates a random position for the sprite within the map boundaries
  * and checks if the position is empty. If it is, it updates the sprite's
  * position. If not, it recursively tries again until a valid position is found.
- * 
- * @param game 
+ *
+ * @param game
  */
 void	randomize_sprite_position(t_game *game)
 {
-	int			new_sprite_pos[2];
+	int	new_sprite_pos[2];
 
-	new_sprite_pos[X] = rand() % game->map.width;
-	new_sprite_pos[Y] = rand() % game->map.height;
+	new_sprite_pos[X] = get_random_position(game->map.width);
+	new_sprite_pos[Y] = get_random_position(game->map.height);
 	if (g_map[new_sprite_pos[Y]][new_sprite_pos[X]] == 0)
 	{
 		game->map.sprite.pos[X] = new_sprite_pos[X] + 0.5;
@@ -65,4 +65,24 @@ void	randomize_sprite_position(t_game *game)
 	}
 	else
 		randomize_sprite_position(game);
+}
+
+int	get_random_position(int max_pos)
+{
+	static unsigned long	seed;
+	static int				initialized = 0;
+	int						fd;
+
+	if (!initialized)
+	{
+		fd = open("/dev/urandom", O_RDONLY);
+		if (fd < 0 || read(fd, &seed, sizeof(seed)) != sizeof(seed))
+		{
+			seed = rand();
+		}
+		close(fd);
+		initialized = 1;
+	}
+	seed = seed * 1103515245 + 12345;
+	return (seed % max_pos);
 }

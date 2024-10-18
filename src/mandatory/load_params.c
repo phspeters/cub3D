@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:33:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:52:13 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
  */
 void	load_params(t_game *game)
 {
-	game->map.width = MAP_WIDTH;
-	game->map.height = MAP_HEIGHT;
 	fake_load_map_params(game);
 	load_player_params(game);
 	load_map_textures(game);

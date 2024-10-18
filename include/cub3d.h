@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:22:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:15:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void				draw_sprite_pixels(t_game *game, t_sprite *sprite,
 void				draw_death_animation_and_respawn(t_game *game,
 						t_sprite sprite);
 void				randomize_sprite_position(t_game *game);
+int					get_random_position(int max_pos);
 
 /*----------------game.c------------------*/
 
