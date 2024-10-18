@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 17:09:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:29:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,8 @@ void	move_player_loop_hook(void *param)
 void	keyboard_action_loop_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game		*game;
-	t_map		*map;
 
 	game = param;
-	map = &game->map;
-	(void)(map);
 	if ((keydata.key == MLX_KEY_SPACE) && (keydata.action == MLX_PRESS))
 	{
 		open_doors(game, game->player.pos);

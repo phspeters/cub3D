@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 21:15:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:00:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MINIMAP_SIZE 25
@@ -65,6 +63,14 @@ enum				e_minimap_colors
 	FLOOR_COLOR = 0x000000FF,
 	DOOR_COLOR = 0x0000FFFF,
 	PLAYER_COLOR = 0xFF0000FF
+};
+
+enum				e_map_elements
+{
+	OPEN_DOOR = -2,
+	EMPTY = 0,
+	WALL = 1,
+	CLOSED_DOOR = 2,
 };
 
 typedef struct s_line_info
@@ -150,8 +156,6 @@ typedef struct s_game
 	t_player		player;
 	int32_t			screen_size[2];
 }					t_game;
-
-extern int			g_map[MAP_HEIGHT][MAP_WIDTH];
 
 /*--------------draw_line.c---------------*/
 

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 21:15:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:57:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
  */
 void	randomize_sprite_position(t_game *game)
 {
-	int	new_sprite_pos[2];
+	t_map	map;
+	int		new_sprite_pos[2];
 
+	map = game->map;
 	new_sprite_pos[X] = get_random_position(game->map.width);
 	new_sprite_pos[Y] = get_random_position(game->map.height);
-	if (g_map[new_sprite_pos[Y]][new_sprite_pos[X]] == 0)
+	if (map.grid[new_sprite_pos[Y]][new_sprite_pos[X]] == EMPTY)
 	{
 		game->map.sprite.pos[X] = new_sprite_pos[X] + 0.5;
 		game->map.sprite.pos[Y] = new_sprite_pos[Y] + 0.5;

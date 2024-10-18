@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:52:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 17:05:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:04:25 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief toggles the state of doors in the game map based on the player's
  * position. It iterates over the surrounding tiles within a 2-unit radius of
  * the player's current position and toggles the state of any doors found.
- * 
+ *
  * @param game struct containing the game data
  * @param pos player's current x and y position
  */
@@ -27,7 +27,6 @@ void	open_doors(t_game *game, double pos[2])
 	int		cur[2];
 
 	map = game->map;
-	(void)map;
 	cur[X] = pos[X];
 	cur[Y] = pos[Y];
 	offset[X] = -2;
@@ -36,18 +35,19 @@ void	open_doors(t_game *game, double pos[2])
 		offset[Y] = -2;
 		while (++offset[Y] < 2)
 		{
-			if (g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] == 'D'
-				|| g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] == - 'D')
-				g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] = -g_map[cur[Y]
-					+ offset[Y]][cur[X] + offset[X]];
+			if (map.grid[cur[Y] + offset[Y]][cur[X] + offset[X]] == CLOSED_DOOR
+				|| map.grid[cur[Y] + offset[Y]][cur[X]
+				+ offset[X]] == OPEN_DOOR)
+				map.grid[cur[Y] + offset[Y]][cur[X] + offset[X]] = \
+					-map.grid[cur[Y] + offset[Y]][cur[X] + offset[X]];
 		}
 	}
 }
 
 /**
  * @brief responsible for marking a sprite as "killed" if the player's position
- * is within a certain proximity to the sprite's position. 
- * 
+ * is within a certain proximity to the sprite's position.
+ *
  * @param game struct containing the game data
  * @param pos player's current x and y position
  */

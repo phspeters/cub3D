@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 17:33:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:06:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ void	perform_dda(t_map *map, t_ray *ray)
 			map->current[Y] += ray->grid_step[Y];
 			ray->side_hit = NORTH_SOUTH;
 		}
-		if (g_map[map->current[Y]][map->current[X]] > 0)
-			ray->hit = g_map[map->current[Y]][map->current[X]];
+		if (map->grid[map->current[Y]][map->current[X]] > EMPTY)
+			ray->hit = map->grid[map->current[Y]][map->current[X]];
 	}
 }
 
@@ -170,7 +170,7 @@ void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 	ray->wall_line_end = ray->wall_height / 2 + game->screen_size[Y] / 2;
 	if (ray->wall_line_end >= game->screen_size[Y])
 		ray->wall_line_end = game->screen_size[Y] - 1;
-	if (ray->hit == 'D')
+	if (ray->hit == CLOSED_DOOR)
 		ray->wall_texture = game->map.textures[DOOR];
 	else if (ray->side_hit == NORTH_SOUTH && ray->ray_dir[Y] < 0)
 		ray->wall_texture = game->map.textures[NORTH];

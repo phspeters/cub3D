@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:19:26 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 17:15:12 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:58:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * key presses (W and S) and updating the player's position accordingly. It
  * also checks for collisions with the game map to ensure the player does not
  * move into blocked areas.
- * 
+ *
  * @param game struct containing the game data
  * @param player struct containing the player's data
  * @param move_speed multiplier for the player's movement speed
@@ -26,22 +26,25 @@
 void	move_player_forward_backward(t_game *game, t_player *player,
 		double move_speed, double collision_distance)
 {
+	t_map	map;
+
+	map = game->map;
 	if (mlx_is_key_down(game->window, MLX_KEY_W))
 	{
-		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] + player->dir[X]
-			* (move_speed + collision_distance))] <= 0)
+		if (map.grid[(int)player->pos[Y]][(int)(player->pos[X] + player->dir[X]
+			* (move_speed + collision_distance))] <= EMPTY)
 			player->pos[X] += player->dir[X] * move_speed;
-		if (g_map[(int)(player->pos[Y] + player->dir[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] <= 0)
+		if (map.grid[(int)(player->pos[Y] + player->dir[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] <= EMPTY)
 			player->pos[Y] += player->dir[Y] * move_speed;
 	}
 	if (mlx_is_key_down(game->window, MLX_KEY_S))
 	{
-		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] - player->dir[X]
-			* (move_speed + collision_distance))] <= 0)
+		if (map.grid[(int)player->pos[Y]][(int)(player->pos[X] - player->dir[X]
+			* (move_speed + collision_distance))] <= EMPTY)
 			player->pos[X] -= player->dir[X] * move_speed;
-		if (g_map[(int)(player->pos[Y] - player->dir[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] <= 0)
+		if (map.grid[(int)(player->pos[Y] - player->dir[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] <= EMPTY)
 			player->pos[Y] -= player->dir[Y] * move_speed;
 	}
 }
@@ -51,7 +54,7 @@ void	move_player_forward_backward(t_game *game, t_player *player,
  * (D and A) and updating the player's position accordingly. It also checks
  * for collisions with the game map to ensure the player does not move into
  * blocked areas.
- * 
+ *
  * @param game struct containing the game data
  * @param player struct containing the player's data
  * @param move_speed multiplier for the player's movement speed
@@ -60,22 +63,25 @@ void	move_player_forward_backward(t_game *game, t_player *player,
 void	strafe_player_left_right(t_game *game, t_player *player,
 		double move_speed, double collision_distance)
 {
+	t_map	map;
+
+	map = game->map;
 	if (mlx_is_key_down(game->window, MLX_KEY_D))
 	{
-		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] + player->plane[X]
-			* (move_speed + collision_distance))] <= 0)
+		if (map.grid[(int)player->pos[Y]][(int)(player->pos[X]
+			+ player->plane[X] * (move_speed + collision_distance))] <= EMPTY)
 			player->pos[X] += player->plane[X] * move_speed;
-		if (g_map[(int)(player->pos[Y] + player->plane[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] <= 0)
+		if (map.grid[(int)(player->pos[Y] + player->plane[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] <= EMPTY)
 			player->pos[Y] += player->plane[Y] * move_speed;
 	}
 	if (mlx_is_key_down(game->window, MLX_KEY_A))
 	{
-		if (g_map[(int)player->pos[Y]][(int)(player->pos[X] - player->plane[X]
-			* (move_speed + collision_distance))] <= 0)
+		if (map.grid[(int)player->pos[Y]][(int)(player->pos[X]
+			- player->plane[X] * (move_speed + collision_distance))] <= EMPTY)
 			player->pos[X] -= player->plane[X] * move_speed;
-		if (g_map[(int)(player->pos[Y] - player->plane[Y] * (move_speed
-					+ collision_distance))][(int)player->pos[X]] <= 0)
+		if (map.grid[(int)(player->pos[Y] - player->plane[Y] * (move_speed
+					+ collision_distance))][(int)player->pos[X]] <= EMPTY)
 			player->pos[Y] -= player->plane[Y] * move_speed;
 	}
 }
@@ -84,7 +90,7 @@ void	strafe_player_left_right(t_game *game, t_player *player,
  * @brief handles the player's rotation based on keyboard input. It checks if
  * the left or right arrow keys are pressed and rotates the player's direction
  * and plane accordingly.
- * 
+ *
  * @param game struct containing the game data
  * @param player struct containing the player's data
  * @param rot_speed multiplier for the player's rotation speed
@@ -102,7 +108,7 @@ void	keyboard_rotate_player(t_game *game, t_player *player, double rot_speed)
  * mouse is to the right of the screen center, the player rotates right; if to
  * the left, the player rotates left. After adjusting the player's direction,
  * the function re-centers the mouse cursor to the middle of the screen.
- * 
+ *
  * @param game struct containing the game data
  * @param player struct containing the player's data
  * @param rot_speed multiplier for the player's rotation speed
@@ -130,7 +136,7 @@ void	mouse_rotate_player(t_game *game, t_player *player, double rot_speed)
  * on the specified rotation speed and direction. It uses trigonometric
  * functions to calculate the new direction and plane vectors, allowing
  * the player to look left or right in the game.
- * 
+ *
  * @param player struct containing the player's data
  * @param rot_speed multiplier for the player's rotation speed
  * @param direction which way the player should rotate (LEFT or RIGHT)

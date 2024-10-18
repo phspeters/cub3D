@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 13:01:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:52:13 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:48:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fake_load_map_params(t_game *game)
 				game->player.start_dir = line[col];
 				line[col] = '0';
 			}
-			game->map.grid[row][col] = ft_atoi(&line[col]);
+			game->map.grid[row][col] = line[col] - '0';
 			col++;
 		}
 		row++;

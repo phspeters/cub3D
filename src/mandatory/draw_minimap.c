@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/16 16:08:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:00:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	draw_minimap_block(int start[2], int minimap_coord[2], double x_offset,
 	if (map.current[X] >= 0 && map.current[X] < map.width && map.current[Y] >= 0
 		&& map.current[Y] < map.height)
 	{
-		if (g_map[map.current[Y]][map.current[X]] == 1)
+		if (map.grid[map.current[Y]][map.current[X]] == WALL)
 			draw_block(block_start, map.minimap_block_size, WALL_COLOR, game);
-		else if (g_map[map.current[Y]][map.current[X]] == 'D'
-			|| g_map[map.current[Y]][map.current[X]] == - 'D')
+		else if (map.grid[map.current[Y]][map.current[X]] == CLOSED_DOOR
+			|| map.grid[map.current[Y]][map.current[X]] == OPEN_DOOR)
 			draw_block(block_start, map.minimap_block_size, DOOR_COLOR, game);
 		else
 			draw_block(block_start, map.minimap_block_size, FLOOR_COLOR, game);
