@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:20:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/12 15:59:02 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/19 13:29:31 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	is_dir(char *argv_file)
 {
 	int		fd;
 	bool	ret;
-	
+
 	ret = false;
 	fd = open(argv_file, __O_DIRECTORY);
 	if (fd >= 0)
