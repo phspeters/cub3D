@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/19 14:25:16 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:54:43 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,15 @@ typedef struct s_game
 }					t_game;
 
 extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
+
+/*--------------debugging.c---------------*/
+void	print_texture_paths(t_game *game);
+
+/*--------------texture.c---------------*/
+int		is_texture_line(char *line);
+int		is_texture_exists(char *texture_path);
+int		validate_textures(t_game *game, char *line);
+int		validate_all_textures(t_game *game);
 
 /*--------------chack_file.c---------------*/
 int		check_file(char *argv_file, bool cub);

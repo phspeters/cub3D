@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/12 16:01:29 by codespace        ###   ########.fr        #
+#    Updated: 2024/10/19 16:08:58 by roglopes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ HEADERS		= 	-I ./include -I $(LIBFT)
 LIBS		= 	$(LIBFT)/libft.a
 FILES		= 	main.c \
 				parsing/parsing.c \
-				parsing/check_file.c
+				parsing/check_texture.c \
+				parsing/check_file.c \
+				debugging/debugging.c
 
 VPATH 		= 	./src:./src/mandatory/
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)

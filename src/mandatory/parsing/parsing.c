@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/19 15:08:56 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:02:38 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,65 +44,10 @@ int	validate_rgb(char *line)
 	b = -1;
 	if (sscanf(line, "C %d,%d,%d", &r, &g, &b) != 3 && \
 		sscanf(line, "F %d,%d,%d", &r, &g, &b) != 3)
-		return (FAILURE);
+		return (0);
 	if ((r < 0 || r > 255) || (g < 0 || g >  255) || (b < 0 || b > 255))
-		return (FAILURE);
-	return (SUCCESS);
-}
-
-int	is_texture_line(char *line)
-{
-	return (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
-			|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0);
-}
-
-int	is_texture_exists(char *texture_path)
-{
-	if (access(texture_path, F_OK) != -1)
-	{
-		printf("%s \n", texture_path);
-		return (1);
-	}
-	else
 		return (0);
-}
-
-int	validate_textures(t_game *game, char *line)
-{
-	char	*texture_path;
-	int		valid;
-
-	valid = 1;
-	if (ft_strncmp(line, "NO ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		//game->map.texture_path[NORTH] = texture_path;
-		printf("NO \n");
-	}
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		//game->map.texture_path[SOUTH] = texture_path;
-		printf("SO \n");
-	}
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		//game->map.texture_path[WEST] = texture_path;
-		printf("WE \n");
-	}
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		//game->map.texture_path[EAST] = texture_path;
-		printf("EA \n");
-	}
-	else
-		return (0);
-	if (!is_texture_exists(texture_path))
-		valid = 0;
-	free (texture_path);
-	return (valid);
+	return (1);
 }
 
 void	parse_map(t_game *game, int argc, char *argv[])
@@ -122,21 +67,23 @@ void	parse_map(t_game *game, int argc, char *argv[])
 	}
 	while ((line = ft_get_next_line(fd)) != NULL)
 	{
-		//printf("Linha lida: %s", line);  // Imprime a linha lida
+		//printf("Linha lida: %s", line); // Imprime a linha lida
 		if (ft_strlen(line) > 0)
 		{
 			if (is_texture_line(line))
 			{
 				if (!validate_textures(game, line))
-					handle_error("Invalid texture path or type");
+					handle_error("Invalid texture path or type.");
 			}
-/* 			else if (is_rgb_line(line))
+			else if (is_rgb_line(line))
 			{
 				if (!validate_rgb(line))
-					handle_error("Invalid RGB values");
-			} */
+					handle_error("Invalid RGB values.");
+			}
 		}
 		free(line);
 	}
 	close(fd);
+	if (!validate_all_textures(game))
+		handle_error("Missing mandatory texture.");
 }
