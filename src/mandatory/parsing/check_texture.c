@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/10/19 17:55:07 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:23:07 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	validate_all_textures(t_game *game)
 {
 	if (game->map.texture_path[NORTH] == NULL)
 	{
-		handle_error("Missing texture for SOUTH.\n");
+		handle_error("Missing texture for NORTH.\n");
 		return (0);
 	}
 	if (game->map.texture_path[SOUTH] == NULL)

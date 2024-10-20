@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/19 17:54:43 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:57:15 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <math.h>
 # include <errno.h>
 # include <string.h>
+# include <stdint.h>
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
@@ -131,6 +132,8 @@ typedef struct s_map
 	t_sprite		sprite;
 	int				grid[MAP_HEIGHT][MAP_WIDTH];
 	int				current[2];
+	uint32_t		ceiling;
+	uint32_t		floor;
 	int				width;
 	int				height;
 	int				minimap_block_size;
@@ -146,6 +149,7 @@ extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
 
 /*--------------debugging.c---------------*/
 void	print_texture_paths(t_game *game);
+void	print_rgb_values(t_game *game);
 
 /*--------------texture.c---------------*/
 int		is_texture_line(char *line);

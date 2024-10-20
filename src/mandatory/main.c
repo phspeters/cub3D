@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/19 18:04:32 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:41:27 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ int	g_map[MAP_HEIGHT][MAP_WIDTH] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
+void	init_texture_params(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 5)
+		game->map.texture_path[i] = NULL;
+	//game->map.ceiling = 0;
+	//game->map.floor = 0;
+}
 
 
 int	main(int argc, char *argv[])
@@ -50,8 +60,10 @@ int	main(int argc, char *argv[])
 		handle_error("Usage: ./cub3D <map.cub> or check if file end with .cub");
 		return (EXIT_FAILURE);
 	}
+	init_texture_params(&game);
 	parse_map(&game, argc, argv);
 	print_texture_paths(&game);
+	print_rgb_values(&game);
 
 	//load_game_params(&game);
 	//start_game(&game);
