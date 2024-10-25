@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:31:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:37:55 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,5 @@ void	load_sprite_textures(t_game *game)
 	map->sprite.death_animation[2] = ft_load_png(game, "./assets/death2.png");
 	map->sprite.death_animation[3] = ft_load_png(game, "./assets/death3.png");
 }
+// Attribution for sprite textures
+// Sprites by PiXeRaT (https://opengameart.org/users/pixerat)
