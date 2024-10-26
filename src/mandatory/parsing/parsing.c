@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/20 15:45:30 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:18:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,80 +28,113 @@ void	handle_error(char *message)
 	}
 }
 
-int	validate_floor_ceiling(t_game *game)
+// Função que valida a estrutura do mapa
+int validate_map(t_game *game)
 {
-	if (game->map.ceiling == 0)
+	int	i;
+	int	j;
+	int	player_count; // Inicializando variáveis
+
+	i = 0;
+	j = 0;
+	player_count = 0;
+	// Verifica se as bordas do mapa são paredes
+	while (i < game->map.height)
 	{
-		handle_error("Ceiling color not set.\n");
-		return (0);
+		if (game->map.grid[i][0] != 1 || game->map.grid[i][game->map.width - 1] != 1)
+			return (0); // Mapa inválido
+		i++;
 	}
-	if (game->map.floor == 0)
+	// Verifica as primeiras e últimas linhas
+	i = 0; // Reinicia i
+	while (i < game->map.width)
 	{
-		handle_error("Floor color not set.\n");
-		return (0);
+		if (game->map.grid[0][i] != 1 || game->map.grid[game->map.height - 1][i] != 1)
+			return (0); // Mapa inválido
+		i++;
 	}
-	return (1);
-}
-
-int	is_rgb_line(char *line)
-{
-	return (ft_strncmp(line, "C ", 2) == 0 || ft_strncmp(line, "F ", 2) == 0);
-}
-
-int	parse_rgb_value(char **line_ptr, int *value)
-{
-	while (**line_ptr == ' ' || **line_ptr == '\t')
-		(*line_ptr)++;
-	*value = ft_atoi(*line_ptr);
-	if (*value < 0 || *value > 255)
-		return (0);
-	while (**line_ptr >= '0' && **line_ptr <= '9')
-		(*line_ptr)++;
-	while (**line_ptr == ' ' || **line_ptr == '\t')
-		(*line_ptr)++;
-	return (1);
-}
-
-int	parse_rgb(t_game *game, char *line)
-{
-	int			r;
-	int			g;
-	int			b;
-	uint32_t	color;
-	char		c_or_f;
-
-	if (line[0] == 'C' || line[0] == 'F')
+	// Verifica a presença do jogador e caracteres inválidos
+	i = 0; // Reinicia i
+	while (i < game->map.height)
 	{
-		c_or_f = line[0];
-		printf("Linha lida: %s", line);
-		line++;
-		if (!parse_rgb_value(&line, &r) || *line != ',')
-			return (0);
-		line++;
-		if (!parse_rgb_value(&line, &g) || *line != ',')
-			return (0);
-		line++;
-		if (!parse_rgb_value(&line, &b))
-			return (0);
-		color = (r << 16) | (g << 8) | b;
-		printf("Linha lida: %c", c_or_f);
-		if (c_or_f == 'C')
-			game->map.ceiling = color;
+		j = 0; // Reinicia j
+		while (j < game->map.width)
+		{
+			if (game->map.grid[i][j] == 'N' || game->map.grid[i][j] == 'S' ||
+				game->map.grid[i][j] == 'E' || game->map.grid[i][j] == 'W')
+				player_count++;
+			j++;
+		}
+		i++;
+	}
+	if (player_count != 1) // Verifica se existe exatamente um jogador
+		return (0); // Mapa inválido
+
+	return (1); // Mapa válido
+}
+
+void	set_player_start_dir(t_game *game, int start_dir)
+{
+	if (start_dir == 'W')
+	{
+		game->player.dir[X] = -1;
+		game->player.dir[Y] = 0;
+		game->player.plane[X] = 0;
+		game->player.plane[Y] = -0.66;
+	}
+	else if (start_dir == 'E')
+	{
+		game->player.dir[X] = 1;
+		game->player.dir[Y] = 0;
+		game->player.plane[X] = 0;
+		game->player.plane[Y] = 0.66;
+	}
+	else if (start_dir == 'S')
+	{
+		game->player.dir[Y] = 1;
+		game->player.dir[Y] = 0;
+		game->player.plane[X] = 0;
+		game->player.plane[X] = -0.66;
+	}
+	else if (start_dir == 'N')
+	{
+		game->player.dir[Y] = -1;
+		game->player.dir[Y] = 0;
+		game->player.plane[X] = 0;
+		game->player.plane[X] = 0.66;
+	}
+}
+
+void process_map_line(t_game *game, char *line)
+{
+	int	j;
+
+	j = 0;
+	while (line[j])
+	{
+		printf("Line: %c\n", line[j]);
+		// Valida o caractere atual
+		if (line[j] == '1')
+			game->map.grid[game->map.current[0]][j] = 1; // Paredes
+		else if (line[j] == '0')
+			game->map.grid[game->map.current[0]][j] = 0; // Espaço vazio
+		else if (line[j] == 'N' || line[j] == 'S' ||
+				line[j] == 'E' || line[j] == 'W')
+		{
+			// Posição inicial do jogador
+			game->player.pos[X] = game->map.current[0];
+			game->player.pos[Y] = j;
+			game->map.grid[game->map.current[0]][j] = 0; // Espaço vazio onde o jogador está
+			set_player_start_dir(game, line[j]);
+		}
 		else
-			game->map.floor = color;
-		return (1);
+		{
+			handle_error("Invalid character in map.");
+			return ; // Não continua se há caracteres inválidos
+		}
+		j++;
 	}
-	return (0);
-}
-
-int	validate_rgb(t_game *game, char *line)
-{
-	if (!parse_rgb(game, line))
-	{
-		handle_error("Invalid RGB values.");
-		return (0);
-	}
-	return (1);
+	game->map.current[0]++; // Incrementa a linha atual
 }
 
 void	parse_map(t_game *game, int argc, char *argv[])
@@ -134,12 +167,16 @@ void	parse_map(t_game *game, int argc, char *argv[])
 				if (!validate_rgb(game, line))
 					handle_error("Invalid RGB values.");
 			}
+			else
+				process_map_line(game, line);
 		}
 		free(line);
 	}
 	close(fd);
 	if (!validate_all_textures(game))
 		handle_error("Missing mandatory texture.");
-/* 	if (!validate_floor_ceiling(game))
-		handle_error("Missing floor or ceiling color."); */
+	if (!validate_floor_ceiling(game))
+		handle_error("Missing floor or ceiling color.");
+	if (!validate_map(game))
+		handle_error("Map validation failed");
 }

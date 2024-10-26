@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 15:31:48 by roglopes          #+#    #+#             */
-/*   Updated: 2024/10/20 14:56:28 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:25:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	print_rgb_values(t_game *game)
 	if (game->map.ceiling == 0)
 		ft_printf("Ceiling color not set. \n");
 	else
-		ft_printf("Ceiling color: %#010x\n", game->map.ceiling);
+		printf("Ceiling color: %#010x\n", game->map.ceiling);
 	if (game->map.floor == 0)
 		ft_printf("Floor color not set. \n");
 	else
-		ft_printf("Floor color: %#010x\n", game->map.floor);
+		printf("Floor color: %#010x\n", game->map.floor);
 }

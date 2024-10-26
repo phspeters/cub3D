@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/19 16:08:58 by roglopes         ###   ########.fr        #
+#    Updated: 2024/10/26 19:53:36 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FILES		= 	main.c \
 				parsing/parsing.c \
 				parsing/check_texture.c \
 				parsing/check_file.c \
+				parsing/check_rgb.c \
 				debugging/debugging.c
 
 VPATH 		= 	./src:./src/mandatory/

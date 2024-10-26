@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/20 15:41:27 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:52:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	init_texture_params(t_game *game)
 	i = -1;
 	while (++i < 5)
 		game->map.texture_path[i] = NULL;
-	//game->map.ceiling = 0;
-	//game->map.floor = 0;
+	game->map.ceiling = 0;
+	game->map.floor = 0;
 }
 
 

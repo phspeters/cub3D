@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/20 14:57:15 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:46:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,21 @@ extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
 void	print_texture_paths(t_game *game);
 void	print_rgb_values(t_game *game);
 
-/*--------------texture.c---------------*/
+/*--------------chack_file.c---------------*/
+int		check_file(char *argv_file, bool cub);
+
+/*--------------check_texture.c---------------*/
 int		is_texture_line(char *line);
 int		is_texture_exists(char *texture_path);
 int		validate_textures(t_game *game, char *line);
 int		validate_all_textures(t_game *game);
 
-/*--------------chack_file.c---------------*/
-int		check_file(char *argv_file, bool cub);
+/*--------------check_rgb.c---------------*/
+int		is_rgb_line(char *line);
+int		parse_rgb_value(char **line_ptr, int *value);
+int		parse_rgb(t_game *game, char *line);
+int		validate_rgb(t_game *game, char *line);
+int		validate_floor_ceiling(t_game *game);
 
 /*--------------parsing.c---------------*/
 void	parse_map(t_game *game, int argc, char *argv[]);
