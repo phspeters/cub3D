@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/26 19:46:08 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/27 21:20:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,20 @@
 # define MAP_HEIGHT 24
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
+# define MAX_MAP_SIZE 1000
 # define MINIMAP_SIZE 25
 # define MOVEMENT_SPEED_MULTIPLIER 5.0
 # define ROTATION_SPEED_MULTIPLIER 2.0
 # define COLLISION_DISTANCE_MULTIPLIER 2
+
+#define WALL 1         // Caracter que representa uma parede
+#define EMPTY 0        // Caracter que representa um espaço vazio
+
+// Estrutura de posição
+typedef struct {
+    int x;
+    int y;
+} t_pos;
 
 enum e_output
 {
@@ -120,6 +130,7 @@ typedef struct s_texture_info
 
 typedef struct s_player
 {
+	char			start_dir;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
@@ -130,7 +141,7 @@ typedef struct s_map
 {
 	char			*texture_path[5];
 	t_sprite		sprite;
-	int				grid[MAP_HEIGHT][MAP_WIDTH];
+	int				**grid;
 	int				current[2];
 	uint32_t		ceiling;
 	uint32_t		floor;
@@ -145,7 +156,6 @@ typedef struct s_game
 	t_player		player;
 }					t_game;
 
-extern int	g_map[MAP_HEIGHT][MAP_WIDTH];
 
 /*--------------debugging.c---------------*/
 void	print_texture_paths(t_game *game);
@@ -220,7 +230,8 @@ void		move_player_loop_hook(void *param);
 void		load_game_params(t_game *game);
 void		load_map_and_screen_params(t_game *game);
 void		load_player_params(t_game *game);
-void		set_player_start_dir(t_game *game, int start_dir);
+
+void		set_player_start_dir(t_game *game, char start_dir);
 
 /*------------load_textures.c-------------*/
 
