@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/29 01:27:24 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/29 23:39:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,13 @@ int calculate_map_dimensions(t_game *game, char *file_path)
     int width = 0;
     int height = 0;
 
+    //game->map.height = 0;
+    //game->map.width = 0;
     if (fd < 0)
     {
         handle_error("Failed to open map file.");
         return FAILURE;
     }
-
     while ((line = ft_get_next_line(fd)) != NULL)
     {
         // Verifica se a linha é uma linha de mapa
@@ -227,47 +228,199 @@ void	print_map_grid(t_game *game)
 		   game->player.dir[X], game->player.dir[Y]);
 }
 
+/// implemetation validate map
 
+int validate_map_borders(t_game *game)
+{
+    int i;
+
+    // Verificação de depuração para altura e largura
+    printf("Map height: %d, Map width: %d\n", game->map.height, game->map.width);
+
+    // Valida as bordas superior e inferior
+    i = 0;
+    while (i < game->map.width)
+    {
+        printf("Top border - grid[0][%d]: %d\n", i, game->map.grid[0][i]);
+        printf("Bottom border - grid[%d][%d]: %d\n", game->map.height - 1, i,
+               game->map.grid[game->map.height - 1][i]);
+
+        if (game->map.grid[0][i] != 1 || game->map.grid[game->map.height - 1][i] != 1)
+        {
+            handle_error("Map is not closed (top or bottom row is open).");
+            return FAILURE;
+        }
+        i++;
+    }
+
+    // Valida as bordas laterais
+    i = 0;
+    while (i < game->map.height)
+    {
+        printf("Left border - grid[%d][0]: %d\n", i, game->map.grid[i][0]);
+        printf("Right border - grid[%d][%d]: %d\n", i, game->map.width - 1,
+               game->map.grid[i][game->map.width - 1]);
+
+        if (game->map.grid[i][0] != 1 || game->map.grid[i][game->map.width - 1] != 1)
+        {
+            handle_error("Map is not closed (left or right column is open).");
+            return FAILURE;
+        }
+        i++;
+    }
+
+    return SUCCESS;
+}
+
+
+int validate_single_player(t_game *game)
+{
+    int i, j;
+    int player_count = 0;
+
+    i = 0;
+    while (i < game->map.height)
+    {
+        j = 0;
+        while (j < game->map.width)
+        {
+            if (game->map.grid[i][j] == 0 && 
+                (game->player.pos[X] == i && game->player.pos[Y] == j))
+            {
+                player_count++;
+            }
+            j++;
+        }
+        i++;
+    }
+
+    if (player_count != 1)
+    {
+        handle_error("Map must have exactly one player.");
+        return FAILURE;
+    }
+    return SUCCESS;
+}
+
+int validate_map_characters(t_game *game)
+{
+    int i, j;
+
+    i = 0;
+    while (i < game->map.height)
+    {
+        j = 0;
+        while (j < game->map.width)
+        {
+            if (game->map.grid[i][j] != 1 && game->map.grid[i][j] != 0 &&
+                !(i == game->player.pos[X] && j == game->player.pos[Y]))
+            {
+                handle_error("Invalid character in map.");
+                return FAILURE;
+            }
+            j++;
+        }
+        i++;
+    }
+    return SUCCESS;
+}
+
+int validate_map_neighbors(t_game *game)
+{
+    int i, j;
+
+    i = 1; // Começa na segunda linha para evitar acessar fora do limite
+    while (i < game->map.height - 1)
+    {
+        j = 1; // Começa na segunda coluna para evitar acessar fora do limite
+        while (j < game->map.width - 1)
+        {
+            if (game->map.grid[i][j] == 0)
+            {
+                if (game->map.grid[i - 1][j] == -1 || game->map.grid[i + 1][j] == -1 ||
+                    game->map.grid[i][j - 1] == -1 || game->map.grid[i][j + 1] == -1)
+                {
+                    handle_error("Map has open spaces around interior walls.");
+                    return FAILURE;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+    return SUCCESS;
+}
+
+int validate_map(t_game *game)
+{
+    if (validate_map_borders(game) == FAILURE)
+    {
+        printf("Board ok\n");
+        return FAILURE;
+    }
+    if (validate_single_player(game) == FAILURE)
+        return FAILURE;
+    if (validate_map_characters(game) == FAILURE)
+        return FAILURE;
+    if (validate_map_neighbors(game) == FAILURE)
+        return FAILURE;
+
+    return SUCCESS;
+}
 
 
 void parse_map(t_game *game, int argc, char *argv[])
 {
-	t_game gam;
     if (argc != 2)
     {
         printf("Usage: %s <map.cub>\n", argv[0]);
+        return;
     }
 
-    if (calculate_map_dimensions(&gam, argv[1]) == FAILURE)
+    // Calcula as dimensões do mapa e atribui diretamente a game->map
+    if (calculate_map_dimensions(game, argv[1]) == FAILURE)
     {
         printf("Erro ao calcular as dimensões do mapa.\n");
+        return;
     }
+
+    // Verifica se as dimensões foram armazenadas corretamente
+    printf("Dimensões calculadas - Largura: %d, Altura: %d\n", game->map.width, game->map.height);
+
     // Aloca o grid do mapa com as dimensões calculadas
-    allocate_map_grid(&gam);
+    allocate_map_grid(game);
 
-    // Inicializa a linha atual
-    gam.map.current[0] = 0;
+    // Inicializa a linha atual do grid para o preenchimento
+    game->map.current[0] = 0;
 
-    // Abra o arquivo e processe linha por linha do mapa
+    // Abre o arquivo e processa cada linha do mapa
     int fd = open(argv[1], O_RDONLY);
     char *line;
     if (fd < 0)
     {
         handle_error("Error opening map file.");
+        return;
     }
 
     while ((line = ft_get_next_line(fd)) != NULL)
     {
         if (is_map_line(line))
         {
-            process_map_line(&gam, line);
+            process_map_line(game, line);
         }
         free(line);
     }
     close(fd);
-    // Imprime o grid do mapa para validar
-    print_map_grid(&gam);
 
+    // Valida as bordas e a estrutura do mapa
+    if (validate_map(game) == FAILURE)
+    {
+        handle_error("Map validation failed.");
+        return;
+    }
+
+    // Imprime o grid do mapa para depuração
+    print_map_grid(game);
 }
 
 

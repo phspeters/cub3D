@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/10/27 19:36:27 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/29 22:07:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_texture_params(t_game *game)
 		game->map.texture_path[i] = NULL;
 	game->map.ceiling = 0;
 	game->map.floor = 0;
-	game->map.current[0] = 0;
+	//game->map.current[0] = 0;
 }
 
 
