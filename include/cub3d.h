@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/27 21:20:15 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/03 16:54:00 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
 
 # include "../lib/libft/libft.h"
 # include <stdio.h>
@@ -135,6 +134,7 @@ typedef struct s_player
 	double			dir[2];
 	double			plane[2];
 	double			*wall_distance_on_camera_x;
+	char			player_start_char;
 }					t_player;
 
 typedef struct s_map
@@ -156,10 +156,14 @@ typedef struct s_game
 	t_player		player;
 }					t_game;
 
+char	*trim_line(char *line);
+
 
 /*--------------debugging.c---------------*/
 void	print_texture_paths(t_game *game);
 void	print_rgb_values(t_game *game);
+void	print_map_grid(t_game *game);
+void	print_validate_map_borders(t_game *game);
 
 /*--------------chack_file.c---------------*/
 int		check_file(char *argv_file, bool cub);
@@ -169,16 +173,33 @@ int		is_texture_line(char *line);
 int		is_texture_exists(char *texture_path);
 int		validate_textures(t_game *game, char *line);
 int		validate_all_textures(t_game *game);
+int		set_texture_path(char **texture_dest, char *line);
 
 /*--------------check_rgb.c---------------*/
 int		is_rgb_line(char *line);
 int		parse_rgb_value(char **line_ptr, int *value);
 int		parse_rgb(t_game *game, char *line);
 int		validate_rgb(t_game *game, char *line);
-int		validate_floor_ceiling(t_game *game);
+int		validate_all_floor_ceiling(t_game *game);
+
+/*--------------calculate_allocate_map.c---------------*/
+int		calculate_map_dimensions(t_game *game, char *file_path);
+int		is_map_line(char *line);
+void	allocate_map_grid(t_game *game);
+
+/*--------------process_map.c---------------*/
+void	process_map_line(t_game *game, char *line);
+void	set_player_start_dir(t_game *game, char start_dir);
+
+/*--------------check_map.c---------------*/
+int		validate_map_borders(t_game *game);
+int		validate_single_player(t_game *game);
+int		validate_map_characters(t_game *game);
+int		validate_map_neighbors(t_game *game);
+int		validate_all_map(t_game *game);
 
 /*--------------parsing.c---------------*/
-void	parse_map(t_game *game, int argc, char *argv[]);
+void	parse_map(t_game *game, char *argv[]);
 
 
 /*--------------draw_line.c---------------*/

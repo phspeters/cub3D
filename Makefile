@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/26 19:53:36 by codespace        ###   ########.fr        #
+#    Updated: 2024/11/03 13:40:09 by roglopes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ FILES		= 	main.c \
 				parsing/check_texture.c \
 				parsing/check_file.c \
 				parsing/check_rgb.c \
+				parsing/calculate_allocate_map.c \
+				parsing/process_map.c \
+				parsing/check_map.c \
 				debugging/debugging.c
 
 VPATH 		= 	./src:./src/mandatory/

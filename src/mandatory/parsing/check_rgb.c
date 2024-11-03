@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 19:26:28 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/26 19:53:24 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/03 15:24:45 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	validate_floor_ceiling(t_game *game)
+int	validate_all_floor_ceiling(t_game *game)
 {
 	if (game->map.ceiling == 0)
 	{
@@ -29,7 +29,7 @@ int	validate_floor_ceiling(t_game *game)
 
 int	is_rgb_line(char *line)
 {
-	return (ft_strncmp(line, "C ", 2) == 0 || ft_strncmp(line, "F ", 2) == 0);
+	return (ft_strncmp(line, "C", 1) == 0 || ft_strncmp(line, "F", 1) == 0);
 }
 
 int	parse_rgb_value(char **line_ptr, int *value)

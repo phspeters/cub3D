@@ -6,7 +6,7 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/10/20 13:23:07 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:53:54 by roglopes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 
 int	is_texture_line(char *line)
 {
-	return (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
-		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0);
-}
-
-int	is_texture_exists(char *texture_path)
-{
-	if (access(texture_path, F_OK) != -1)
-		return (1);
-	else
-		return (0);
+	return (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
+		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0);
 }
 
 static bool	is_xpm_file(char *arg)
@@ -38,42 +30,28 @@ static bool	is_xpm_file(char *arg)
 	return (true);
 }
 
-int	validate_textures(t_game *game, char *line)
+int	set_texture_path(char **texture_dest, char *line)
 {
 	char	*texture_path;
-	int		valid;
 
-	valid = 1;
-	if (ft_strncmp(line, "NO ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		if (!is_xpm_file(texture_path))
-			game->map.texture_path[NORTH] = ft_strdup(line + 3);
-	}
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		if (!is_xpm_file(texture_path))
-			game->map.texture_path[SOUTH] = ft_strdup(line + 3);
-	}
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		if (!is_xpm_file(texture_path))
-			game->map.texture_path[WEST] = ft_strdup(line + 3);
-	}
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-	{
-		texture_path = ft_strdup(line + 3);
-		if (!is_xpm_file(texture_path))
-			game->map.texture_path[EAST] = ft_strdup(line + 3);
-	}
-	else
-		return (0);
-/* 	if (!is_texture_exists(texture_path))
-		return (0); */
-	free (texture_path);
-	return (valid);
+	texture_path = trim_line(line + 2);
+	if (!is_xpm_file(texture_path))
+		*texture_dest = trim_line(line + 2);
+	free(texture_path);
+	return (FAILURE);
+}
+
+int	validate_textures(t_game *game, char *line)
+{
+	if (ft_strncmp(line, "NO", 2) == 0)
+		return (set_texture_path(&game->map.texture_path[NORTH], line));
+	else if (ft_strncmp(line, "SO", 2) == 0)
+		return (set_texture_path(&game->map.texture_path[SOUTH], line));
+	else if (ft_strncmp(line, "WE", 2) == 0)
+		return (set_texture_path(&game->map.texture_path[WEST], line));
+	else if (ft_strncmp(line, "EA", 2) == 0)
+		return (set_texture_path(&game->map.texture_path[EAST], line));
+	return (FAILURE);
 }
 
 int	validate_all_textures(t_game *game)
