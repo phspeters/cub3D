@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/11 15:18:14 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/11 15:22:39 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ FILES		= 	main.c \
 				utils.c \
 				draw_line.c \
 
-VPATH 		= 	./src:./src/mandatory/
+VPATH 		= 	./src:./src/mandatory
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d
@@ -67,76 +67,73 @@ $(NAME): $(OBJS)
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(LIBMLX)/build
+	@rm -rf $(SUPP_FILE)
 	@make -C $(LIBFT) clean --silent
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf $(SUPP_FILE)
 	@make -C $(LIBFT) fclean --silent
 
 re: fclean all
 
 val: all supp
-	valgrind --leak-check=full --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
 
 norm:
 	@norminette src include $(LIBFT)
 
 supp:
-	echo "{" > $(SUPP_FILE)
-	echo "   <MLX_CODAM>"  $(SUPP_FILE)
-	echo "   Memcheck:Leak"  $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable"  $(SUPP_FILE)
-	echo "   ..."  $(SUPP_FILE)
-	echo "   fun:_dl_catch_exception"  $(SUPP_FILE)
-	echo "   ..."  $(SUPP_FILE)
-	echo "}"  $(SUPP_FILE)
-	echo "{"  $(SUPP_FILE)
-	echo " <MLX_CODAM>"  $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:mlx_init" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
-	echo "{" >> $(SUPP_FILE)
-	echo " <MLX_CODAM>" >> $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:XrmGetStringDatabase" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
-	echo "{" >> $(SUPP_FILE)
-	echo " <MLX_CODAM>" >> $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:_XrmInitParseInfo" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
-	echo "{" >> $(SUPP_FILE)
-	echo " <MLX_CODAM>" >> $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:__tls_get_addr" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
-	echo "{" >> $(SUPP_FILE)
-	echo " <MLX_CODAM>" >> $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:__pthread_once_slow" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
-	echo "{" >> $(SUPP_FILE)
-	echo " <MLX_CODAM>" >> $(SUPP_FILE)
-	echo "   Memcheck:Leak" >> $(SUPP_FILE)
-	echo "   match-leak-kinds: reachable" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "   fun:_dl_init" >> $(SUPP_FILE)
-	echo "   ..." >> $(SUPP_FILE)
-	echo "}" >> $(SUPP_FILE)
+	@if [ ! -f $(SUPP_FILE) ]; then \
+		echo "{" > $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:_dl_catch_exception" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:mlx_init" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:XrmGetStringDatabase" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:_XrmInitParseInfo" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:__tls_get_addr" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:__pthread_once_slow" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+		echo "{" >> $(SUPP_FILE); \
+		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
+		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "   fun:_dl_init" >> $(SUPP_FILE); \
+		echo "   ..." >> $(SUPP_FILE); \
+		echo "}" >> $(SUPP_FILE); \
+	fi
 
 .PHONY: all, clean, fclean, re, norm, val

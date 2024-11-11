@@ -6,16 +6,24 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/24 20:08:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:00:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief draws a MINIMAP_SIZE x MINIMAP_SIZE blocks minimap (Default 25).
+ * The function iterates through each coordinate on the minimap, calling the
+ * draw_minimap_block function to draw each block. The minimap is positioned
+ * on the right side of the screen and centered around the player's position.
+ *
+ * @param game struct with game information
+ */
 void	draw_minimap(t_game *game)
 {
 	t_map	map;
-	int		counter[2];
+	int		minimap_coord[2];
 	int		start[2];
 	double	x_offset;
 
@@ -23,37 +31,47 @@ void	draw_minimap(t_game *game)
 	x_offset = game->screen_size[X] - MINIMAP_SIZE * map.minimap_block_size;
 	start[X] = (int)(game->player.pos[X]) - MINIMAP_SIZE / 2;
 	start[Y] = (int)(game->player.pos[Y]) - MINIMAP_SIZE / 2;
-	counter[Y] = 0;
-	while (counter[Y] < MINIMAP_SIZE)
+	minimap_coord[Y] = 0;
+	while (minimap_coord[Y] < MINIMAP_SIZE)
 	{
-		counter[X] = 0;
-		while (counter[X] < MINIMAP_SIZE)
+		minimap_coord[X] = 0;
+		while (minimap_coord[X] < MINIMAP_SIZE)
 		{
-			draw_minimap_block(start, counter, x_offset, game);
-			counter[X]++;
+			draw_minimap_block(start, minimap_coord, x_offset, game);
+			minimap_coord[X]++;
 		}
-		counter[Y]++;
+		minimap_coord[Y]++;
 	}
 }
 
-void	draw_minimap_block(int start[2], int counter[2], double x_offset,
+/**
+ * @brief Draws a block of the minimap according to the minimap coordinates.
+ * It determines the type of block (wall, door, or floor) based on the map
+ * data and draws it at the appropriate position on the screen.
+ *
+ * @param start x and y coordinates of the top left corner of the block
+ * @param minimap_coord x and y coordinates of the block in the minimap
+ * @param x_offset offset to draw the minimap on the right side of the screen
+ * @param game struct with game information
+ */
+void	draw_minimap_block(int start[2], int minimap_coord[2], double x_offset,
 		t_game *game)
 {
 	t_map	map;
 	double	block_start[2];
 
 	map = game->map;
-	map.current[X] = start[X] + counter[X];
-	map.current[Y] = start[Y] + counter[Y];
-	block_start[X] = counter[X] * map.minimap_block_size + x_offset;
-	block_start[Y] = counter[Y] * map.minimap_block_size;
+	map.current[X] = start[X] + minimap_coord[X];
+	map.current[Y] = start[Y] + minimap_coord[Y];
+	block_start[X] = minimap_coord[X] * map.minimap_block_size + x_offset;
+	block_start[Y] = minimap_coord[Y] * map.minimap_block_size;
 	if (map.current[X] >= 0 && map.current[X] < map.width && map.current[Y] >= 0
 		&& map.current[Y] < map.height)
 	{
-		if (g_map[map.current[Y]][map.current[X]] == 1)
+		if (map.grid[map.current[Y]][map.current[X]] == WALL)
 			draw_block(block_start, map.minimap_block_size, WALL_COLOR, game);
-		else if (g_map[map.current[Y]][map.current[X]] == 'D'
-			|| g_map[map.current[Y]][map.current[X]] == - 'D')
+		else if (map.grid[map.current[Y]][map.current[X]] == CLOSED_DOOR
+			|| map.grid[map.current[Y]][map.current[X]] == OPEN_DOOR)
 			draw_block(block_start, map.minimap_block_size, DOOR_COLOR, game);
 		else
 			draw_block(block_start, map.minimap_block_size, FLOOR_COLOR, game);
@@ -62,6 +80,15 @@ void	draw_minimap_block(int start[2], int counter[2], double x_offset,
 		draw_block(block_start, map.minimap_block_size, WALL_COLOR, game);
 }
 
+/**
+ * @brief Draws a block of block_size x block_size pixels with the specified
+ * color at the specified start position from the top left corner.
+ *
+ * @param start x and y coordinates of the top left corner of the block
+ * @param block_size size of the block in pixels
+ * @param color rgba channel of the color to draw the block
+ * @param game struct with game information
+ */
 void	draw_block(double start[2], int block_size, uint32_t color,
 		t_game *game)
 {
@@ -81,6 +108,14 @@ void	draw_block(double start[2], int block_size, uint32_t color,
 	}
 }
 
+/**
+ * @brief Draws the player on the minimap as an arrow pointing in the direction
+ * the player is facing. It uses the player's direction and plane vectors to
+ * determine the end points of these lines and calls the draw_line function to
+ * render them.
+ * 
+ * @param game struct with game information
+ */
 void	draw_player_on_minimap(t_game *game)
 {
 	t_player	player;

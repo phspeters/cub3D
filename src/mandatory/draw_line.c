@@ -6,12 +6,24 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 11:46:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:11:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:16:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief uses the Bresenham's line algorithm to draw a line between two pixels.
+ * The set_line_info function is used to initialize the line information, and
+ * the draw_shallow_line and draw_steep_line functions are used to draw the
+ * line based on its type.
+ *  
+ * @param start x and y coordinates of the starting pixel.
+ * @param end x and y coordinates of the ending pixel.
+ * @param color rgba channel of the color of the line.
+ * @param game struct that contains the pointer to the image that is being
+ * drawn into.
+ */
 void	draw_line(int start[2], int end[2], uint32_t color, t_game *game)
 {
 	t_line_info	line_info;
@@ -23,6 +35,15 @@ void	draw_line(int start[2], int end[2], uint32_t color, t_game *game)
 		draw_steep_line(line_info, game);
 }
 
+/**
+ * @brief sets the information needed to draw a line between two pixels
+ * using the Bresenham's line algorithm.
+ * 
+ * @param start x and y coordinates of the starting pixel.
+ * @param end x and y coordinates of the ending pixel.
+ * @param color rgba channel of the color of the line.
+ * @return t_line_info holds the information needed to draw a line.
+ */
 t_line_info	set_line_info(int start[2], int end[2], uint32_t color)
 {
 	t_line_info	line_info;
@@ -40,14 +61,14 @@ t_line_info	set_line_info(int start[2], int end[2], uint32_t color)
 }
 
 /**
- * @brief Function that uses the Bresenham's line algortihm to draw a line
- * between two pixels that are more horizontally distant from each other than
- * they are vertically distant. That is, the absolute value of the difference
- * between the x coordinates of the two pixels is greater than the absolute
- * value of the difference between the y coordinates of the two pixels.
+ * @brief uses the Bresenham's line algorithm to draw a line between two pixels
+ * that are more horizontally distant from each other than vertically. That is,
+ * the line is closer to the x axis than to the y axis.
+ * It iterates through the x-coordinates of the line, using a decision variable
+ * to determine whether to move vertically as well as horizontally.
  *
  * @param line_info Struct that contains the information needed to draw the line.
- * @param image Struct that contains the pointer to the image that is being
+ * @param game Struct that contains the pointer to the image that is being
  * drawn into.
  */
 void	draw_shallow_line(t_line_info line_info, t_game *game)
@@ -76,14 +97,14 @@ void	draw_shallow_line(t_line_info line_info, t_game *game)
 }
 
 /**
- * @brief Function that uses the Bresenham's line algortihm to draw a line
- * between two pixels that are more vertically distant from each other than
- * they are horizontally distant. That is, the absolute value of the difference
- * between the y coordinates of the two pixels is greater than the absolute
- * value of the difference between the x coordinates of the two pixels.
+ * @brief uses the Bresenham's line algorithm to draw a line between two pixels
+ * that are more vertically distant from each other than horizontally. That is,
+ * the line is closer to the y axis than to the x axis.
+ * It iterates through the y-coordinates of the line, using a decision variable
+ * to determine whether to move horizontally as well as vertically.
  *
  * @param line_info Struct that contains the information needed to draw the line.
- * @param image Struct that contains the pointer to the image that is being
+ * @param game Struct that contains the pointer to the image that is being
  * drawn into.
  */
 void	draw_steep_line(t_line_info line_info, t_game *game)
@@ -111,6 +132,13 @@ void	draw_steep_line(t_line_info line_info, t_game *game)
 	}
 }
 
+/**
+ * @brief adjusts a coordinate value by either incrementing or decrementing it
+ * based on the provided direction.
+ * 
+ * @param coordinate Pointer to the coordinate that will be moved.
+ * @param direction Direction in which the coordinate will be moved.
+ */
 void	move_coordinate(int *coordinate, int direction)
 {
 	if (direction < 0)

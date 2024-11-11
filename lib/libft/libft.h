@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:02:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/02/07 14:27:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:13:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ char	*ft_strtoupper(char *str);
 char	*ft_strtolower(char *str);
 void	*ft_free_str(char *str);
 int		ft_fprintf(const int fd, const char *str, ...);
+void	*ft_safalloc(size_t nmemb, size_t size);
+void	ft_collect_memory(void *pointer);
+void	ft_free_all_memory(void);
 
 //Mandatory part 1 functions
 int		ft_isalpha(int c);
