@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/07/23 17:33:21 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/11 15:10:40 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,28 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
+				parsing/parsing.c \
+				parsing/check_texture.c \
+				parsing/check_file.c \
+				parsing/check_rgb.c \
+				parsing/calculate_allocate_map.c \
+				parsing/process_map.c \
+				parsing/check_map.c \
+				debugging/debugging.c \
 				draw_minimap.c \
 				draw_scene.c \
+				draw_sprites.c \
+				draw_sprites_utils.c \
 				game.c \
 				hooks.c \
+				init_params.c \
 				load_params.c \
+				load_textures.c \
+				player_action.c \
 				player_movement.c \
 				raycasting.c \
 				utils.c \
-				draw_line.c
+				draw_line.c \
 
 VPATH 		= 	./src:./src/mandatory
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
