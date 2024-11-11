@@ -6,11 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:20:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/11 15:55:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:45:25 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-"cub3d.h"
+#include "cub3d.h"
 
 static bool	is_dir(char *argv_file)
 {
