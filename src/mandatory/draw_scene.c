@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/23 21:14:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:05:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	draw_loop(void *param)
 		handle_mlx_error(game);
 	draw_3d_scene(game);
 	draw_minimap(game);
+	draw_player_on_minimap(game);
+	draw_sprites(game);
 }
 
 void	draw_3d_scene(t_game *game)
@@ -45,27 +47,21 @@ void	draw_vertical_line(t_game *game, int x, t_ray ray)
 	int				y;
 	t_texture_info	texture_info;
 
-	y = 0;
-	while (y < ray.wall_line_start)
-	{
+	y = -1;
+	while (++y < ray.wall_line_start)
 		put_valid_pixel(game, x, y, game->map.ceiling);
-		y++;
-	}
 	calculate_texture_coordinates(game, &ray, &texture_info);
-	while (y < ray.wall_line_end)
+	game->player.wall_distance_on_camera_x[x] = ray.perpendicular_wall_distance;
+	while (++y < ray.wall_line_end)
 	{
 		texture_info.texture_coord[Y] = (int)texture_info.texture_pos & \
 		(ray.wall_texture->height - 1);
 		texture_info.texture_pos += texture_info.step;
 		put_valid_pixel(game, x, y, get_texel_color(ray.wall_texture,
 				texture_info.texture_coord[X], texture_info.texture_coord[Y]));
-		y++;
 	}
-	while (y < game->screen_size[Y])
-	{
+	while (++y < game->screen_size[Y])
 		put_valid_pixel(game, x, y, game->map.floor);
-		y++;
-	}
 }
 
 void	calculate_texture_coordinates(t_game *game, t_ray *ray,

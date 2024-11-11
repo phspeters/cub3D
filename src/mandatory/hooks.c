@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/07/22 20:39:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:14:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,42 @@ void	move_player_loop_hook(void *param)
 
 	game = param;
 	player = &game->player;
-	move_speed = game->window->delta_time * 5.0;
-	rot_speed = game->window->delta_time * 2.5;
-	collision_distance = move_speed * 5;
+	move_speed = game->window->delta_time * MOVEMENT_SPEED_MULTIPLIER;
+	rot_speed = game->window->delta_time * ROTATION_SPEED_MULTIPLIER;
+	collision_distance = move_speed * COLLISION_DISTANCE_MULTIPLIER;
 	move_player_forward_backward(game, player, move_speed, collision_distance);
 	strafe_player_left_right(game, player, move_speed, collision_distance);
 	keyboard_rotate_player(game, player, rot_speed);
 	mouse_rotate_player(game, player, rot_speed);
 }
 
-void	player_action_loop_hook(mlx_key_data_t keydata, void *param)
+void	keyboard_action_loop_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game		*game;
 	t_map		*map;
-	int			offset[2];
-	int			cur[2];
 
 	game = param;
 	map = &game->map;
 	(void)(map);
-	cur[X] = (int)game->player.pos[X];
-	cur[Y] = (int)game->player.pos[Y];
 	if ((keydata.key == MLX_KEY_SPACE) && (keydata.action == MLX_PRESS))
 	{
-		offset[X] = -2;
-		while (++offset[X] < 2)
-		{
-			offset[Y] = -2;
-			while (++offset[Y] < 2)
-			{
-				if (g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] == 'D'
-					|| g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] == - 'D')
-					g_map[cur[Y] + offset[Y]][cur[X] + offset[X]] = \
-						-g_map[cur[Y] + offset[Y]][cur[X] + offset[X]];
-			}
-		}
+		open_doors(game, game->player.pos);
+		kill_sprites(game, game->player.pos);
+	}
+}
+
+void	mouse_action_loop_hook(mouse_key_t button, action_t action,
+		modifier_key_t mod, void *param)
+{
+	t_game	*game;
+
+	(void)mod;
+	game = (t_game *)param;
+	if (button == MLX_MOUSE_BUTTON_RIGHT && action == MLX_PRESS)
+		game->player.is_mouse_active = !game->player.is_mouse_active;
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+	{
+		open_doors(game, game->player.pos);
+		kill_sprites(game, game->player.pos);
 	}
 }
