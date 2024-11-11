@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/11 15:22:39 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/11 15:45:55 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ FLAG 		?= 	-g3
 CC			= 	cc
 LIBMLX		= 	./lib/MLX42
 LIBFT		= 	./lib/libft
-HEADERS		= 	-I ./include -I $(LIBFT)
-LIBS		= 	$(LIBFT)/libft.a
+HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
+LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
 				parsing/parsing.c \
 				parsing/check_texture.c \
@@ -49,7 +49,7 @@ EXE			?= 	cub3d
 
 SUPP_FILE	= MLX42.suppressions
 
-all: libft $(NAME)
+all: libmlx libft $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4

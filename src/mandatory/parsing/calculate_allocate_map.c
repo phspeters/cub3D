@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calculate_allocate_map.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 13:15:14 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:40:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 int	is_map_line(char *line)
 {
@@ -37,7 +37,7 @@ int	calculate_map_dimensions(t_game *game, char *file_path)
 	height = 0;
 	if (fd < 0)
 	{
-		handle_error("Failed to open map file.");
+		handle_error(game, "Failed to open map file.");
 		return (FAILURE);
 	}
 	while ((line = ft_get_next_line(fd)) != NULL)
@@ -66,7 +66,7 @@ void	allocate_map_grid(t_game *game)
 	game->map.grid = malloc(sizeof(int *) * game->map.height);
 	if (!game->map.grid)
 	{
-		handle_error("Memory allocation failed for map grid.");
+		handle_error(game, "Memory allocation failed for map grid.");
 		return ;
 	}
 	i = 0;
@@ -75,7 +75,7 @@ void	allocate_map_grid(t_game *game)
 		game->map.grid[i] = malloc(sizeof(int) * game->map.width);
 		if (!game->map.grid[i])
 		{
-			handle_error("Memory allocation failed for map row.");
+			handle_error(game, "Memory allocation failed for map row.");
 			return ;
 		}
 		i++;

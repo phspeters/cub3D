@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 15:31:48 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 14:42:07 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:44:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 void	print_texture_paths(t_game *game)
 {
@@ -50,7 +50,7 @@ void	print_map_grid(t_game *game)
 
 	i = 0;
 	printf("Player detect: %c in position (X: %d, Y: %d)\n", \
-		game->player.player_start_char, \
+		game->player.start_dir, \
 		(int)game->player.pos[X], (int)game->player.pos[Y]);
 	printf("Player direction: (dir[X]: %f, dir[Y]: %f)\n", game->player.dir[X],
 		game->player.dir[Y]);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 16:53:54 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:40:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 int	is_texture_line(char *line)
 {
@@ -58,22 +58,22 @@ int	validate_all_textures(t_game *game)
 {
 	if (game->map.texture_path[NORTH] == NULL)
 	{
-		handle_error("Missing texture for NORTH.\n");
+		handle_error(game, "Missing texture for NORTH.\n");
 		return (0);
 	}
 	if (game->map.texture_path[SOUTH] == NULL)
 	{
-		handle_error("Missing texture for SOUTH.\n");
+		handle_error(game, "Missing texture for SOUTH.\n");
 		return (0);
 	}
 	if (game->map.texture_path[WEST] == NULL)
 	{
-		handle_error("Missing texture for WEST.\n");
+		handle_error(game, "Missing texture for WEST.\n");
 		return (0);
 	}
 	if (game->map.texture_path[EAST] == NULL)
 	{
-		handle_error("Missing texture for EAST.\n");
+		handle_error(game, "Missing texture for EAST.\n");
 		return (0);
 	}
 	return (1);

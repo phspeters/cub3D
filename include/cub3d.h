@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/11 15:26:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:44:56 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@
 # define MOVEMENT_SPEED_MULTIPLIER 5.0
 # define ROTATION_SPEED_MULTIPLIER 2.0
 # define COLLISION_DISTANCE_MULTIPLIER 2
-
-#define WALL 1         // Caracter que representa uma parede
-#define EMPTY 0        // Caracter que representa um espaço vazio
 
 // Estrutura de posição
 typedef struct {
@@ -98,10 +95,13 @@ typedef struct s_line_info
 	int				end[2];
 	int				delta[2];
 	unsigned int	abs[2];
+	uint32_t		color;
 }					t_line_info;
 
 typedef struct s_sprite
 {
+	mlx_texture_t	*texture[9];
+	mlx_texture_t	*death_animation[4];
 	double			pos[2];
 	double			transform[2];
 	double			inverse_projection_determinant;
@@ -123,6 +123,7 @@ typedef struct s_ray
 	double			delta_distance[2];
 	double			camera_x_coordinate;
 	double			perpendicular_wall_distance;
+	mlx_texture_t	*wall_texture;
 	int				wall_height;
 	int				wall_line_start;
 	int				wall_line_end;
@@ -146,26 +147,30 @@ typedef struct s_player
 	double			dir[2];
 	double			plane[2];
 	double			*wall_distance_on_camera_x;
-	char			player_start_char;
+	uint32_t		is_mouse_active;
 }					t_player;
 
 typedef struct s_map
 {
 	char			*texture_path[5];
+	mlx_texture_t	*textures[5];
+	uint32_t		ceiling;
+	uint32_t		floor;
 	t_sprite		sprite;
 	int				**grid;
 	int				current[2];
-	uint32_t		ceiling;
-	uint32_t		floor;
 	int				width;
 	int				height;
 	int				minimap_block_size;
-}					t_map;
+}						t_map;
 
 typedef struct s_game
 {
+	mlx_t			*window;
+	mlx_image_t		*image;
 	t_map			map;
 	t_player		player;
+	int32_t			screen_size[2];
 }					t_game;
 
 char	*trim_line(char *line);

@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/03 16:53:39 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:40:21 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
-
-void	handle_error(char *message)
-{
-	if (errno)
-	{
-		ft_fprintf(STDERR_FILENO, "Error\n");
-		perror(message);
-		exit(errno);
-	}
-	else
-	{
-		ft_fprintf(STDERR_FILENO, "Error\n");
-		ft_fprintf(STDERR_FILENO, "%s.\n", message);
-		exit(EXIT_FAILURE);
-	}
-}
+#include "cub3d.h"
 
 char	*trim_line(char *line)
 {
@@ -55,7 +39,7 @@ void	parse_map(t_game *game, char *argv[])
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		handle_error("Error opening map file.");
+		handle_error(game, "Error opening map file.");
 		return ;
 	}
 	line = ft_get_next_line(fd);
@@ -65,12 +49,12 @@ void	parse_map(t_game *game, char *argv[])
 		if (is_texture_line(line))
 		{
 			if (!validate_textures(game, line))
-				handle_error ("Invalid texture path or type.");
+				handle_error(game, "Invalid texture path or type.");
 		}
 		else if (is_rgb_line(line))
 		{
 			if (!validate_rgb(game, line))
-				handle_error("Invalid RGB values.");
+				handle_error(game, "Invalid RGB values.");
 		}
 		else if (is_map_line(line))
 		{
@@ -81,12 +65,12 @@ void	parse_map(t_game *game, char *argv[])
 	}
 	close(fd);
 	if (!validate_all_textures(game))
-		handle_error("Missing mandatory texture.");
+		handle_error(game, "Missing mandatory texture.");
 	if (!validate_all_floor_ceiling(game))
-		handle_error("Missing floor or ceiling color.");
+		handle_error(game, "Missing floor or ceiling color.");
 	if (validate_all_map(game) == FAILURE)
 	{
-		handle_error("Map validation failed.");
+		handle_error(game, "Map validation failed.");
 		return ;
 	}
 }

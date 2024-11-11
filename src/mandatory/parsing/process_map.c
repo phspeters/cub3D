@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:20:37 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 14:19:49 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:57:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 void	set_player_start_dir(t_game *game, char start_dir)
 {
@@ -49,11 +49,13 @@ void	process_map_line(t_game *game, char *line)
 	int	j;
 
 	j = 0;
-	if (game->map.current[0] >= game->map.height)
-	{
-		handle_error("Map exceeds allocated height.");
-		return ;
-	}
+	printf("Map line: %s\n", line);
+	printf("---------------------AQUI----------------------");
+	//if (game->map.current[0] >= game->map.height)
+	//{
+	//	handle_error(game, "Map exceeds allocated height.");
+	//	return ;
+	//}
 	while (line[j] && j < game->map.width)
 	{
 		if (line[j] == '1')
@@ -65,13 +67,13 @@ void	process_map_line(t_game *game, char *line)
 		{
 			game->player.pos[X] = game->map.current[0];
 			game->player.pos[Y] = j;
-			game->player.player_start_char = line[j];
+			game->player.start_dir = line[j];
 			game->map.grid[game->map.current[0]][j] = 0;
 			set_player_start_dir(game, line[j]);
 		}
 		else
 		{
-			handle_error("Invalid character in map.");
+			handle_error(game, "Invalid character in map.");
 			return ;
 		}
 		j++;

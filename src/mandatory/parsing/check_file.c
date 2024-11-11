@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:20:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/19 13:29:31 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:55:25 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/cub3d.h"
+"cub3d.h"
 
 static bool	is_dir(char *argv_file)
 {
