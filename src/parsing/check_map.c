@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 16:33:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:38:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	validate_map_borders(t_game *game)
 {
 	int	i;
 
-	print_map_grid(game);
 	i = 0;
 	while (i < game->map.width)
 	{
