@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:21 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/23 18:37:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:12:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	load_map_textures(t_game *game)
 	map->textures[WEST] = ft_load_png(game, "./assets/plant_wall.png");
 	map->textures[EAST] = ft_load_png(game, "./assets/cave_wall.png");
 	map->textures[DOOR] = ft_load_png(game, "./assets/door.png");
-	map->ceiling = 0x87CEEBFF;
-	map->floor = 0xC0C0C0FF;
 }
 
 /**
