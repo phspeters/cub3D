@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 15:24:06 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/12 00:01:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ int	validate_single_player(t_game *game)
 		j = 0;
 		while (j < game->map.width)
 		{
-			if (game->map.grid[i][j] == 0 && (game->player.pos[X] == i
-					&& game->player.pos[Y] == j))
+			if (game->map.grid[i][j] == 'N' || game->map.grid[i][j] == 'S' ||
+				game->map.grid[i][j] == 'E' || game->map.grid[i][j] == 'W')
+			{
 				player_count++;
+				game->player.pos[X] = i;
+				game->player.pos[Y] = j;
+			}
 			j++;
 		}
 		i++;
