@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/12 16:12:48 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/12 16:34:48 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,9 @@ FILES		= 	main.c \
 				raycasting.c \
 				utils.c \
 				draw_line.c \
+				debugging.c
 
-VPATH 		= 	./src:./src/parsing:
+VPATH 		= 	./src:./src/parsing:./src/debugging
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d

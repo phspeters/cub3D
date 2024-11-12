@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:20:37 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 16:16:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:35:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	process_map_line(t_game *game, char *line)
 	static int	i;
 	int			j;
 
-	i = 0;
 	j = 0;
 	if (i > game->map.height)
 		handle_error(game, "Map exceeds allocated height.");
