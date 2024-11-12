@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/12 16:16:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:00:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	parse_map(t_game *game, char *argv[])
 	char	*line;
 
 	if (calculate_map_dimensions(game, argv[1]) == FAILURE)
-		handle_error(game, "Error getting map dimensions.\n");
+		handle_error(game, "Error getting map dimensions");
 	allocate_map_grid(game);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		handle_error(game, "Error opening map file.");
+		handle_error(game, "Error opening map file");
 	line = ft_get_next_line(fd);
 	while (line != NULL)
 	{
@@ -43,12 +43,12 @@ void	parse_map(t_game *game, char *argv[])
 		if (is_texture_line(line))
 		{
 			if (!validate_textures(game, line))
-				handle_error(game, "Invalid texture path or type.");
+				handle_error(game, "Invalid texture path or type");
 		}
 		else if (is_rgb_line(line))
 		{
 			if (!validate_rgb(game, line))
-				handle_error(game, "Invalid RGB values.");
+				handle_error(game, "Invalid RGB values");
 		}
 		else if (is_map_line(line))
 		{
@@ -59,9 +59,9 @@ void	parse_map(t_game *game, char *argv[])
 	}
 	close(fd);
 	if (!validate_all_textures(game))
-		handle_error(game, "Missing mandatory texture.");
+		handle_error(game, "Missing mandatory texture");
 	if (!validate_all_floor_ceiling(game))
-		handle_error(game, "Missing floor or ceiling color.");
+		handle_error(game, "Missing floor or ceiling color");
 	if (validate_all_map(game) == FAILURE)
-		handle_error(game, "Map validation failed.");
+		handle_error(game, "Map validation failed");
 }

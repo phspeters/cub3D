@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 16:38:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:59:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	validate_map_borders(t_game *game)
 		if (game->map.grid[0][i] != 1 || game->map.grid[game->map.height
 			- 1][i] != 1)
 			handle_error(game,
-				"Map is not closed (top or bottom row is open).");
+				"Map is not closed (top or bottom row is open)");
 		i++;
 	}
 	i = 0;
@@ -31,7 +31,7 @@ int	validate_map_borders(t_game *game)
 		if (game->map.grid[i][0] != 1 || game->map.grid[i][game->map.width
 			- 1] != 1)
 			handle_error(game,
-				"Map is not closed (left or right column is open).");
+				"Map is not closed (left or right column is open)");
 		i++;
 	}
 	return (SUCCESS);
@@ -63,7 +63,7 @@ int	validate_single_player(t_game *game)
 		i++;
 	}
 	if (player_count != 1)
-		handle_error(game, "Map must have exactly one player.");
+		handle_error(game, "Map must have exactly one player");
 	return (SUCCESS);
 }
 
@@ -80,7 +80,7 @@ int	validate_map_characters(t_game *game)
 		{
 			if (game->map.grid[i][j] != 1 && game->map.grid[i][j] != 0
 				&& !(i == game->player.pos[X] && j == game->player.pos[Y]))
-				handle_error(game, "Invalid character in map.");
+				handle_error(game, "Invalid character in map");
 			j++;
 		}
 		i++;
@@ -105,7 +105,7 @@ int	validate_map_neighbors(t_game *game)
 					+ 1][j] == -1 || game->map.grid[i][j - 1] == -1
 					|| game->map.grid[i][j + 1] == -1)
 					handle_error(game,
-						"Map has open spaces around interior walls.");
+						"Map has open spaces around interior walls");
 			}
 			j++;
 		}

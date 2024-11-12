@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 19:26:28 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/12 16:16:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:59:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	validate_all_floor_ceiling(t_game *game)
 {
 	if (game->map.ceiling == 0)
-		handle_error(game, "Ceiling color not set.\n");
+		handle_error(game, "Ceiling color not set");
 	if (game->map.floor == 0)
-		handle_error(game, "Floor color not set.\n");
+		handle_error(game, "Floor color not set");
 	return (1);
 }
 
@@ -73,6 +73,6 @@ int	parse_rgb(t_game *game, char *line)
 int	validate_rgb(t_game *game, char *line)
 {
 	if (!parse_rgb(game, line))
-		handle_error(game, "Invalid RGB values.");
+		handle_error(game, "Invalid RGB values");
 	return (1);
 }
