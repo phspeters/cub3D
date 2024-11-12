@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/11 15:45:55 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/12 16:12:48 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,13 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
-				parsing/parsing.c \
-				parsing/check_texture.c \
-				parsing/check_file.c \
-				parsing/check_rgb.c \
-				parsing/calculate_allocate_map.c \
-				parsing/process_map.c \
-				parsing/check_map.c \
-				debugging/debugging.c \
+				parsing.c \
+				check_texture.c \
+				check_file.c \
+				check_rgb.c \
+				calculate_allocate_map.c \
+				process_map.c \
+				check_map.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
@@ -42,7 +41,7 @@ FILES		= 	main.c \
 				utils.c \
 				draw_line.c \
 
-VPATH 		= 	./src:./src/mandatory
+VPATH 		= 	./src:./src/parsing:
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d
@@ -59,7 +58,7 @@ libft:
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	@$(CC)  $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)

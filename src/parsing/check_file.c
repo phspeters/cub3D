@@ -6,11 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:20:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/11 15:55:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:07:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-"cub3d.h"
+#include "cub3d.h"
 
 static bool	is_dir(char *argv_file)
 {
@@ -32,9 +32,10 @@ static bool	is_cub_file(char *argv_file)
 	size_t	len;
 
 	len = ft_strlen(argv_file);
-	if ((argv_file[len - 3] != 'c' || argv_file[len - 2] != 'u'
-			|| argv_file[len - 1] != 'b'
-			|| argv_file[len - 4] != '.'))
+	if ((argv_file[len - 4] != '.')
+		|| argv_file[len - 3] != 'c'
+		|| argv_file[len - 2] != 'u'
+		|| argv_file[len - 1] != 'b')
 		return (false);
 	return (true);
 }

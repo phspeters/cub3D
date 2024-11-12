@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/11 15:40:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:16:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,11 @@ void	parse_map(t_game *game, char *argv[])
 	char	*line;
 
 	if (calculate_map_dimensions(game, argv[1]) == FAILURE)
-	{
-		printf("Erro ao calcular as dimensões do mapa.\n");
-		return ;
-	}
+		handle_error(game, "Error getting map dimensions.\n");
 	allocate_map_grid(game);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
 		handle_error(game, "Error opening map file.");
-		return ;
-	}
 	line = ft_get_next_line(fd);
 	while (line != NULL)
 	{
@@ -69,8 +63,5 @@ void	parse_map(t_game *game, char *argv[])
 	if (!validate_all_floor_ceiling(game))
 		handle_error(game, "Missing floor or ceiling color.");
 	if (validate_all_map(game) == FAILURE)
-	{
 		handle_error(game, "Map validation failed.");
-		return ;
-	}
 }

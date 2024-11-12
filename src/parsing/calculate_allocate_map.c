@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/11 15:40:09 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:02:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int	calculate_map_dimensions(t_game *game, char *file_path)
 	width = 0;
 	height = 0;
 	if (fd < 0)
-	{
 		handle_error(game, "Failed to open map file.");
-		return (FAILURE);
-	}
 	while ((line = ft_get_next_line(fd)) != NULL)
 	{
 		if (is_map_line(line))
@@ -65,19 +62,13 @@ void	allocate_map_grid(t_game *game)
 
 	game->map.grid = malloc(sizeof(int *) * game->map.height);
 	if (!game->map.grid)
-	{
 		handle_error(game, "Memory allocation failed for map grid.");
-		return ;
-	}
 	i = 0;
 	while (i < game->map.height)
 	{
 		game->map.grid[i] = malloc(sizeof(int) * game->map.width);
 		if (!game->map.grid[i])
-		{
 			handle_error(game, "Memory allocation failed for map row.");
-			return ;
-		}
 		i++;
 	}
 }

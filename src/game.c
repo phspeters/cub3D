@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 12:53:17 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:01:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:45:15 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	end_game(t_game *game)
 	delete_textures(game->map.textures, 5);
 	delete_textures(game->map.sprite.texture, 9);
 	delete_textures(game->map.sprite.death_animation, 4);
-	mlx_terminate(game->window);
+	if (game->window)
+		mlx_terminate(game->window);
 }
