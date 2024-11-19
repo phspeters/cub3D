@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 16:59:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:00:13 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	validate_single_player(t_game *game)
 				|| game->map.grid[i][j] == 'E' || game->map.grid[i][j] == 'W')
 			{
 				player_count++;
-				game->player.pos[X] = i;
-				game->player.pos[Y] = j;
 				game->map.grid[i][j] = 0;
 			}
 			j++;

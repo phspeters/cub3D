@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:20:37 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 17:00:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:11:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	process_map_line(t_game *game, char *line)
 		else if (line[j] == 'N' || line[j] == 'S' || line[j] == 'E'
 			|| line[j] == 'W')
 		{
-			game->player.pos[X] = i;
-			game->player.pos[Y] = j;
+			game->player.pos[Y] = i + 0.5;
+			game->player.pos[X] = j + 0.5;
 			game->player.start_dir = line[j];
 			game->map.grid[i][j] = line[j];
 		}
