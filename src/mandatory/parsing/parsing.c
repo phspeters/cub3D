@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/03 16:53:39 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:00:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*trim_line(char *line)
 	int		i;
 
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\r' \
-			|| line[i] == '\v' || line[i] == '\f')
-			i++;
+	while (line[i] == ' ' || line[i] == '\t' || \
+	line[i] == '\r' || line[i] == '\v' || line[i] == '\f')
+		i++;
 	trimmed = ft_strdup(line + i);
 	return (trimmed);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/03 16:54:00 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:39:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct s_map
 	int				current[2];
 	uint32_t		ceiling;
 	uint32_t		floor;
+	char			c_or_f;
 	int				width;
 	int				height;
 	int				minimap_block_size;
@@ -154,6 +155,7 @@ typedef struct s_game
 {
 	t_map			map;
 	t_player		player;
+	int				player_count;
 }					t_game;
 
 char	*trim_line(char *line);

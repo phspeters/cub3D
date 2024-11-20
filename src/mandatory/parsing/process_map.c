@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:20:37 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 14:19:49 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,18 @@ void	process_map_line(t_game *game, char *line)
 	}
 	while (line[j] && j < game->map.width)
 	{
+		while (line[j] == ' ' || line[j] == '\t' || line[j] == '\r' \
+			|| line[j] == '\v' || line[j] == '\f')
+		{
+			game->map.grid[game->map.current[0]][j] = 8;
+			j++;
+		}
 		if (line[j] == '1')
 			game->map.grid[game->map.current[0]][j] = 1;
 		else if (line[j] == '0')
 			game->map.grid[game->map.current[0]][j] = 0;
+		else if (line[j] == '\n' || line[j] == '\0')
+			game->map.grid[game->map.current[0]][j] = 8;
 		else if (line[j] == 'N' || line[j] == 'S' || line[j] == 'E'
 			|| line[j] == 'W')
 		{
@@ -68,12 +76,18 @@ void	process_map_line(t_game *game, char *line)
 			game->player.player_start_char = line[j];
 			game->map.grid[game->map.current[0]][j] = 0;
 			set_player_start_dir(game, line[j]);
+			game->player_count++;
 		}
 		else
 		{
 			handle_error("Invalid character in map.");
 			return ;
 		}
+		j++;
+	}
+	while (j < game->map.width)
+	{
+		game->map.grid[game->map.current[0]][j] = 8;
 		j++;
 	}
 	game->map.current[0]++;

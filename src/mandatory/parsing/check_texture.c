@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/03 16:53:54 by roglopes         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:10:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	is_texture_line(char *line)
 {
+	line = trim_line(line);
 	return (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
 		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0);
 }
@@ -43,6 +44,7 @@ int	set_texture_path(char **texture_dest, char *line)
 
 int	validate_textures(t_game *game, char *line)
 {
+	line = trim_line(line);
 	if (ft_strncmp(line, "NO", 2) == 0)
 		return (set_texture_path(&game->map.texture_path[NORTH], line));
 	else if (ft_strncmp(line, "SO", 2) == 0)
