@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   validate_arguments.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/11/22 18:24:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/11/22 18:22:00 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/11/22 18:29:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+void	validate_arguments(t_game *game, int argc, char **argv)
 {
-	t_game	game;
-
-	init_params(&game);
-	validate_arguments(&game, argc, argv);
-	parse_map(&game, argv);
-	load_params(&game);
-	start_game(&game);
-	run_game_loop(&game);
-	end_game(&game);
-	return (EXIT_SUCCESS);
+	if (argc != 2)
+	{
+		handle_error(game,
+			"Invalid number of arguments: Usage: ./cub3D <path to map>");
+	}
+	validate_file(game, argv[1]);
 }

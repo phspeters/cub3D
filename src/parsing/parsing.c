@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/12 17:00:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:03:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ char	*trim_line(char *line)
 	int		i;
 
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\r' \
-			|| line[i] == '\v' || line[i] == '\f')
-			i++;
+	while (ft_isspace(line[i]))
+		i++;
 	trimmed = ft_strdup(line + i);
 	return (trimmed);
 }
@@ -39,7 +38,6 @@ void	parse_map(t_game *game, char *argv[])
 	line = ft_get_next_line(fd);
 	while (line != NULL)
 	{
-		line = trim_line(line);
 		if (is_texture_line(line))
 		{
 			if (!validate_textures(game, line))
@@ -58,10 +56,7 @@ void	parse_map(t_game *game, char *argv[])
 		line = ft_get_next_line(fd);
 	}
 	close(fd);
-	if (!validate_all_textures(game))
-		handle_error(game, "Missing mandatory texture");
-	if (!validate_all_floor_ceiling(game))
-		handle_error(game, "Missing floor or ceiling color");
-	if (validate_all_map(game) == FAILURE)
-		handle_error(game, "Map validation failed");
+	validate_all_textures(game);
+	validate_all_floor_ceiling(game);
+	validate_all_map(game);
 }

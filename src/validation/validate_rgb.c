@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_rgb.c                                        :+:      :+:    :+:   */
+/*   validate_rgb.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 19:26:28 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/12 16:59:08 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:51:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	validate_all_floor_ceiling(t_game *game)
 
 int	is_rgb_line(char *line)
 {
+	line = trim_line(line);
 	return (ft_strncmp(line, "C", 1) == 0 || ft_strncmp(line, "F", 1) == 0);
 }
 
@@ -72,6 +73,7 @@ int	parse_rgb(t_game *game, char *line)
 
 int	validate_rgb(t_game *game, char *line)
 {
+	line = trim_line(line);
 	if (!parse_rgb(game, line))
 		handle_error(game, "Invalid RGB values");
 	return (1);

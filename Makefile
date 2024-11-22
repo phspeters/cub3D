@@ -6,11 +6,11 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/12 16:34:48 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/22 18:38:42 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 	cub3d
+NAME		= 	cub3D
 CFLAGS		=	-Wextra -Wall -Werror -Wunreachable-code $(FLAG) #-fsanitize=address
 FLAG 		?= 	-g3
 CC			= 	cc
@@ -20,12 +20,13 @@ HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
 				parsing.c \
-				check_texture.c \
-				check_file.c \
-				check_rgb.c \
+				validate_arguments.c \
+				validate_textures.c \
+				validate_file.c \
+				validate_rgb.c \
+				validate_map.c \
 				calculate_allocate_map.c \
 				process_map.c \
-				check_map.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
@@ -39,10 +40,9 @@ FILES		= 	main.c \
 				player_movement.c \
 				raycasting.c \
 				utils.c \
-				draw_line.c \
-				debugging.c
+				draw_line.c
 
-VPATH 		= 	./src:./src/parsing:./src/debugging
+VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/validation
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d

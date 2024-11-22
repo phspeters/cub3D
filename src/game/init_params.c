@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 19:00:28 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 20:29:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:18:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	init_screen_params(t_game *game)
 		game->screen_size[Y] = SCREEN_HEIGHT;
 	}
 	game->map.minimap_block_size = game->screen_size[Y] / 135;
+	game->image = NULL;
+	game->window = NULL;
 }
 
 /**
@@ -54,6 +56,7 @@ void	init_screen_params(t_game *game)
  */
 void	init_player_params(t_game *game)
 {
+	game->player.player_count = 0;
 	game->player.is_mouse_active = 0;
 	game->player.dir[X] = 0;
 	game->player.dir[Y] = 0;

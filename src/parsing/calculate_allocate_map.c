@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/12 16:59:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:21:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_map_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
+	while (line[i] == ' ')
 		i++;
 	if (line[i] == '1' || line[i] == '0')
 		return (1);

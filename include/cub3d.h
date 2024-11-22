@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/19 15:25:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:34:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ enum				e_map_elements
 	EMPTY = 0,
 	WALL = 1,
 	CLOSED_DOOR = 2,
+	VOID = 8
 };
 
 typedef struct s_line_info
@@ -137,6 +138,7 @@ typedef struct s_texture_info
 typedef struct s_player
 {
 	char			start_dir;
+	int				player_count;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
@@ -177,8 +179,10 @@ void				print_map_grid(t_game *game);
 void				print_validate_map_borders(t_game *game);
 //#################DELETE###################
 
-/*--------------chack_file.c---------------*/
-int					check_file(char *argv_file, bool cub);
+void				validate_arguments(t_game *game, int argc, char **argv);
+
+/*--------------check_file.c---------------*/
+void				validate_file(t_game *game, char *argv_file);
 
 /*--------------check_texture.c---------------*/
 int					is_texture_line(char *line);
