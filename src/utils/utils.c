@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 18:59:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/23 21:15:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,43 +33,6 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 	if ((x > 0 && x < game->screen_size[X]) && (y > 0
 			&& y < game->screen_size[Y]))
 		mlx_put_pixel(image, x, y, color);
-}
-
-/**
- * @brief prints the appropriate error message and exits the program without
- * memory leaks when an error occurs in the mlx library.
- *
- * @param game struct with game info
- */
-void	handle_mlx_error(t_game *game, char *message)
-{
-	end_game(game);
-	ft_fprintf(STDERR_FILENO, "%s: %s.\n", message, mlx_strerror(mlx_errno));
-	exit(mlx_errno);
-}
-
-/**
- * @brief prints the appropriate error message and exits the program without
- * memory leaks.
- *
- * @param game struct with game info
- * @param message error message
- */
-void	handle_error(t_game *game, char *message)
-{
-	end_game(game);
-	if (errno)
-	{
-		ft_fprintf(STDERR_FILENO, "Error\n");
-		perror(message);
-		exit(errno);
-	}
-	else
-	{
-		ft_fprintf(STDERR_FILENO, "Error\n");
-		ft_fprintf(STDERR_FILENO, "%s.\n", message);
-		exit(EXIT_FAILURE);
-	}
 }
 
 /**
@@ -110,4 +73,17 @@ void	delete_textures(mlx_texture_t **textures, int count)
 			mlx_delete_texture(textures[i]);
 		i++;
 	}
+}
+
+char	*trim_line(char *line)
+{
+	char	*trimmed;
+	int		i;
+
+	i = 0;
+	while (ft_strchr(" \t", line[i]))
+		i++;
+	trimmed = ft_strdup(line + i);
+	ft_collect_memory(trimmed);
+	return (trimmed);
 }

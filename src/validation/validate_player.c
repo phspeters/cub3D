@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   validate_player.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1014/07/14 10:33:41 by pehenri1          #+#    #+#             */
-/*   Updated: 2024/11/23 19:23:23 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/11/23 19:18:43 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/11/23 19:18:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+void	validate_player(t_game *game)
 {
-	t_game	game;
-
-	init_params(&game);
-	validate_arguments(&game, argc, argv);
-	parse_cub_file(&game, argv);
-	load_params(&game);
-	start_game(&game);
-	run_game_loop(&game);
-	end_game(&game);
-	return (EXIT_SUCCESS);
+	if (game->player.player_count != 1)
+	{
+		if (game->player.player_count == 0)
+			handle_error(game, "No player detected on the map");
+		else
+			handle_error(game, "Multiple players detected on the map");
+	}
 }

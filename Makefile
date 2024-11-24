@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/22 18:38:42 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/23 19:43:39 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,30 +19,30 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
-				parsing.c \
-				validate_arguments.c \
-				validate_textures.c \
-				validate_file.c \
-				validate_rgb.c \
-				validate_map.c \
-				calculate_allocate_map.c \
-				process_map.c \
+				player_action.c \
+				player_movement.c \
+				draw_line.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
 				draw_sprites_utils.c \
+				raycasting.c \
 				game.c \
 				hooks.c \
 				init_params.c \
 				load_params.c \
-				load_textures.c \
-				player_action.c \
-				player_movement.c \
-				raycasting.c \
+				allocate_map.c \
+				identification.c \
+				parsing.c \
+				error.c \
 				utils.c \
-				draw_line.c
+				validate_arguments.c \
+				validate_map.c \
+				validate_player.c \
+				validate_rgb.c \
+				validate_textures.c
 
-VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/validation
+VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/utils:./src/validation
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 EXE			?= 	cub3d
