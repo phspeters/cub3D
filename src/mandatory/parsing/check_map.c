@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/20 22:50:51 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/23 14:51:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ int	validate_map_neighbors(t_game *game)
 	}
 	return (SUCCESS);
 }
-
 
 int	validate_all_map(t_game *game)
 {
