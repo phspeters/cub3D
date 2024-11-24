@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/24 05:52:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:32:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ void	get_map_dimensions(t_game *game, char *file_path)
 	width = 0;
 	height = 0;
 	line = get_first_map_line(game, fd);
-	while (line != NULL)
+	while (line != NULL && is_map_line(line))
 	{
 		width = get_line_width(line, width);
 		height++;
-		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	close(fd);
+	if (line != NULL)
+		handle_error(game, "Map must be the last information in the file");
 	game->map.width = width;
 	game->map.height = height;
 }
@@ -42,9 +43,8 @@ char	*get_first_map_line(t_game *game, int fd)
 	char	*line;
 
 	line = ft_get_next_line(fd);
-	while (!is_map_line(line))
+	while (line != NULL && !is_map_line(line))
 	{
-		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	if (!line)

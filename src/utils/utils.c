@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 05:37:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:34:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,7 @@ void	delete_textures(mlx_texture_t **textures, int count)
 	}
 }
 
-char	*trim_line(char *line)
+int	is_wall_or_void(int map_cell)
 {
-	char	*trimmed;
-	int		i;
-
-	i = 0;
-	while (ft_strchr(" \t", line[i]))
-		i++;
-	trimmed = ft_strdup(line + i);
-	return (trimmed);
+	return (map_cell == WALL || map_cell == VOID);
 }

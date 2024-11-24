@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/23 20:52:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:25:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,21 @@ void	validate_textures(t_game *game)
 void	set_texture_path(t_game *game, char **texture_dest, char *line)
 {
 	char	*texture_path;
-	int		len;
+	int		fd;
 
 	if (*texture_dest != NULL)
 	{
 		handle_error(game, "Duplicated texture info: texture already set");
 	}
-	texture_path = trim_line(line + 2);
-	len = ft_strlen(texture_path);
-	if (texture_path[len - 1] == '\n')
-		texture_path[len - 1] = '\0';
+	texture_path = ft_strtrim(line + 2, " \t\n\f\r\v");
 	if (!is_png_file(texture_path))
 	{
 		handle_error(game, "Invalid texture file extension: file must be .png");
+	}
+	fd = open(texture_path, O_RDONLY);
+	if (fd < 0)
+	{
+		handle_error(game, "Invalid texture file path");
 	}
 	*texture_dest = texture_path;
 }

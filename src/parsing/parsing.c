@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/24 05:52:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 15:27:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	parse_cub_file(t_game *game, char *argv[])
 		parse_textures(game, line);
 		parse_rgb(game, line);
 		parse_map_line(game, line);
-		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	close(fd);
 	validate_textures(game);
 	validate_rgb(game);
-	validate_map_borders(game);
+	validate_map(game);
 	validate_player(game);
 }
 
@@ -42,7 +41,7 @@ void	parse_textures(t_game *game, char *line)
 {
 	if (!is_texture_line(line))
 		return ;
-	line = trim_line(line);
+	line = ft_strtrim(line, " \t\n\f\r\v");
 	if (ft_strncmp(line, "NO", 2) == 0)
 		set_texture_path(game, &game->map.texture_path[NORTH], line);
 	else if (ft_strncmp(line, "SO", 2) == 0)
@@ -62,9 +61,9 @@ void	parse_rgb(t_game *game, char *line)
 
 	if (!is_rgb_line(line))
 		return ;
-	line = trim_line(line);
+	line = ft_strtrim(line, " \t\n\f\r\v");
 	validate_rgb_line(game, line + 1);
-	r = validate_rgb_value(game, line);
+	r = validate_rgb_value(game, line + 1);
 	g = validate_rgb_value(game, ft_strchr(line, ',') + 1);
 	b = validate_rgb_value(game, ft_strrchr(line, ',') + 1);
 	color = (r << 24) | (g << 16) | (b << 8) | 0xFF;
@@ -74,6 +73,8 @@ void	parse_rgb(t_game *game, char *line)
 		game->map.floor = color;
 }
 
+//trocar para parse_map e ler lines aqui dentro para se achar \n acaba a leitura
+//colocar error de coisas após o mapa?
 void	parse_map_line(t_game *game, char *line)
 {
 	static int	i;
@@ -82,16 +83,15 @@ void	parse_map_line(t_game *game, char *line)
 	if (!is_map_line(line))
 		return ;
 	j = 0;
-	if (i > game->map.height)
-		handle_error(game, "Map exceeds allocated height");
-	while (line[j] && line[j] != '\n' && j < game->map.width)
+	line = ft_strtrim(line, "\n");
+	while (line[j] && j < game->map.width)
 	{
 		parse_map_char(game, line[j], i, j);
 		j++;
 	}
 	while (j < game->map.width)
 	{
-		game->map.grid[i][j] = 8;
+		game->map.grid[i][j] = VOID;
 		j++;
 	}
 	i++;

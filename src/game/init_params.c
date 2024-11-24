@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 19:00:28 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/22 17:18:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:23:54 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	init_textures_params(t_game *game)
 	i = -1;
 	while (++i < 4)
 		game->map.sprite.death_animation[i] = NULL;
+	game->map.ceiling = 0;
+	game->map.floor = 0;
 }
 
 /**

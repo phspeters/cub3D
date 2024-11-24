@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/23 19:55:13 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 06:47:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,7 @@ void				put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 mlx_texture_t		*ft_load_png(t_game *game, char *path);
 void				delete_textures(mlx_texture_t **textures, int count);
 char				*trim_line(char *line);
+int					is_wall_or_void(int map_cell);
 
 /*******************************************
 ############## VALIDATION FOLDER ###########
@@ -337,14 +338,10 @@ int					has_cub_extension(char *argv_file);
 
 /*-------------validate_map.c-------------*/
 
+void				validate_map(t_game *game);
 void				validate_map_borders(t_game *game);
-void				validate_top_border(t_game *game);
-void				validate_bottom_border(t_game *game);
-void				validate_left_border(t_game *game);
-void				validate_right_border(t_game *game);
-
-/*------------validate_player.c-----------*/
-
+void				validate_map_content(t_game *game);
+void				validate_cell_neighbours(t_game *game, int i, int j);
 void				validate_player(t_game *game);
 
 /*-------------validate_rgb.c-------------*/

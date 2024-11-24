@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/24 05:57:00 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/24 06:45:38 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ FILES		= 	main.c \
 				utils.c \
 				validate_arguments.c \
 				validate_map.c \
-				validate_player.c \
 				validate_rgb.c \
 				validate_textures.c
 
