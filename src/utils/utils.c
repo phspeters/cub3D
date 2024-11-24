@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/23 21:15:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 05:37:56 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ char	*trim_line(char *line)
 	while (ft_strchr(" \t", line[i]))
 		i++;
 	trimmed = ft_strdup(line + i);
-	ft_collect_memory(trimmed);
 	return (trimmed);
 }

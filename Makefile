@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/23 19:43:39 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/24 05:57:00 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ FILES		= 	main.c \
 VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/utils:./src/validation
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
-EXE			?= 	cub3d
+EXE			?= 	cub3D
 
 SUPP_FILE	= MLX42.suppressions
 
@@ -78,7 +78,7 @@ fclean: clean
 re: fclean all
 
 val: all supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/valid/subject.cub
 
 norm:
 	@norminette src include $(LIBFT)

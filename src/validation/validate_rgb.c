@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 19:26:28 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/23 20:54:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 05:37:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	validate_rgb(t_game *game)
 {
 	if (game->map.ceiling == 0)
-		handle_error(game, "Ceiling color not set");
+		handle_error(game, "Missing color: ceiling color not set");
 	if (game->map.floor == 0)
-		handle_error(game, "Floor color not set");
+		handle_error(game, "Missing color: floor color not set");
 }
 
 void	validate_rgb_line(t_game *game, char *line)
@@ -27,21 +27,24 @@ void	validate_rgb_line(t_game *game, char *line)
 		line++;
 	line = trim_line(line);
 	if (*line != ',')
-		handle_error(game, "Invalid RGB line");
+		handle_error(game,
+			"Invalid RGB line: must provide 3 values separated by commas");
 	line++;
 	line = trim_line(line);
 	while (line && ft_isdigit(*line))
 		line++;
 	line = trim_line(line);
 	if (*line != ',')
-		handle_error(game, "Invalid RGB line");
+		handle_error(game,
+			"Invalid RGB line: must provide 3 values separated by commas");
 	line++;
 	line = trim_line(line);
 	while (line && ft_isdigit(*line))
 		line++;
 	line = trim_line(line);
 	if (*line != '\0' && *line != '\n')
-		handle_error(game, "Invalid RGB line");
+		handle_error(game,
+			"Invalid RGB line: must provide 3 values separated by commas");
 }
 
 int	validate_rgb_value(t_game *game, char *rgb_string)

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/23 20:21:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 05:52:49 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	parse_cub_file(t_game *game, char *argv[])
 		parse_textures(game, line);
 		parse_rgb(game, line);
 		parse_map_line(game, line);
-		free(line);
+		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/23 21:16:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 05:52:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_map_dimensions(t_game *game, char *file_path)
 	{
 		width = get_line_width(line, width);
 		height++;
-		free(line);
+		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	close(fd);
@@ -44,7 +44,7 @@ char	*get_first_map_line(t_game *game, int fd)
 	line = ft_get_next_line(fd);
 	while (!is_map_line(line))
 	{
-		free(line);
+		//free(line);
 		line = ft_get_next_line(fd);
 	}
 	if (!line)
