@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 16:09:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:19:36 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 # define MOVEMENT_SPEED_MULTIPLIER 5.0
 # define ROTATION_SPEED_MULTIPLIER 2.0
 # define COLLISION_DISTANCE_MULTIPLIER 2
-
-enum				e_output
-{
-	SUCCESS = 0,
-	FAILURE = 1,
-};
 
 enum				e_axis
 {
