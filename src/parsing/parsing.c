@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/24 15:27:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:13:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ void	parse_rgb(t_game *game, char *line)
 		game->map.floor = color;
 }
 
-//trocar para parse_map e ler lines aqui dentro para se achar \n acaba a leitura
-//colocar error de coisas após o mapa?
 void	parse_map_line(t_game *game, char *line)
 {
 	static int	i;
