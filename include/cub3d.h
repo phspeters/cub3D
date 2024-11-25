@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/17 21:15:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:14:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,10 @@
 # include <MLX42/MLX42.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <limits.h>
 # include <math.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MINIMAP_SIZE 25
@@ -65,6 +61,15 @@ enum				e_minimap_colors
 	FLOOR_COLOR = 0x000000FF,
 	DOOR_COLOR = 0x0000FFFF,
 	PLAYER_COLOR = 0xFF0000FF
+};
+
+enum				e_map_elements
+{
+	OPEN_DOOR = -2,
+	EMPTY = 0,
+	WALL = 1,
+	CLOSED_DOOR = 2,
+	VOID = 8
 };
 
 typedef struct s_line_info
@@ -121,6 +126,7 @@ typedef struct s_texture_info
 typedef struct s_player
 {
 	char			start_dir;
+	int				player_count;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
@@ -151,7 +157,31 @@ typedef struct s_game
 	int32_t			screen_size[2];
 }					t_game;
 
-extern int			g_map[MAP_HEIGHT][MAP_WIDTH];
+/*******************************************
+############## ACTIONS FOLDER ##############
+*******************************************/
+
+/*------------player_action.c-------------*/
+
+void				open_doors(t_game *game, double pos[2]);
+void				kill_sprites(t_game *game, double pos[2]);
+
+/*-----------player_movement.c------------*/
+
+void				move_player_forward_backward(t_game *game, t_player *player,
+						double move_speed, double collision_distance);
+void				strafe_player_left_right(t_game *game, t_player *player,
+						double move_speed, double collision_distance);
+void				keyboard_rotate_player(t_game *game, t_player *player,
+						double rot_speed);
+void				mouse_rotate_player(t_game *game, t_player *player,
+						double rot_speed);
+void				rotate_direction_and_plane(t_player *player,
+						double rot_speed, int direction);
+
+/*******************************************
+############## DRAWING FOLDER ##############
+*******************************************/
 
 /*--------------draw_line.c---------------*/
 
@@ -197,6 +227,21 @@ void				draw_death_animation_and_respawn(t_game *game,
 void				randomize_sprite_position(t_game *game);
 int					get_random_position(int max_pos);
 
+/*--------------raycasting.c--------------*/
+
+void				cast_ray(t_game *game, int x_coordinate);
+void				initialize_ray_and_player(t_game *game, t_ray *ray,
+						int x_coordinate);
+void				calculate_step_and_initial_side_distance(t_game *game,
+						t_player *player, t_ray *ray);
+void				perform_dda(t_map *map, t_ray *ray);
+void				calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
+						int x_coordinate);
+
+/*******************************************
+############### GAME FOLDER ################
+*******************************************/
+
 /*----------------game.c------------------*/
 
 void				start_game(t_game *game);
@@ -223,49 +268,83 @@ void				init_sprite_params(t_game *game);
 /*-------------load_params.c--------------*/
 
 void				load_params(t_game *game);
-void				fake_load_map_params(t_game *game);
 void				load_player_params(t_game *game);
-
-/*------------load_textures.c-------------*/
-
 void				load_map_textures(t_game *game);
 void				load_sprite_textures(t_game *game);
 
-/*-----------player_movement.c------------*/
+/*******************************************
+############### PARSING FOLDER #############
+*******************************************/
 
-void				move_player_forward_backward(t_game *game, t_player *player,
-						double move_speed, double collision_distance);
-void				strafe_player_left_right(t_game *game, t_player *player,
-						double move_speed, double collision_distance);
-void				keyboard_rotate_player(t_game *game, t_player *player,
-						double rot_speed);
-void				mouse_rotate_player(t_game *game, t_player *player,
-						double rot_speed);
-void				rotate_direction_and_plane(t_player *player,
-						double rot_speed, int direction);
+/*-------------allocate_map.c-------------*/
 
-/*------------player_action.c-------------*/
+void				get_map_dimensions(t_game *game, char *file_path);
+char				*get_first_map_line(t_game *game, int fd);
+int					get_line_width(char *line, int current_width);
+void				allocate_map_grid(t_game *game);
 
-void				open_doors(t_game *game, double pos[2]);
-void				kill_sprites(t_game *game, double pos[2]);
+/*------------identification.c------------*/
 
-/*--------------raycasting.c--------------*/
+int					is_valid_line(char *line);
+int					is_texture_line(char *line);
+int					is_rgb_line(char *line);
+int					is_map_line(char *line);
 
-void				cast_ray(t_game *game, int x_coordinate);
-void				initialize_ray_and_player(t_game *game, t_ray *ray,
-						int x_coordinate);
-void				calculate_step_and_initial_side_distance(t_game *game,
-						t_player *player, t_ray *ray);
-void				perform_dda(t_map *map, t_ray *ray);
-void				calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
-						int x_coordinate);
+/*---------------parsing.c----------------*/
+
+void				parse_cub_file(t_game *game, char *argv[]);
+void				parse_textures(t_game *game, char *line);
+void				parse_rgb(t_game *game, char *line);
+void				parse_map_line(t_game *game, char *line);
+void				parse_map_char(t_game *game, char c, int i, int j);
+
+/*******************************************
+############### UTILS FOLDER ###############
+*******************************************/
+
+/*----------------error.c-----------------*/
+
+void				handle_mlx_error(t_game *game, char *message);
+void				handle_error(t_game *game, char *message);
 
 /*----------------utils.c-----------------*/
 
 void				put_valid_pixel(t_game *game, int x, int y, uint32_t color);
-void				handle_mlx_error(t_game *game, char *message);
-void				handle_error(t_game *game, char *message);
 mlx_texture_t		*ft_load_png(t_game *game, char *path);
 void				delete_textures(mlx_texture_t **textures, int count);
+int					is_wall_or_void(int map_cell);
+
+/*******************************************
+############## VALIDATION FOLDER ###########
+*******************************************/
+
+/*----------validate_arguments.c----------*/
+
+void				validate_arguments(t_game *game, int argc, char **argv);
+void				validate_file(t_game *game, char *argv_file);
+int					is_directory(char *argv_file);
+int					has_cub_extension(char *argv_file);
+
+/*-------------validate_map.c-------------*/
+
+void				validate_map(t_game *game);
+void				validate_map_borders(t_game *game);
+void				validate_map_content(t_game *game);
+void				validate_cell_neighbours(t_game *game, int i, int j);
+void				validate_player(t_game *game);
+
+/*-------------validate_rgb.c-------------*/
+
+void				validate_rgb(t_game *game);
+void				validate_rgb_line(t_game *game, char *line);
+int					count_rgb_values(t_game *game, char *line);
+int					validate_rgb_value(t_game *game, char *rgb_string);
+
+/*----------validate_textures.c-----------*/
+
+void				validate_textures(t_game *game);
+void				set_texture_path(t_game *game, char **texture_dest,
+						char *line);
+int					is_png_file(char *arg);
 
 #endif

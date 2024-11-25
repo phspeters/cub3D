@@ -6,11 +6,11 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/10/17 19:53:23 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/24 06:45:38 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 	cub3d
+NAME		= 	cub3D
 CFLAGS		=	-Wextra -Wall -Werror -Wunreachable-code $(FLAG) #-fsanitize=address
 FLAG 		?= 	-g3
 CC			= 	cc
@@ -19,25 +19,32 @@ LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
+				player_action.c \
+				player_movement.c \
+				draw_line.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
 				draw_sprites_utils.c \
+				raycasting.c \
 				game.c \
 				hooks.c \
 				init_params.c \
 				load_params.c \
-				load_textures.c \
-				player_action.c \
-				player_movement.c \
-				raycasting.c \
+				allocate_map.c \
+				identification.c \
+				parsing.c \
+				error.c \
 				utils.c \
-				draw_line.c \
+				validate_arguments.c \
+				validate_map.c \
+				validate_rgb.c \
+				validate_textures.c
 
-VPATH 		= 	./src:./src/mandatory
+VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/utils:./src/validation
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
-EXE			?= 	cub3d
+EXE			?= 	cub3D
 
 SUPP_FILE	= MLX42.suppressions
 
@@ -70,7 +77,7 @@ fclean: clean
 re: fclean all
 
 val: all supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/default.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/valid/subject.cub
 
 norm:
 	@norminette src include $(LIBFT)
