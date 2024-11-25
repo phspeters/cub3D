@@ -1,7 +1,7 @@
-NO ./assets/black_wood.png
+NO ./assets/brick_wall_2.png
 SO ./assets/brick_wall_2.png
-WE ./assets/wood_brick.png
-EA ./assets/plant_wall.png
+WE ./assets/brick_wall_2.png
+EA ./assets/brick_wall_2.png
 
 F 220,100,0
 C 225,30,0

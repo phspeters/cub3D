@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 19:26:28 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/24 15:44:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:14:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,39 @@ void	validate_rgb(t_game *game)
 
 void	validate_rgb_line(t_game *game, char *line)
 {
+	int	color_count;
+
 	line = ft_strtrim(line, " \t\n\f\r\v");
-	while (line && ft_isdigit(*line))
-		line++;
-	line = ft_strtrim(line, " \t\n\f\r\v");
-	if (*line != ',')
+	color_count = count_rgb_values(game, line);
+	if (color_count != 3)
 		handle_error(game,
-			"Invalid RGB line: must provide 3 integers separated by commas");
-	line++;
-	line = ft_strtrim(line, " \t\n\f\r\v");
-	while (line && ft_isdigit(*line))
-		line++;
-	line = ft_strtrim(line, " \t\n\f\r\v");
-	if (*line != ',')
-		handle_error(game,
-			"Invalid RGB line: must provide 3 integers separated by commas");
-	line++;
-	line = ft_strtrim(line, " \t\n\f\r\v");
-	while (line && ft_isdigit(*line))
-		line++;
-	line = ft_strtrim(line, " \t\n\f\r\v");
-	if (*line != '\0' && *line != '\n')
-		handle_error(game,
-			"Invalid RGB line: must provide 3 integers separated by commas");
+			"Invalid RGB: must provide 3 integers separated by commas");
+}
+
+int	count_rgb_values(t_game *game, char *line)
+{
+	int	count;
+
+	count = 0;
+	while (*line)
+	{
+		while (ft_isspace(*line))
+			line++;
+		if (ft_isdigit(*line))
+		{
+			count++;
+			while (ft_isdigit(*line))
+				line++;
+		}
+		while (ft_isspace(*line))
+			line++;
+		if (*line == ',')
+			line++;
+		else if (*line != '\0')
+			handle_error(game,
+				"Invalid RGB: must provide 3 integers separated by commas");
+	}
+	return (count);
 }
 
 int	validate_rgb_value(t_game *game, char *rgb_string)

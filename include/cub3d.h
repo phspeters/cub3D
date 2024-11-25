@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 16:19:36 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:14:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,7 @@ void				allocate_map_grid(t_game *game);
 
 /*------------identification.c------------*/
 
+int					is_valid_line(char *line);
 int					is_texture_line(char *line);
 int					is_rgb_line(char *line);
 int					is_map_line(char *line);
@@ -336,6 +337,7 @@ void				validate_player(t_game *game);
 
 void				validate_rgb(t_game *game);
 void				validate_rgb_line(t_game *game, char *line);
+int					count_rgb_values(t_game *game, char *line);
 int					validate_rgb_value(t_game *game, char *rgb_string);
 
 /*----------validate_textures.c-----------*/

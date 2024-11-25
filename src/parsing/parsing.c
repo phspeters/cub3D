@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/24 16:13:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:39:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	parse_cub_file(t_game *game, char *argv[])
 	line = ft_get_next_line(fd);
 	while (line != NULL)
 	{
+		if (!is_valid_line(line))
+			handle_error(game, ft_strjoin("Invalid line in map file: ",
+					ft_strtrim(line, "\n\r\f\v")));
 		parse_textures(game, line);
 		parse_rgb(game, line);
 		parse_map_line(game, line);
