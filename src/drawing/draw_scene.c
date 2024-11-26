@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:17:01 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/19 16:01:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:07:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ void	draw_loop(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	mlx_delete_image(game->window, game->image);
-	game->image = mlx_new_image(game->window, game->screen_size[X],
-			game->screen_size[Y]);
-	if (!game->image)
-		handle_mlx_error(game, "mlx_new_image");
-	if (mlx_image_to_window(game->window, game->image, 0, 0) == -1)
-		handle_mlx_error(game, "mlx_image_to_window");
 	draw_3d_scene(game);
 	draw_minimap(game);
 	draw_player_on_minimap(game);
@@ -113,10 +106,10 @@ void	calculate_texture_coordinates(t_game *game, t_ray *ray,
 	wall_x -= floor(wall_x);
 	texture_info->texture_coord[X] = (int)(wall_x
 			* (double)(ray->wall_texture->width));
-	if (ray->side_hit == WEST_EAST && ray->ray_dir[X] > 0)
+	if (ray->side_hit == WEST_EAST && ray->ray_dir[X] < 0)
 		texture_info->texture_coord[X] = ray->wall_texture->width
 			- texture_info->texture_coord[X] - 1;
-	if (ray->side_hit == NORTH_SOUTH && ray->ray_dir[Y] < 0)
+	if (ray->side_hit == NORTH_SOUTH && ray->ray_dir[Y] > 0)
 		texture_info->texture_coord[X] = ray->wall_texture->width
 			- texture_info->texture_coord[X] - 1;
 	texture_info->step = 1.0 * ray->wall_texture->height / ray->wall_height;
