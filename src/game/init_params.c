@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 19:00:28 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 14:23:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:05:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,7 @@ void	init_textures_params(t_game *game)
 	game->map.floor = 0;
 }
 
-/**
- * @brief initializes the sprite-related parameters in the game. It sets the
- * killed sprite flag to 0 and specifies that each sprite texture should be
- * displayed for 3 frames.
- * 
- * @param game struct containing game data
- */
 void	init_sprite_params(t_game *game)
 {
-	game->map.sprite.killed = 0;
-	game->map.sprite.frames_per_texture = 3;
+	game->map.sprite.killed = false;
 }

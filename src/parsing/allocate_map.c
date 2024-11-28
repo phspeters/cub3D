@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:03:19 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/24 15:32:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:27:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int	get_line_width(char *line, int current_width)
 
 	width = 0;
 	while (line[width] && line[width] != '\n')
+	{
 		width++;
+	}
 	if (width > current_width)
 		return (width);
 	return (current_width);

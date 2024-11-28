@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/24 06:45:38 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/28 18:46:35 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,22 @@ NAME		= 	cub3D
 CFLAGS		=	-Wextra -Wall -Werror -Wunreachable-code $(FLAG) #-fsanitize=address
 FLAG 		?= 	-g3
 CC			= 	cc
+
 LIBMLX		= 	./lib/MLX42
 LIBFT		= 	./lib/libft
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
+
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
 				player_action.c \
 				player_movement.c \
+				player_rotation.c \
 				draw_line.c \
 				draw_minimap.c \
 				draw_scene.c \
 				draw_sprites.c \
 				draw_sprites_utils.c \
+				draw_vertical_screen_line.c \
 				raycasting.c \
 				game.c \
 				hooks.c \
@@ -44,14 +48,15 @@ FILES		= 	main.c \
 VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/utils:./src/validation
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
-EXE			?= 	cub3D
 
+EXE			?= 	./cub3D
+MAP			?= 	maps/valid/subject.cub
 SUPP_FILE	= MLX42.suppressions
 
 all: libmlx libft $(NAME)
 
 libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@cmake $(LIBMLX) -B $(LIBMLX)/build >/dev/null 2>&1 && make -C $(LIBMLX)/build -j4 --silent
 
 libft:
 	@make -C $(LIBFT) --silent
@@ -76,8 +81,25 @@ fclean: clean
 
 re: fclean all
 
+INVALID_MAPS := $(wildcard maps/invalid/*.cub)
+invalid: all
+	@for map in $(INVALID_MAPS); do \
+		printf "\nRunning ./$(EXE) $$map\n"; \
+		./$(EXE) $$map || true; \
+	done
+
+val_invalid: all supp
+	@for map in $(INVALID_MAPS); do \
+		printf "\nTesting $$map with valgrind\n"; \
+		valgrind --leak-check=full --show-leak-kinds=all \
+		--track-origins=yes --suppressions=$(SUPP_FILE) \
+		--error-exitcode=1 --quiet ./$(EXE) $$map || true; \
+	done
+
+#make val MAP=maps/valid/all_black.cub
+#make val EXE=./cub3D_bonus MAP=maps/valid/all_black.cub
 val: all supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(EXE) maps/valid/subject.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) $(EXE) $(MAP)
 
 norm:
 	@norminette src include $(LIBFT)

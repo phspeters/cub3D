@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 12:46:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/12 16:11:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:53:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	keyboard_action_loop_hook(mlx_key_data_t keydata, void *param)
 		open_doors(game, game->player.pos);
 		kill_sprites(game, game->player.pos);
 	}
+	if ((keydata.key == MLX_KEY_M) && (keydata.action == MLX_PRESS))
+		game->map.is_minimap_active = !game->map.is_minimap_active;
 }
 
 /**

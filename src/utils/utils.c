@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 15:34:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:47:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 	image = game->image;
 	if (color == 0xFF00FFFF)
 		return ;
-	if ((x > 0 && x < game->screen_size[X]) && (y > 0
-			&& y < game->screen_size[Y]))
-		mlx_put_pixel(image, x, y, color);
+	if (x < 0 || x > game->screen_size[X] || y < 0 || y > game->screen_size[Y])
+		return ;
+	mlx_put_pixel(image, x, y, color);
 }
 
 /**
@@ -75,7 +75,7 @@ void	delete_textures(mlx_texture_t **textures, int count)
 	}
 }
 
-int	is_wall_or_void(int map_cell)
+bool	is_wall_or_void(int map_cell)
 {
 	return (map_cell == WALL || map_cell == VOID);
 }

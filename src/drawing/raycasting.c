@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:14:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/19 16:12:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:35:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
  * and then calculates the wall distance and draws the result on the screen.
  * This function is part of the raycasting process used to render a 3D view
  * from a 2D map.
- * 
+ *
  * @param game struct containing the game data
  * @param x_coordinate on the screen
  */
-void	cast_ray(t_game *game, int x_coordinate)
+t_ray	cast_ray(t_game *game, int x_coordinate)
 {
 	t_ray		ray;
 	t_player	*player;
@@ -34,7 +34,8 @@ void	cast_ray(t_game *game, int x_coordinate)
 	initialize_ray_and_player(game, &ray, x_coordinate);
 	calculate_step_and_initial_side_distance(game, player, &ray);
 	perform_dda(map, &ray);
-	calculate_wall_distance_and_draw(game, &ray, x_coordinate);
+	calculate_wall_distance(game, &ray);
+	return (ray);
 }
 
 /**
@@ -43,7 +44,7 @@ void	cast_ray(t_game *game, int x_coordinate)
  * ray direction, initializes the ray's hit flag, sets the current map
  * position to the player's position, and calculates the delta distance for
  * the ray in the x and y directions.
- * 
+ *
  * @param game struct containing the game data
  * @param ray struct containing the ray data
  * @param x_coordinate on the screen
@@ -59,27 +60,27 @@ void	initialize_ray_and_player(t_game *game, t_ray *ray, int x_coordinate)
 		* ray->camera_x_coordinate;
 	ray->ray_dir[Y] = player.dir[Y] + player.plane[Y]
 		* ray->camera_x_coordinate;
-	ray->hit = 0;
+	ray->hit = EMPTY;
 	game->map.current[X] = (int)player.pos[X];
 	game->map.current[Y] = (int)player.pos[Y];
 	if (ray->ray_dir[X] == 0)
-		ray->delta_distance[X] = 1e30;
+		ray->delta_dist[X] = 1e30;
 	else
-		ray->delta_distance[X] = fabs(1 / ray->ray_dir[X]);
+		ray->delta_dist[X] = fabs(1 / ray->ray_dir[X]);
 	if (ray->ray_dir[Y] == 0)
-		ray->delta_distance[Y] = 1e30;
+		ray->delta_dist[Y] = 1e30;
 	else
-		ray->delta_distance[Y] = fabs(1 / ray->ray_dir[Y]);
+		ray->delta_dist[Y] = fabs(1 / ray->ray_dir[Y]);
 }
 
 /**
  * @brief determines the initial step direction and distance to the first side
  * of a grid cell for a ray being cast. It sets the step direction (grid_step)
- * and calculates the initial distance to the side (distance_to_side) for both
+ * and calculates the initial distance to the side (dist_to_side) for both
  * the X and Y directions based on the ray's direction. This setup is essential
  * for the DDA algorithm to correctly traverse the grid cells and determine
  * intersections.
- * 
+ *
  * @param game struct containing the game data
  * @param player struct containing the player data
  * @param ray struct containing the ray data
@@ -90,26 +91,26 @@ void	calculate_step_and_initial_side_distance(t_game *game, t_player *player,
 	if (ray->ray_dir[X] < 0)
 	{
 		ray->grid_step[X] = -1;
-		ray->distance_to_side[X] = (player->pos[X] - game->map.current[X])
-			* ray->delta_distance[X];
+		ray->dist_to_side[X] = (player->pos[X] - game->map.current[X])
+			* ray->delta_dist[X];
 	}
 	else
 	{
 		ray->grid_step[X] = 1;
-		ray->distance_to_side[X] = (game->map.current[X] + 1.0 - player->pos[X])
-			* ray->delta_distance[X];
+		ray->dist_to_side[X] = (game->map.current[X] + 1.0 - player->pos[X])
+			* ray->delta_dist[X];
 	}
 	if (ray->ray_dir[Y] < 0)
 	{
 		ray->grid_step[Y] = -1;
-		ray->distance_to_side[Y] = (player->pos[Y] - game->map.current[Y])
-			* ray->delta_distance[Y];
+		ray->dist_to_side[Y] = (player->pos[Y] - game->map.current[Y])
+			* ray->delta_dist[Y];
 	}
 	else
 	{
 		ray->grid_step[Y] = 1;
-		ray->distance_to_side[Y] = (game->map.current[Y] + 1.0 - player->pos[Y])
-			* ray->delta_distance[Y];
+		ray->dist_to_side[Y] = (game->map.current[Y] + 1.0 - player->pos[Y])
+			* ray->delta_dist[Y];
 	}
 }
 
@@ -118,23 +119,23 @@ void	calculate_step_and_initial_side_distance(t_game *game, t_player *player,
  * a ray step by step through a 2D grid until it hits a wall. It updates the
  * ray's distance to the next vertical and horizontal grid lines, moves the
  * current position in the map, and checks if a wall is hit.
- * 
+ *
  * @param map struct containing the map data
  * @param ray struct containing the ray data
  */
 void	perform_dda(t_map *map, t_ray *ray)
 {
-	while (ray->hit == 0)
+	while (ray->hit == EMPTY)
 	{
-		if (ray->distance_to_side[X] < ray->distance_to_side[Y])
+		if (ray->dist_to_side[X] < ray->dist_to_side[Y])
 		{
-			ray->distance_to_side[X] += ray->delta_distance[X];
+			ray->dist_to_side[X] += ray->delta_dist[X];
 			map->current[X] += ray->grid_step[X];
 			ray->side_hit = WEST_EAST;
 		}
 		else
 		{
-			ray->distance_to_side[Y] += ray->delta_distance[Y];
+			ray->dist_to_side[Y] += ray->delta_dist[Y];
 			map->current[Y] += ray->grid_step[Y];
 			ray->side_hit = NORTH_SOUTH;
 		}
@@ -148,28 +149,26 @@ void	perform_dda(t_map *map, t_ray *ray)
  * determines the height and position of the wall slice to be drawn, selects
  * the appropriate wall texture, and then draws the vertical line representing
  * the wall slice on the screen.
- * 
+ *
  * @param game struct containing the game data
  * @param ray struct containing the ray data
  * @param x_coordinate on the screen
  */
-void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
-		int x_coordinate)
+void	calculate_wall_distance(t_game *game, t_ray *ray)
 {
+	int	half_wall;
+	int	screen_center;
+
 	if (ray->side_hit == WEST_EAST)
-		ray->perpendicular_wall_distance = ray->distance_to_side[X]
-			- ray->delta_distance[X];
+		ray->perp_wall_dist = ray->dist_to_side[X] - ray->delta_dist[X];
 	else
-		ray->perpendicular_wall_distance = ray->distance_to_side[Y]
-			- ray->delta_distance[Y];
-	ray->wall_height = (int)(game->screen_size[Y]
-			/ ray->perpendicular_wall_distance);
-	ray->wall_line_start = -ray->wall_height / 2 + game->screen_size[Y] / 2;
-	if (ray->wall_line_start < 0)
-		ray->wall_line_start = 0;
-	ray->wall_line_end = ray->wall_height / 2 + game->screen_size[Y] / 2;
-	if (ray->wall_line_end >= game->screen_size[Y])
-		ray->wall_line_end = game->screen_size[Y] - 1;
+		ray->perp_wall_dist = ray->dist_to_side[Y] - ray->delta_dist[Y];
+	ray->wall_height = (int)(game->screen_size[Y] / ray->perp_wall_dist);
+	half_wall = ray->wall_height / 2;
+	screen_center = game->screen_size[Y] / 2;
+	ray->wall_line_start = fmax(0, (-half_wall + screen_center));
+	ray->wall_line_end = fmin(half_wall + screen_center, game->screen_size[Y]
+			- 1);
 	if (ray->hit == CLOSED_DOOR)
 		ray->wall_texture = game->map.textures[DOOR];
 	else if (ray->side_hit == NORTH_SOUTH && ray->ray_dir[Y] < 0)
@@ -180,5 +179,4 @@ void	calculate_wall_distance_and_draw(t_game *game, t_ray *ray,
 		ray->wall_texture = game->map.textures[EAST];
 	else if (ray->side_hit == WEST_EAST && ray->ray_dir[X] < 0)
 		ray->wall_texture = game->map.textures[WEST];
-	draw_vertical_line(game, x_coordinate, *ray);
 }

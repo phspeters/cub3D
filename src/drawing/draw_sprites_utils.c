@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:19:30 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/10/18 16:57:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:02:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void	draw_death_animation_and_respawn(t_game *game, t_sprite sprite)
 	static int		frame_counter = 0;
 
 	texture = sprite.death_animation[tex_index];
-	initialize_sprite(game, &sprite);
+	project_sprite_position(game, &sprite);
 	calculate_sprite_dimensions(game, &sprite);
-	draw_sprite_columns(game, &sprite, texture);
+	draw_sprite(game, &sprite, texture);
 	frame_counter++;
-	if (frame_counter >= sprite.frames_per_texture)
+	if (frame_counter >= FRAMES_PER_TEXTURE)
 	{
 		tex_index++;
 		frame_counter = 0;
 	}
 	if (tex_index == 4)
 	{
-		game->map.sprite.killed = 0;
+		game->map.sprite.killed = false;
 		tex_index = 0;
 		randomize_sprite_position(game);
 	}
@@ -69,7 +69,7 @@ void	randomize_sprite_position(t_game *game)
 		randomize_sprite_position(game);
 }
 
-int	get_random_position(int max_pos)
+int	get_random_position(int max)
 {
 	static unsigned long	seed;
 	static int				initialized = 0;
@@ -86,5 +86,23 @@ int	get_random_position(int max_pos)
 		initialized = 1;
 	}
 	seed = seed * 1103515245 + 12345;
-	return (seed % max_pos);
+	return (seed % max);
+}
+
+int	calculate_texture_x(int screen_x, t_sprite *sprite, mlx_texture_t *texture)
+{
+	int	sprite_x;
+
+	sprite_x = screen_x - (-sprite->width / 2 + sprite->screen_x);
+	return ((int)(256 * sprite_x * texture->width / sprite->width) / 256);
+}
+
+int	calculate_texture_y(int screen_y, t_game *game, t_sprite *sprite,
+		mlx_texture_t *texture)
+{
+	int	sprite_y;
+
+	sprite_y = screen_y * 256 - game->screen_size[Y] * 128 + sprite->height
+		* 128;
+	return (((sprite_y * texture->height) / sprite->height) / 256);
 }

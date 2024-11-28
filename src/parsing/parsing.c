@@ -6,12 +6,20 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/11/25 17:39:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:08:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Parse the cub file and fill the game struct with the information for
+ * the game to run. Reads and validates the map information, wall textures and 
+ * floor and ceiling colors.
+ * 
+ * @param game struct with the game information
+ * @param argv array with the arguments passed to the program
+ */
 void	parse_cub_file(t_game *game, char *argv[])
 {
 	int		fd;
