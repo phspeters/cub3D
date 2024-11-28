@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/28 18:46:35 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/28 19:14:02 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,11 @@ CFLAGS		=	-Wextra -Wall -Werror -Wunreachable-code $(FLAG) #-fsanitize=address
 FLAG 		?= 	-g3
 CC			= 	cc
 
+HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
+LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 LIBMLX		= 	./lib/MLX42
 LIBFT		= 	./lib/libft
-HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
-LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 FILES		= 	main.c \
 				player_action.c \
 				player_movement.c \
@@ -45,7 +45,7 @@ FILES		= 	main.c \
 				validate_rgb.c \
 				validate_textures.c
 
-VPATH 		= 	./src:./src/actions:./src/drawing:./src/game:./src/parsing:./src/utils:./src/validation
+VPATH 		= 	$(shell find src -type d | tr '\n' ':')
 OBJS		= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= 	obj
 
