@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/11/28 19:14:02 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/11/29 19:27:39 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,14 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@printf "\n$(NAME) compiled successfully\n\n"
+	@printf "CONTROLS:\n\
+	W,A,S,D: move player\n\
+	LEFT and RIGHT ARROWS: rotate player\n\
+	SPACE or LEFT MOUSE BUTTON: perform action\n\
+	RIGHT MOUSE BUTTON: activate mouse rotation\n\
+	M: toggle minimap\n\
+	ESC: exit game\n"
 
 clean:
 	@rm -rf $(OBJ_DIR)
