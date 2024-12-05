@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:53:07 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/12/05 19:16:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:08:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	put_valid_pixel(t_game *game, int x, int y, uint32_t color)
 	image = game->image;
 	if (color == 0xFF00FFFF)
 		return ;
-	if (x < 0 || x > game->screen_size[X] || y < 0 || y > game->screen_size[Y])
+	if (x < 0 || x >= game->screen_size[X]
+		|| y < 0 || y >= game->screen_size[Y])
 		return ;
 	mlx_put_pixel(image, x, y, color);
 }

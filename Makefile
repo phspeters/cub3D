@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/12/05 19:44:14 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/12/05 20:25:20 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,10 +72,10 @@ OBJS			= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJS		= 	$(BONUS_FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR			= 	obj
 
-MAP			?= 	maps/valid/subject.cub
-SUPP_FILE	= MLX42.suppressions
+MAP				?= 	maps/valid/subject.cub
+SUPP_FILE		= MLX42.supp
 
-all: libmlx libft $(NAME)
+all: $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build >/dev/null 2>&1 && make -C $(LIBMLX)/build -j4 --silent
@@ -87,7 +87,7 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
 
-$(NAME): $(OBJS)
+$(NAME): libmlx libft $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 	@printf "\n$(NAME) compiled successfully\n\n"
 	@printf "CONTROLS:\n\
@@ -95,7 +95,7 @@ $(NAME): $(OBJS)
 	LEFT and RIGHT ARROWS: rotate player\n\
 	ESC: exit game\n\n"
 
-bonus: $(BONUS_OBJS) libmlx libft
+bonus: libmlx libft $(BONUS_OBJS)
 	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBS) $(HEADERS) -o $(BONUS_NAME)
 	@printf "\n$(BONUS_NAME) compiled successfully\n\n"
 	@printf "CONTROLS:\n\
@@ -115,7 +115,6 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(BONUS_NAME)
-	@rm -rf $(SUPP_FILE)
 	@make -C $(LIBFT) fclean --silent
 
 re: fclean all
@@ -127,7 +126,7 @@ invalid: all
 		./$(NAME) $$map || true; \
 	done
 
-b_invalid: all
+b_invalid: bonus
 	@for map in $(INVALID_MAPS); do \
 		printf "\nRunning ./$(BONUS_NAME) $$map\n"; \
 		./$(BONUS_NAME) $$map || true; \
@@ -141,7 +140,7 @@ val_invalid: all supp
 		--error-exitcode=1 --quiet ./$(NAME) $$map || true; \
 	done
 
-b_val_invalid: all supp
+b_val_invalid: bonus supp
 	@for map in $(INVALID_MAPS); do \
 		printf "\nTesting $$map with valgrind\n"; \
 		valgrind --leak-check=full --show-leak-kinds=all \
@@ -153,8 +152,8 @@ b_val_invalid: all supp
 val: all supp
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(NAME) $(MAP)
 
-#make val MAP=maps/valid/all_black.cub
-b_val: all supp
+#make b_val MAP=maps/valid/all_black.cub
+b_val: bonus supp
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE) ./$(BONUS_NAME) $(MAP)
 
 norm:
@@ -163,6 +162,7 @@ norm:
 supp:
 	@if [ ! -f $(SUPP_FILE) ]; then \
 		echo "{" > $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
@@ -170,6 +170,7 @@ supp:
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
 		echo "{" >> $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
@@ -177,6 +178,7 @@ supp:
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
 		echo "{" >> $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
@@ -184,6 +186,7 @@ supp:
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
 		echo "{" >> $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
@@ -191,6 +194,7 @@ supp:
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
 		echo "{" >> $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
@@ -198,47 +202,13 @@ supp:
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
 		echo "{" >> $(SUPP_FILE); \
+		echo "   <MLX_CODAM>" >> $(SUPP_FILE); \
 		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
 		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "   fun:__pthread_once_slow" >> $(SUPP_FILE); \
 		echo "   ..." >> $(SUPP_FILE); \
 		echo "}" >> $(SUPP_FILE); \
-		echo "{" >> $(SUPP_FILE); \
-		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
-		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "   fun:_dl_init" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "}" >> $(SUPP_FILE); \
-		echo "{" >> $(SUPP_FILE); \
-		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
-		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "   fun:_dlerror_run" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "}" >> $(SUPP_FILE); \
-		echo "{" >> $(SUPP_FILE); \
-		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
-		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "   fun:_dl_open" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "}" >> $(SUPP_FILE); \
-		echo "{" >> $(SUPP_FILE); \
-		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
-		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "   fun:_dl_catch_exception" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "}" >> $(SUPP_FILE); \
-		echo "{" >> $(SUPP_FILE); \
-		echo "   Memcheck:Leak" >> $(SUPP_FILE); \
-		echo "   match-leak-kinds: reachable" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "   fun:mlx_init" >> $(SUPP_FILE); \
-		echo "   ..." >> $(SUPP_FILE); \
-		echo "}" >> $(SUPP_FILE); \
 	fi
 
-.PHONY: all, clean, fclean, re, norm, val
+.PHONY: all, clean, fclean, re, norm, val, b_val, invalid, b_invalid, val_invalid, b_val_invalid, supp
