@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/12/03 19:38:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:06:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	validate_map(t_game *game)
 {
 	validate_map_borders(game);
 	validate_map_content(game);
-	validate_player(game);
 }
 
 /**
