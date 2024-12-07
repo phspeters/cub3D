@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/12/03 19:36:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:16:12 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,17 @@ void	parse_rgb(t_game *game, char *line)
 	b = validate_rgb_value(game, ft_strrchr(line, ',') + 1);
 	color = (r << 24) | (g << 16) | (b << 8) | 0xFF;
 	if (line[0] == 'C')
+	{
+		if (game->map.ceiling != 0)
+			handle_error(game, "Duplicate ceiling color: color already set");
 		game->map.ceiling = color;
-	else
+	}
+	else if (line[0] == 'F')
+	{
+		if (game->map.floor != 0)
+			handle_error(game, "Duplicate floor color: color already set");
 		game->map.floor = color;
+	}
 }
 
 void	parse_map_line(t_game *game, char *line)
