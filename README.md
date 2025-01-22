@@ -37,13 +37,13 @@ This project is inspired by the world-famous Wolfenstein 3D game, which was the 
 
 ## 📋 Testing
 
-To compile, go to the project path and run:
+To compile, navigate to the project directory and run:
 
 ```shell
 $ make 
 ```
 
-Then, execute the program with the map chosen:
+Then, execute the program with the path of the map chosen as your second argument:
 
 ```shell
 $ ./cub3D maps/valid/subject.cub
