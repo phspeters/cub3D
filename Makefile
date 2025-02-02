@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/14 10:47:08 by pehenri2          #+#    #+#              #
-#    Updated: 2024/12/05 20:25:20 by pehenri2         ###   ########.fr        #
+#    Updated: 2025/02/02 13:55:16 by roglopes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC			= 	cc
 
 HEADERS		= 	-I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS		= 	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
-LIBMLX		= 	./lib/MLX42
-LIBFT		= 	./lib/libft
+LIBMLX		= 	./.lib/MLX42
+LIBFT		= 	./.lib/libft
 
 FILES		= 	main.c \
 				player_movement.c \
