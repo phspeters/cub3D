@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:45:05 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/23 18:45:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:37:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,18 @@ void	handle_mlx_error(t_game *game, char *message)
  */
 void	handle_error(t_game *game, char *message)
 {
-	end_game(game);
 	if (errno)
 	{
 		ft_fprintf(STDERR_FILENO, "Error\n");
 		perror(message);
+		end_game(game);
 		exit(errno);
 	}
 	else
 	{
 		ft_fprintf(STDERR_FILENO, "Error\n");
 		ft_fprintf(STDERR_FILENO, "%s.\n", message);
+		end_game(game);
 		exit(EXIT_FAILURE);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:29:21 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/24 15:47:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:32:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void	validate_player(t_game *game)
 	{
 		if (game->player.player_count == 0)
 			handle_error(game,
-				"No player detected on the map: must have one player");
+				"No player detected: must have at least one player");
 		else
 			handle_error(game,
-				"Multiple players detected on the map: must have one player");
+				"Multiple players detected: must have only one player");
 	}
 }

@@ -1,9 +1,10 @@
-NO assets/black_wood.png
-SO assets/brick_wall_2.png
-WE assets/wood_brick.png
-EA assets/plant_wall.png
-F 0,0,0
-C 0,0,0
+NO assets/cave_wall.png
+SO assets/cave_wall.png
+WE assets/cave_wall.png
+EA assets/cave_wall.png
+
+F 255,255,255
+C 255,255,255
 
 111111111111111
 111111000111111

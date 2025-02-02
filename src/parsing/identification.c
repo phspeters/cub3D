@@ -6,11 +6,21 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 17:08:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 15:41:02 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:35:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	is_valid_line(char *line)
+{
+	while (*line && ft_strchr(" \t", *line))
+		line++;
+	return (is_texture_line(line)
+		|| is_rgb_line(line)
+		|| is_map_line(line)
+		|| *line == '\n');
+}
 
 int	is_texture_line(char *line)
 {

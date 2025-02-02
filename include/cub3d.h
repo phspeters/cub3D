@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 10:33:51 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/11/24 06:47:02 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:14:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,16 @@
 # include <MLX42/MLX42.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <limits.h>
 # include <math.h>
-# include <stdbool.h>
-# include <stdint.h>
 # include <stdio.h>
-# include <string.h>
 # include <unistd.h>
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
-# define MAX_MAP_SIZE 1000
 # define MINIMAP_SIZE 25
 # define MOVEMENT_SPEED_MULTIPLIER 5.0
 # define ROTATION_SPEED_MULTIPLIER 2.0
 # define COLLISION_DISTANCE_MULTIPLIER 2
-
-enum				e_output
-{
-	SUCCESS = 0,
-	FAILURE = 1,
-};
 
 enum				e_axis
 {
@@ -296,6 +285,7 @@ void				allocate_map_grid(t_game *game);
 
 /*------------identification.c------------*/
 
+int					is_valid_line(char *line);
 int					is_texture_line(char *line);
 int					is_rgb_line(char *line);
 int					is_map_line(char *line);
@@ -322,7 +312,6 @@ void				handle_error(t_game *game, char *message);
 void				put_valid_pixel(t_game *game, int x, int y, uint32_t color);
 mlx_texture_t		*ft_load_png(t_game *game, char *path);
 void				delete_textures(mlx_texture_t **textures, int count);
-char				*trim_line(char *line);
 int					is_wall_or_void(int map_cell);
 
 /*******************************************
@@ -348,6 +337,7 @@ void				validate_player(t_game *game);
 
 void				validate_rgb(t_game *game);
 void				validate_rgb_line(t_game *game, char *line);
+int					count_rgb_values(t_game *game, char *line);
 int					validate_rgb_value(t_game *game, char *rgb_string);
 
 /*----------validate_textures.c-----------*/

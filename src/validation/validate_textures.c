@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:03:44 by roglopes          #+#    #+#             */
-/*   Updated: 2024/11/24 15:25:02 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:35:17 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	validate_textures(t_game *game)
 {
 	if (game->map.texture_path[NORTH] == NULL)
-		handle_error(game, "Missing texture for NORTH wall");
+		handle_error(game, "Missing texture for north (NO) wall");
 	if (game->map.texture_path[SOUTH] == NULL)
-		handle_error(game, "Missing texture for SOUTH wall");
+		handle_error(game, "Missing texture for south (SO) wall");
 	if (game->map.texture_path[WEST] == NULL)
-		handle_error(game, "Missing texture for WEST wall");
+		handle_error(game, "Missing texture for west (WE) wall");
 	if (game->map.texture_path[EAST] == NULL)
-		handle_error(game, "Missing texture for EAST wall");
+		handle_error(game, "Missing texture for east (EA) wall");
 }
 
 void	set_texture_path(t_game *game, char **texture_dest, char *line)

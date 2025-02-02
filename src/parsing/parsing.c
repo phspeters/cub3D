@@ -6,7 +6,11 @@
 /*   By: roglopes <roglopes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 00:04:19 by codespace         #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/24 16:05:27 by roglopes         ###   ########.fr       */
+=======
+/*   Updated: 2024/11/25 17:39:59 by pehenri2         ###   ########.fr       */
+>>>>>>> 5ae73df4a08715cea4c6f6d12865f4aa7d7f857f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +29,9 @@ void	parse_cub_file(t_game *game, char *argv[])
 	line = ft_get_next_line(fd);
 	while (line != NULL)
 	{
+		if (!is_valid_line(line))
+			handle_error(game, ft_strjoin("Invalid line in map file: ",
+					ft_strtrim(line, "\n\r\f\v")));
 		parse_textures(game, line);
 		parse_rgb(game, line);
 		parse_map_line(game, line);
@@ -73,8 +80,6 @@ void	parse_rgb(t_game *game, char *line)
 		game->map.floor = color;
 }
 
-//trocar para parse_map e ler lines aqui dentro para se achar \n acaba a leitura
-//colocar error de coisas após o mapa?
 void	parse_map_line(t_game *game, char *line)
 {
 	static int	i;
