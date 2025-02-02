@@ -16,10 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libreadline-dev cmake make gcc g++
-      - name: make
-        run: make fclean re
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreadline-dev cmake make gcc g++ libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: make
+        run: make fclean re
       - run: echo "🍏 This job's status is ${{ job.status }}."
