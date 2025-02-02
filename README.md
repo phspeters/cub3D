@@ -1,6 +1,23 @@
 <h1 align="center">
-	🎲 cub3D
+🎲 cub3D
 </h1>
+
+<div align = center>
+
+![Norminette](https://github.com/phspeters/cub3D/actions/workflows/norminette.yml/badge.svg)
+![Build](https://github.com/phspeters/cub3D/actions/workflows/build.yml/badge.svg)
+![Static Badge](https://custom-icon-badges.demolab.com/badge/Cub_3D-42-blue?logo=repo)
+![42 São Paulo](https://custom-icon-badges.demolab.com/badge/42-SP-1E2952)
+![License](https://custom-icon-badges.demolab.com/github/license/phspeters/cub3D?logo=law&color=dark-green)
+![Code size in bytes](https://custom-icon-badges.demolab.com/github/languages/code-size/phspeters/cub3D?logo=file-code&color=dark-green)
+![Top language](https://custom-icon-badges.demolab.com/github/languages/top/phspeters/cub3D?color=dark-green)
+![Last commit](https://custom-icon-badges.demolab.com/github/last-commit/phspeters/cub3D?logo=history&color=dark-green)
+![Repo size](https://custom-icon-badges.demolab.com/github/repo-size/phspeters/cub3D?logo=database)
+![Languages](https://custom-icon-badges.demolab.com/github/languages/count/phspeters/cub3D?logo=command-palette&color=red)
+![GitHub repo file count (file type)](https://custom-icon-badges.demolab.com/github/directory-file-count/phspeters/cub3D%2Fsrc?logo=file&label=files%20sources&color=8602b1)
+![](https://img.shields.io/github/forks/phspeters/cub3D)
+
+</div>
 
 ## 💡 About the project
 
@@ -57,3 +74,9 @@ $ ./cub3D maps/valid/subject.cub
 - Right Mouse Button toggles mouse camera movement
 - The M key toggles the minimap
 - Pressing ESC close the window and quit the program.
+
+> [!NOTE]
+> Because of 42 School norm requirements:
+> * Each function can't have more than 25 lines of code.
+> * All variables are declared and aligned at the top of each function.
+> * Project should be created just with allowed functions otherwise it's cheating.
